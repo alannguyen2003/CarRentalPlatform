@@ -7,6 +7,7 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddDependence(builder.Configuration);
 
+builder.Services.AddSession();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
