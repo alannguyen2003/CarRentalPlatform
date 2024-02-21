@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 
 builder.Services.AddDependence(builder.Configuration);
+builder.Services.AddMvcCore();
 
 builder.Services.AddSession();
 var app = builder.Build();
