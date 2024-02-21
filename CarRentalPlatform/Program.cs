@@ -6,12 +6,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 
 builder.Services.AddDependence(builder.Configuration);
-<<<<<<< HEAD
 builder.Services.AddMvcCore();
-=======
 
 builder.Services.AddSession();
->>>>>>> main
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
