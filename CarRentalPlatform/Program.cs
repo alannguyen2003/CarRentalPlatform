@@ -4,7 +4,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddSession(options =>
+{
 
+});
 builder.Services.AddDependence(builder.Configuration);
 
 var app = builder.Build();

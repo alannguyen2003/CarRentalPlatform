@@ -16,10 +16,13 @@ public class BookingEntity : BaseEntity
 
     public string Note { get; set; } = null!;
     
-    [ForeignKey("ContractId")]
-    public int ContractId { get; set; }
-    public virtual ContractEntity Contract { get; set; } = null!;
-
+    public int DepositAmount { get; set; }
+    public int TotalAmount { get; set; }
+    
+    [ForeignKey("CustomerId")]
+    public int CustomerId { get; set; }
+    public virtual AccountEntity Customer { get; set; } = null!;
+    
     [ForeignKey("CarId")]
     public int CarId { get; set; }
     public virtual CarEntity Car { get; set; }
