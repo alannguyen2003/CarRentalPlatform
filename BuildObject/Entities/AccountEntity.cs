@@ -30,10 +30,12 @@ public class AccountEntity : BaseEntity
 
     public int WalletBalance { get; set; }
     
-    [ForeignKey("RoleId")]
-    public int RoleId { get; set; }
-
-    public virtual RoleEntity Role { get; set; }
+    //1 -- ADMIN
+    //2 -- EMPLOYEE
+    //3 -- CUSTOMER
+    public int Role { get; set; }
     
-    public ICollection<DriverLicenseEntity> DriverLicenses { get; set; }
+    [StringLength(10)]
+    public string DriverLicense { get; set; }
+    public DateTime DriverLicenseIssueDate { get; set; }
 }
