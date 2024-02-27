@@ -1,0 +1,114 @@
+﻿@page
+@model CarRentalPlatform.Pages.AdminPage.DashboardModel
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<style>
+    .dashboard-section {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+        .dashboard-section .section-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+    .dashboard-item {
+        width: 48%;
+        background-color: #f4f4f4;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+        .dashboard-item table {
+            width: 100%;
+        }
+</style>
+<h1>Dashboard</h1>
+
+<div class="dashboard-section">
+    <div class="dashboard-item">
+        <div class="section-title">Cars</div>
+        <p><a asp-page="Car/Create">Create New Car</a></p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Model</th>
+                    <th>License Plate</th>
+                    <th>Status</th>
+                    <th>Brand</th>
+                    <th>Location</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var car in Model.CarEntity)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => car.Model)</td>
+                        <td>@Html.DisplayFor(modelItem => car.LicensePlate)</td>
+                        <td>@Html.DisplayFor(modelItem => car.Status)</td>
+                        <td>@Html.DisplayFor(modelItem => car.Brand.BrandName)</td>
+                        <td>@Html.DisplayFor(modelItem => car.Location.Address)</td>
+                        <td>
+                            <a asp-page="Car/Edit" asp-route-id="@car.Id">Edit</a> |
+                            <a asp-page="Car/Details" asp-route-id="@car.Id">Details</a> |
+                            <a asp-page="Car/Delete" asp-route-id="@car.Id">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="dashboard-item">
+        <div class="section-title">Accounts</div>
+        <p><a asp-page="Account/Create">Create New Account</a></p>
+        <table class="table">
+            <!-- Account Table Header -->
+            <thead>
+                <tr>
+                    <th>Email</th>
+                    <th>Full Name</th>
+                    <th>Last Name</th>
+                    <th>Phone Number</th>
+                    <th>Gender</th>
+                    <th>Wallet Balance</th>
+                    <th>Role</th>
+                    <th>Driver License</th>
+                    <th>Driver License Issue Date</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <!-- Account Table Body -->
+            <tbody>
+                @foreach (var account in Model.AccountEntity)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => account.Email)</td>
+                        <td>@Html.DisplayFor(modelItem => account.FullName)</td>
+                        <td>@Html.DisplayFor(modelItem => account.LastName)</td>
+                        <td>@Html.DisplayFor(modelItem => account.PhoneNumber)</td>
+                        <td>@Html.DisplayFor(modelItem => account.Gender)</td>
+                        <td>@Html.DisplayFor(modelItem => account.WalletBalance)</td>
+                        <td>@Html.DisplayFor(modelItem => account.Role)</td>
+                        <td>@Html.DisplayFor(modelItem => account.DriverLicense)</td>
+                        <td>@Html.DisplayFor(modelItem => account.DriverLicenseIssueDate)</td>
+                        <td>
+                            <a asp-page="Account/Edit" asp-route-id="@account.Id">Edit</a> |
+                            <a asp-page="Account/Details" asp-route-id="@account.Id">Details</a> |
+                            <a asp-page="Account/Delete" asp-route-id="@account.Id">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+

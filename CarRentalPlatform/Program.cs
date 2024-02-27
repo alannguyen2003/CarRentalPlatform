@@ -1,4 +1,5 @@
 using CarRentalPlatform.Configuration;
+using DataAccess.DataAccessLayer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,10 @@ builder.Services.AddDependence(builder.Configuration);
 builder.Services.AddMvcCore();
 
 builder.Services.AddSession();
+
+builder.Services.AddScoped<CarEntityDAO>();
+builder.Services.AddScoped<AccountDao>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

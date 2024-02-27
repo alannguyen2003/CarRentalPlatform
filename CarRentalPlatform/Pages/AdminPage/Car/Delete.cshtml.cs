@@ -12,11 +12,12 @@ namespace CarRentalPlatform.Pages.AdminPage.Car
 {
     public class DeleteModel : PageModel
     {
-        private readonly DataAccess.DataAccessLayer.ApplicationDbContext _context;
+        private readonly CarEntityDAO _entityDAO;
 
-        public DeleteModel(DataAccess.DataAccessLayer.ApplicationDbContext context)
+
+        public DeleteModel(CarEntityDAO entityDAO)
         {
-            _context = context;
+            _entityDAO = entityDAO;
         }
 
         [BindProperty]
@@ -24,12 +25,13 @@ namespace CarRentalPlatform.Pages.AdminPage.Car
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Cars == null)
+            var cars = _entityDAO.GetAll();
+            if (id == null || cars == null)
             {
                 return NotFound();
             }
 
-            var carentity = await _context.Cars.FirstOrDefaultAsync(m => m.Id == id);
+            var carentity = await _entityDAO.GetCarsByIdAsync(id);
 
             if (carentity == null)
             {
@@ -44,17 +46,18 @@ namespace CarRentalPlatform.Pages.AdminPage.Car
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null || _context.Cars == null)
+            var cars = _entityDAO.GetAll();
+
+            if (id == null || cars == null)
             {
                 return NotFound();
             }
-            var carentity = await _context.Cars.FindAsync(id);
+            var carentity = await _entityDAO.GetCarsByIdAsync(id);
 
             if (carentity != null)
             {
                 CarEntity = carentity;
-                _context.Cars.Remove(CarEntity);
-                await _context.SaveChangesAsync();
+                await _entityDAO.DeleteEntity(CarEntity);
             }
 
             return RedirectToPage("./Index");

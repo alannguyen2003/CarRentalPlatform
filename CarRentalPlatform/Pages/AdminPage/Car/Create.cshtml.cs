@@ -12,17 +12,18 @@ namespace CarRentalPlatform.Pages.AdminPage.Car
 {
     public class CreateModel : PageModel
     {
-        private readonly DataAccess.DataAccessLayer.ApplicationDbContext _context;
+        private readonly CarEntityDAO _entityDAO;
 
-        public CreateModel(DataAccess.DataAccessLayer.ApplicationDbContext context)
+        public CreateModel(CarEntityDAO carEntityDAO)
         {
-            _context = context;
+            _entityDAO = carEntityDAO;
         }
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGet()
         {
-        ViewData["BrandId"] = new SelectList(_context.Brands, "Id", "BrandName");
-        ViewData["LocationId"] = new SelectList(_context.Locations, "Id", "Address");
+            var entityCar = await _entityDAO.GetCarsAsync();
+        ViewData["BrandId"] = new SelectList(entityCar.Select(c => c.Brand), "Id", "BrandName");
+        ViewData["LocationId"] = new SelectList(entityCar.Select(c => c.Location), "Id", "Address");
             return Page();
         }
 
@@ -33,13 +34,13 @@ namespace CarRentalPlatform.Pages.AdminPage.Car
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.Cars == null || CarEntity == null)
+            var cars = await _entityDAO.GetCarsAsync();
+          if (!ModelState.IsValid || cars == null || CarEntity == null)
             {
                 return Page();
             }
 
-            _context.Cars.Add(CarEntity);
-            await _context.SaveChangesAsync();
+            await _entityDAO.Create(CarEntity);
 
             return RedirectToPage("./Index");
         }
