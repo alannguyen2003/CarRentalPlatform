@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Text.Json;
 
-namespace CarRentalPlatform.Pages.BookCar
+namespace CarRentalPlatform.Pages
 {
     public class ShoppingCartModel : PageModel
     {

@@ -1,0 +1,55 @@
+﻿@page
+@model AllCarsModel
+@{
+    ViewData["Title"] = "All Cars";
+}
+
+<h1>Index</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CarEntity[0].Model)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CarEntity[0].LicensePlate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CarEntity[0].Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CarEntity[0].Brand)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CarEntity[0].Location)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.CarEntity)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Model)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LicensePlate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Brand.BrandName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Location.Address)
+                </td>
+                <td>
+                    <a asp-page="./AddToCart" asp-route-id="@item.Id">Book</a> 
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

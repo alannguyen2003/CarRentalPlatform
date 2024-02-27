@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
-namespace CarRentalPlatform.Pages.BookCar
+namespace CarRentalPlatform.Pages
 {
     public class AddToCartModel : PageModel
     {

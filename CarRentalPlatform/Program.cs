@@ -13,7 +13,7 @@ builder.Services.AddSession(options =>
 });
 builder.Services.AddDependence(builder.Configuration);
 builder.Services.AddMvcCore();
-
+builder.Services.AddScoped<CarEntityDAO>();
 builder.Services.AddSession();
 var app = builder.Build();
 
