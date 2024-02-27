@@ -14,11 +14,9 @@ namespace CarRentalPlatform.Pages
     public class AllCarsModel : PageModel
     {
         private readonly CarEntityDAO _entityDAO;
-        private readonly ApplicationDbContext _context;
 
-        public AllCarsModel(ApplicationDbContext context, CarEntityDAO entityDAO)
+        public AllCarsModel(CarEntityDAO entityDAO)
         {
-            _context = context;
             _entityDAO = entityDAO;
         }
         public IList<CarEntity> CarEntity { get; private set; }

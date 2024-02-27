@@ -8,11 +8,11 @@ namespace CarRentalPlatform.Pages
 {
     public class AddToCartModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
+        private readonly CarEntityDAO _carEntityDAO;
 
-        public AddToCartModel(ApplicationDbContext context)
+        public AddToCartModel(CarEntityDAO carEntityDAO)
         {
-            _context = context;
+            _carEntityDAO = carEntityDAO;
         }
 
         [BindProperty(SupportsGet = true)]
@@ -20,9 +20,9 @@ namespace CarRentalPlatform.Pages
 
         public CarEntity Car { get; set; }
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
-            Car = _context.Cars.Include(c => c.Brand).Include(c => c.Location).FirstOrDefault(c => c.Id == Id);
+            Car = await _carEntityDAO.GetCarsByIdAsync(Car.Id);
 
             if (Car == null)
             {
