@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddSession(options =>
 {
-
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
 });
 builder.Services.AddDependence(builder.Configuration);
 builder.Services.AddMvcCore();
@@ -32,7 +32,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+app.UseSession();
 app.UseRouting();
 
 app.UseAuthorization();
