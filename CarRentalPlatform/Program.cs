@@ -1,4 +1,7 @@
 using CarRentalPlatform.Configuration;
+using DataAccess.DataAccessLayer;
+using Microsoft.EntityFrameworkCore;
+using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 

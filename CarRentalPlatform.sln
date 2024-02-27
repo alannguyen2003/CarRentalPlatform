@@ -1,14 +1,20 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarRentalPlatform", "CarRentalPlatform\CarRentalPlatform.csproj", "{B062157D-D402-4A9F-BD00-3966D2FEDE08}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarRentalPlatform", "CarRentalPlatform\CarRentalPlatform.csproj", "{B062157D-D402-4A9F-BD00-3966D2FEDE08}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B64141DF-747A-47AE-BF75-D19279A2F1AE} = {B64141DF-747A-47AE-BF75-D19279A2F1AE}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildObject", "BuildObject\BuildObject.csproj", "{CF52EF8C-9B28-4F18-B41F-59161CCDA75A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildObject", "BuildObject\BuildObject.csproj", "{CF52EF8C-9B28-4F18-B41F-59161CCDA75A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{B64141DF-747A-47AE-BF75-D19279A2F1AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{B64141DF-747A-47AE-BF75-D19279A2F1AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Repository.csproj", "{3E727DC3-2AF7-4F56-89F8-15A6A18E8342}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "Repository\Repository.csproj", "{3E727DC3-2AF7-4F56-89F8-15A6A18E8342}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataTransferLayer", "DataTransferLayer\DataTransferLayer.csproj", "{6E59308A-D994-4DA5-B498-D9285D6277EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataTransferLayer", "DataTransferLayer\DataTransferLayer.csproj", "{6E59308A-D994-4DA5-B498-D9285D6277EA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,6 +43,10 @@ Global
 		{6E59308A-D994-4DA5-B498-D9285D6277EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E59308A-D994-4DA5-B498-D9285D6277EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D9AA8576-5355-45DD-BB93-D6766289F5ED}
 	EndGlobalSection
 EndGlobal

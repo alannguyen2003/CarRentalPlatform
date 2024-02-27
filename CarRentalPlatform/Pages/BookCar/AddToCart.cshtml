@@ -1,0 +1,46 @@
+﻿@page "{id:int}"
+@model CarRentalPlatform.Pages.BookCar.AddToCartModel
+@{
+    ViewData["Title"] = "Car Details";
+}
+
+<h1>Car Details</h1>
+
+<h3>@Model.Car.Model</h3>
+<p>License Plate: @Model.Car.LicensePlate</p>
+<p>Status: @Model.Car.Status</p>
+<p>Brand: @Model.Car.Brand</p>
+<p>Location: @Model.Car.Location</p>
+
+<form method="post" asp-page="./ShoppingCart">
+    <input type="hidden" name="CarId" value="@Model.Car.Id" />
+    <div>
+        <label>Start Date:</label>
+        <input type="date" name="StartDate" required />
+    </div>
+    <div>
+        <label>End Date:</label>
+        <input type="date" name="EndDate" required />
+    </div>
+    <div>
+        <label>Actual Return Date:</label>
+        <input type="date" name="ActualReturnDate" />
+    </div>
+    <div>
+        <label>Feedback:</label>
+        <textarea name="Feedback"></textarea>
+    </div>
+    <div>
+        <label>Note:</label>
+        <textarea name="Note"></textarea>
+    </div>
+    <div>
+        <label>Deposit Amount:</label>
+        <input type="number" name="DepositAmount" required />
+    </div>
+    <div>
+        <label>Total Amount:</label>
+        <input type="number" name="TotalAmount" required />
+    </div>
+    <button type="submit">Add to Cart</button>
+</form>
