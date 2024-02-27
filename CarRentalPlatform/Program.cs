@@ -1,5 +1,6 @@
 using CarRentalPlatform.Configuration;
 using DataAccess.DataAccessLayer;
+using Microsoft.CodeAnalysis;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,8 @@ builder.Services.AddSession();
 
 builder.Services.AddScoped<CarEntityDAO>();
 builder.Services.AddScoped<AccountDao>();
+builder.Services.AddScoped<BrandDAO>();
+builder.Services.AddScoped<LocationDAO>();
 
 var app = builder.Build();
 

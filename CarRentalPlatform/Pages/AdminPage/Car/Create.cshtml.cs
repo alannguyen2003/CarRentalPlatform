@@ -13,17 +13,22 @@ namespace CarRentalPlatform.Pages.AdminPage.Car
     public class CreateModel : PageModel
     {
         private readonly CarEntityDAO _entityDAO;
+        private readonly BrandDAO _brandDAO;
+        private readonly LocationDAO _locationDAO;
 
-        public CreateModel(CarEntityDAO carEntityDAO)
+        public CreateModel(CarEntityDAO carEntityDAO,LocationDAO locationDAO,BrandDAO brandDAO)
         {
             _entityDAO = carEntityDAO;
+            _brandDAO = brandDAO;
+            _locationDAO = locationDAO;
         }
-
+         
         public async Task<IActionResult> OnGet()
         {
-            var entityCar = await _entityDAO.GetCarsAsync();
-        ViewData["BrandId"] = new SelectList(entityCar.Select(c => c.Brand), "Id", "BrandName");
-        ViewData["LocationId"] = new SelectList(entityCar.Select(c => c.Location), "Id", "Address");
+            var brands = await _brandDAO.GetAll();
+            var location = await _locationDAO.GetAll();
+        ViewData["BrandId"] = new SelectList(brands, "Id", "BrandName");
+        ViewData["LocationId"] = new SelectList(location, "Id", "Address");
             return Page();
         }
 
@@ -34,11 +39,11 @@ namespace CarRentalPlatform.Pages.AdminPage.Car
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-            var cars = await _entityDAO.GetCarsAsync();
-          if (!ModelState.IsValid || cars == null || CarEntity == null)
+           /* var cars = await _entityDAO.GetCarsAsync();
+          if (cars == null || CarEntity == null)
             {
                 return Page();
-            }
+            }*/
 
             await _entityDAO.Create(CarEntity);
 

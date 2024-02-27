@@ -30,6 +30,7 @@ namespace CarRentalPlatform.Pages.AdminPage.Account
                 if (accountsQuery != null)
                 {
                     AccountEntity = await accountsQuery.ToListAsync();
+                    
                 }
             }
             catch (Exception ex)

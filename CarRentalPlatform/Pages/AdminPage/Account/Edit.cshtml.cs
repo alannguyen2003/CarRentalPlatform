@@ -51,9 +51,15 @@ namespace CarRentalPlatform.Pages.AdminPage.Account
             {
                 return Page();
             }*/
-
+            
             try
             {
+                var Account = await _accountDao.GetEntityById(AccountEntity.Id);
+                if (Account == null)
+                {
+                    throw new Exception();
+                }
+                AccountEntity = Account;
                 await _accountDao.UpdateEntity(AccountEntity);
             }
             catch (DbUpdateConcurrencyException)
@@ -75,5 +81,6 @@ namespace CarRentalPlatform.Pages.AdminPage.Account
         {
           return (await _accountDao.GetEntityById(id)) != null;
         }
-    }
+        
+}
 }
