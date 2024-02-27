@@ -38,6 +38,8 @@ namespace CarRentalPlatform.Pages.AdminPage.Account
                 else
                 {
                     AccountEntity = accountentity;
+                    var genderValue = accountentity.Gender;
+                    ViewData["DisplayGender"] = genderValue == true ? "Male" : "Female";
                 }
                 return Page();
             }

@@ -35,11 +35,12 @@ namespace CarRentalPlatform.Pages.AdminPage.Account
             try
             {
                 var account = await _accountDao.GetAll();
-                if (!ModelState.IsValid || account == null || AccountEntity == null)
+                if (account == null || AccountEntity == null)
                 {
                     return Page();
                 }
-
+                AccountEntity.WalletBalance = 0;
+                AccountEntity.Role = 3;
                 await _accountDao.Create(AccountEntity);
 
                 return RedirectToPage("./Index");

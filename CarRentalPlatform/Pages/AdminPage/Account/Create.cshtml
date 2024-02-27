@@ -1,6 +1,8 @@
 ﻿@page
 @model CarRentalPlatform.Pages.AdminPage.Account.CreateModel
-
+@{
+    Layout = "_Layout";
+}
 @{
     ViewData["Title"] = "Create";
 }
@@ -15,44 +17,51 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="AccountEntity.Email" class="control-label"></label>
-                <input asp-for="AccountEntity.Email" class="form-control" />
+                <input asp-for="AccountEntity.Email" class="form-control" type="email" />
                 <span asp-validation-for="AccountEntity.Email" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="AccountEntity.FullName" class="control-label"></label>
-                <input asp-for="AccountEntity.FullName" class="form-control" />
+                <input asp-for="AccountEntity.FullName" class="form-control" type="text"/>
                 <span asp-validation-for="AccountEntity.FullName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="AccountEntity.LastName" class="control-label"></label>
-                <input asp-for="AccountEntity.LastName" class="form-control" />
+                <input asp-for="AccountEntity.LastName" class="form-control" type="text"/>
                 <span asp-validation-for="AccountEntity.LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="AccountEntity.PhoneNumber" class="control-label"></label>
-                <input asp-for="AccountEntity.PhoneNumber" class="form-control" />
+                <input asp-for="AccountEntity.PhoneNumber" class="form-control" type="tel" pattern="[0-9]{10}" title="Please enter a valid 10-digit phone number" />
                 <span asp-validation-for="AccountEntity.PhoneNumber" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="AccountEntity.Gender" /> @Html.DisplayNameFor(model => model.AccountEntity.Gender)
+                    <select class="form-check" asp-for="AccountEntity.Gender">
+                        <option value="true">Male</option>
+                        <option value="false">Female</option>
+                    </select>
                 </label>
             </div>
             <div class="form-group">
                 <label asp-for="AccountEntity.Password" class="control-label"></label>
-                <input asp-for="AccountEntity.Password" class="form-control" />
+                <input asp-for="AccountEntity.Password" class="form-control" type="password"/>
                 <span asp-validation-for="AccountEntity.Password" class="text-danger"></span>
             </div>
-            <div class="form-group">
+@*             <div class="form-group">
                 <label asp-for="AccountEntity.WalletBalance" class="control-label"></label>
-                <input asp-for="AccountEntity.WalletBalance" class="form-control" />
+                <input asp-for="AccountEntity.WalletBalance" class="form-control" type="number"/>
                 <span asp-validation-for="AccountEntity.WalletBalance" class="text-danger"></span>
-            </div>
-            <div class="form-group">
+            </div> *@
+            @* <div class="form-group">
                 <label asp-for="AccountEntity.Role" class="control-label"></label>
-                <input asp-for="AccountEntity.Role" class="form-control" />
+                <select asp-for="AccountEntity.Role" class="form-control">
+                    <option value="1">Admin</option>
+                    <option value="2">Employee</option>
+                    <option value="3">User</option>
+                </select>
                 <span asp-validation-for="AccountEntity.Role" class="text-danger"></span>
-            </div>
+            </div> *@
             <div class="form-group">
                 <label asp-for="AccountEntity.DriverLicense" class="control-label"></label>
                 <input asp-for="AccountEntity.DriverLicense" class="form-control" />
@@ -60,7 +69,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="AccountEntity.DriverLicenseIssueDate" class="control-label"></label>
-                <input asp-for="AccountEntity.DriverLicenseIssueDate" class="form-control" />
+                <input asp-for="AccountEntity.DriverLicenseIssueDate" class="form-control" type="date"/>
                 <span asp-validation-for="AccountEntity.DriverLicenseIssueDate" class="text-danger"></span>
             </div>
             <div class="form-group">

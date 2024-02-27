@@ -12,23 +12,24 @@ namespace CarRentalPlatform.Pages.AdminPage.Car
 {
     public class DetailsModel : PageModel
     {
-        private readonly DataAccess.DataAccessLayer.ApplicationDbContext _context;
+        private readonly CarEntityDAO _entityDAO;
 
-        public DetailsModel(DataAccess.DataAccessLayer.ApplicationDbContext context)
+        public DetailsModel( CarEntityDAO entityDAO)
         {
-            _context = context;
+            _entityDAO = entityDAO;
         }
 
-      public CarEntity CarEntity { get; set; } = default!; 
+        public CarEntity CarEntity { get; set; } = default!; 
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Cars == null)
+            var cars = await _entityDAO.GetAll();
+            if (id == null || cars == null)
             {
                 return NotFound();
             }
 
-            var carentity = await _context.Cars.FirstOrDefaultAsync(m => m.Id == id);
+            var carentity = await _entityDAO.GetCarsByIdAsync(id);
             if (carentity == null)
             {
                 return NotFound();
