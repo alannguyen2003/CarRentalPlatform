@@ -32,12 +32,8 @@ namespace CarRentalPlatform.Pages
         {
             public CarEntity Car { get; set; }
             public string StartDate { get; set; }
-            public string EndDate { get; set; }
-            public string ActualReturnDate { get; set; }
-            public string Feedback { get; set; }
-            public string Note { get; set; }
-            public int DepositAmount { get; set; }
-            public int TotalAmount { get; set; }
+            public string AccountName { get; set; }
+            public string DriverLicense { get; set; }
         }
 
         public void OnGet()

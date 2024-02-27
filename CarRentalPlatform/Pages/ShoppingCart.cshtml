@@ -10,13 +10,8 @@
         <tr>
             <th>Car</th>
             <th>Start Date</th>
-            <th>End Date</th>
-            <th>Actual Return Date</th> <!-- New header for actual return date -->
-            <th>Feedback</th> <!-- New header for feedback -->
-            <th>Note</th> <!-- New header for note -->
-            <th>Deposit Amount</th> <!-- New header for deposit amount -->
-            <th>Total Amount</th> <!-- New header for total amount -->
-            <!-- Add more table headers for additional booking details if needed -->
+            <th>Account name</th>
+            <th>Driver Licence</th>
         </tr>
     </thead>
     <tbody>
@@ -25,16 +20,11 @@
             <tr>
                 <td>@item.Car.Model</td>
                 <td>@item.StartDate</td>
-                <td>@item.EndDate</td>
-                <td>@item.ActualReturnDate</td> <!-- New cell for actual return date -->
-                <td>@item.Feedback</td> <!-- New cell for feedback -->
-                <td>@item.Note</td> <!-- New cell for note -->
-                <td>@item.DepositAmount</td> <!-- New cell for deposit amount -->
-                <td>@item.TotalAmount</td> <!-- New cell for total amount -->
-                <!-- Add more table cells for additional booking details if needed -->
+                <td>@item.AccountName</td>
+                <td>@item.DriverLicense</td>
             </tr>
         }
     </tbody>
 </table>
 
-<a asp-page="./Checkout">Proceed to Checkout</a>
+<a asp-page="">Proceed to Checkout</a>
