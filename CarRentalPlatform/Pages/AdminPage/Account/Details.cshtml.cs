@@ -12,8 +12,8 @@ namespace CarRentalPlatform.Pages.AdminPage.Account
 {
     public class DetailsModel : PageModel
     {
-        private readonly AccountDao _accountDao;
-        public DetailsModel( AccountDao accountDao)
+        private readonly AccountDAO _accountDao;
+        public DetailsModel( AccountDAO accountDao)
         {
             _accountDao = accountDao;
         }

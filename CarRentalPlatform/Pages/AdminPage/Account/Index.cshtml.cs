@@ -7,16 +7,18 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BuildObject.Entities;
 using DataAccess.DataAccessLayer;
+using Repository.Repository.Abstract;
+using Repository.Repository;
 
 namespace CarRentalPlatform.Pages.AdminPage.Account
 {
     public class IndexModel : PageModel
     {
-        private readonly AccountDao _accountDao;
+        private readonly IAccountRepository _accountRepository;
 
-        public IndexModel(AccountDao accountDao)
+        public IndexModel(AccountRepository accountRepository)
         {
-            _accountDao = accountDao;
+            _accountRepository = accountRepository;
         }
 
         public IList<AccountEntity> AccountEntity { get;set; } = default!;
@@ -25,11 +27,11 @@ namespace CarRentalPlatform.Pages.AdminPage.Account
         {
             try
             {
-                var accountsQuery = await _accountDao.GetAll();
+                var accountsQuery = await _accountRepository.GetAllAccounts();
 
                 if (accountsQuery != null)
                 {
-                    AccountEntity = await accountsQuery.ToListAsync();
+                    AccountEntity = accountsQuery;
                     
                 }
             }

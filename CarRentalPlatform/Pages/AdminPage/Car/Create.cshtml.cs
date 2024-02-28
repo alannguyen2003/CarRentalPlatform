@@ -7,33 +7,35 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using BuildObject.Entities;
 using DataAccess.DataAccessLayer;
+using Repository.Repository.Abstract;
+using Repository.Repository;
 
 namespace CarRentalPlatform.Pages.AdminPage.Car
 {
     public class CreateModel : PageModel
     {
-        private readonly CarEntityDAO _entityDAO;
-        private readonly BrandDAO _brandDAO;
-        private readonly LocationDAO _locationDAO;
+        private readonly ICarRepository _carRepository;
+        private readonly IBrandRepository _brandRepository;
+        private readonly ILocationRepository _locationRepository;
 
-        public CreateModel(CarEntityDAO carEntityDAO,LocationDAO locationDAO,BrandDAO brandDAO)
+        public CreateModel(CarRepository carRepository, BrandRepository brandRepository, LocationRepository locationRepository)
         {
-            _entityDAO = carEntityDAO;
-            _brandDAO = brandDAO;
-            _locationDAO = locationDAO;
+            _carRepository = carRepository;
+            _brandRepository = brandRepository;
+            _locationRepository = locationRepository;
         }
          
         public async Task<IActionResult> OnGet()
         {
-            var brands = await _brandDAO.GetAll();
-            var location = await _locationDAO.GetAll();
-        ViewData["BrandId"] = new SelectList(brands, "Id", "BrandName");
-        ViewData["LocationId"] = new SelectList(location, "Id", "Address");
+            var brands = await _brandRepository.GetAllBrands();
+            var location = await _locationRepository.GetAllLocations();
+            ViewData["BrandId"] = new SelectList(brands, "Id", "BrandName");
+            ViewData["LocationId"] = new SelectList(location, "Id", "Address");
             return Page();
         }
 
         [BindProperty]
-        public CarEntity CarEntity { get; set; } = default!;
+        public CarEntity CarEntity { get; set; }
         
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
@@ -45,7 +47,7 @@ namespace CarRentalPlatform.Pages.AdminPage.Car
                 return Page();
             }*/
 
-            await _entityDAO.Create(CarEntity);
+            await _carRepository.CreateCar(CarEntity);
 
             return RedirectToPage("./Index");
         }

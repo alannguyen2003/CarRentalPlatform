@@ -7,29 +7,31 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BuildObject.Entities;
 using DataAccess.DataAccessLayer;
+using Repository.Repository.Abstract;
+using Repository.Repository;
 
 namespace CarRentalPlatform.Pages.AdminPage
 {
     public class DashboardModel : PageModel
     {
 
-        private readonly CarEntityDAO _carDAO;
+        private readonly ICarRepository _carRepository;
         
-        private readonly AccountDao _accountDao;
-        public DashboardModel( CarEntityDAO entityDAO, AccountDao accountDao)
+        private readonly IAccountRepository _accountRepository;
+        public DashboardModel(CarRepository carRepository, AccountRepository accountRepository)
         {
-            _carDAO = entityDAO;
-            _accountDao = accountDao;
+            _carRepository = carRepository;
+            _accountRepository = accountRepository;
         }
 
-        public IList<AccountEntity> AccountEntity { get;set; } = default!;
-        public IList<CarEntity> CarEntity { get; set; } = default!;
+        public IList<AccountEntity> AccountEntity { get;set; }
+        public IList<CarEntity> CarEntity { get; set; }
 
 
         public async Task OnGetAsync()
         {
-            var Accounts = await _accountDao.GetAccountAsync();
-            var Cars = await _carDAO.GetCarsAsync();
+            var Accounts = await _accountRepository.GetAllAccounts();
+            var Cars = await _carRepository.GetAllCars();
             if (Cars != null || Accounts != null)
             {
                 AccountEntity = Accounts;
