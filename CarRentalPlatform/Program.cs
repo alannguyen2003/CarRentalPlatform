@@ -12,7 +12,7 @@ builder.Services.AddSession(options =>
 });
 builder.Services.AddDependence(builder.Configuration);
 builder.Services.AddMvcCore();
-builder.Services.AddScoped<CarEntityDAO>();
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddSession();
 
 builder.Services.AddScoped<CarEntityDAO>();
@@ -34,6 +34,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseSession();
 
 app.UseAuthorization();
 

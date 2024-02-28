@@ -8,27 +8,32 @@ namespace CarRentalPlatform.Pages
 {
     public class AddToCartModel : PageModel
     {
-        private readonly CarEntityDAO _carEntityDAO;
+        private readonly CarEntityDAO _entityDAO;
 
-        public AddToCartModel(CarEntityDAO carEntityDAO)
+        public AddToCartModel(CarEntityDAO entityDAO)
         {
-            _carEntityDAO = carEntityDAO;
+            _entityDAO = entityDAO;
         }
 
-        [BindProperty(SupportsGet = true)]
-        public int Id { get; set; }
+        public CarEntity CarEntity { get; set; } = default!;
 
-        public CarEntity Car { get; set; }
-
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(int? id)
         {
-            Car = await _carEntityDAO.GetCarsByIdAsync(Car.Id);
-
-            if (Car == null)
+            var cars = await _entityDAO.GetAll();
+            if (id == null || cars == null)
             {
                 return NotFound();
             }
 
+            var carentity = await _entityDAO.GetCarsByIdAsync(id);
+            if (carentity == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                CarEntity = carentity;
+            }
             return Page();
         }
     }

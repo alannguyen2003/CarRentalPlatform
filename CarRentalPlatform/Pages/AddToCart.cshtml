@@ -6,25 +6,61 @@
 
 <h1>Car Details</h1>
 
-<h3>@Model.Car.Model</h3>
-<p>License Plate: @Model.Car.LicensePlate</p>
-<p>Status: @Model.Car.Status</p>
-<p>Brand: @Model.Car.Brand</p>
-<p>Location: @Model.Car.Location</p>
+<h1>Details</h1>
 
-<form method="post" asp-page="./ShoppingCart">
-    <input type="hidden" name="CarId" value="@Model.Car.Id" />
-    <div>
-        <label>Start Date:</label>
-        <input type="date" name="StartDate" required />
+<div>
+    <h4>CarEntity</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CarEntity.Model)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CarEntity.Model)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CarEntity.LicensePlate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CarEntity.LicensePlate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CarEntity.Status)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CarEntity.Status)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CarEntity.Brand)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CarEntity.Brand.BrandName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CarEntity.Location)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CarEntity.Location.Address)
+        </dd>
+    </dl>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" asp-page="./ShoppingCart">
+            <input type="hidden" name="CarId" value="@Model.CarEntity.Id" />
+            <div>
+                <label>Start Date:</label>
+                <input type="date" name="StartDate" required />
+            </div>
+            <div>
+                <label>Account Name:</label>
+                <input type="text" name="AccountName" required />
+            </div>
+            <div>
+                <label>Driver License:</label>
+                <input type="text" name="DriverLicense" required />
+            </div>
+            <button type="submit">Add to Cart</button>
+        </form>
     </div>
-    <div>
-        <label>Account Name:</label>
-        <input type="text" name="AccountName" required />
-    </div>
-    <div>
-        <label>Driver License:</label>
-        <input type="date" name="DriverLicense" required />
-    </div>
-    <button type="submit">Add to Cart</button>
-</form>
+</div>
