@@ -7,31 +7,27 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BuildObject.Entities;
 using DataAccess.DataAccessLayer;
+using Repository.Repository.Abstract;
+using Repository.Repository;
 
 namespace CarRentalPlatform.Pages.AdminPage.Car
 {
     public class DeleteModel : PageModel
     {
-        private readonly CarEntityDAO _entityDAO;
-
-
-        public DeleteModel(CarEntityDAO entityDAO)
-        {
-            _entityDAO = entityDAO;
-        }
+        private readonly ICarRepository _carRepository = new CarRepository();
 
         [BindProperty]
-      public CarEntity CarEntity { get; set; } = default!;
+        public CarEntity CarEntity { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            var cars = _entityDAO.GetAll();
+            var cars = _carRepository.GetAllCars();
             if (id == null || cars == null)
             {
                 return NotFound();
             }
 
-            var carentity = await _entityDAO.GetCarsByIdAsync(id);
+            var carentity = await _carRepository.GetCarById(id);
 
             if (carentity == null)
             {
@@ -46,18 +42,18 @@ namespace CarRentalPlatform.Pages.AdminPage.Car
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            var cars = _entityDAO.GetAll();
+            var cars = _carRepository.GetAllCars();
 
             if (id == null || cars == null)
             {
                 return NotFound();
             }
-            var carentity = await _entityDAO.GetCarsByIdAsync(id);
+            var carentity = await _carRepository.GetCarById(id);
 
             if (carentity != null)
             {
                 CarEntity = carentity;
-                await _entityDAO.DeleteEntity(CarEntity);
+                await _carRepository.DeleteCar(CarEntity);
             }
 
             return RedirectToPage("./Index");

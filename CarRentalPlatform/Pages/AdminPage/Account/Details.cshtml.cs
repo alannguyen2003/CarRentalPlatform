@@ -7,16 +7,14 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BuildObject.Entities;
 using DataAccess.DataAccessLayer;
+using Repository.Repository.Abstract;
+using Repository.Repository;
 
 namespace CarRentalPlatform.Pages.AdminPage.Account
 {
     public class DetailsModel : PageModel
     {
-        private readonly AccountDao _accountDao;
-        public DetailsModel( AccountDao accountDao)
-        {
-            _accountDao = accountDao;
-        }
+        private readonly IAccountRepository _accountRepository = new AccountRepository();
 
         public AccountEntity AccountEntity { get; set; } = default!; 
 
@@ -24,13 +22,13 @@ namespace CarRentalPlatform.Pages.AdminPage.Account
         {
             try
             {
-                var accounts = await _accountDao.GetAll();
+                var accounts = await _accountRepository.GetAllAccounts();
                 if (id == null || accounts == null)
                 {
                     return NotFound();
                 }
 
-                var accountentity = await _accountDao.GetEntityById((int)id);
+                var accountentity = await _accountRepository.GetAccountById((int)id);
                 if (accountentity == null)
                 {
                     return NotFound();

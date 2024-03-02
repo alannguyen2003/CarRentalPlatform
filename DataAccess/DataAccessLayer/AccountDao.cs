@@ -4,18 +4,33 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.DataAccessLayer;
 
-public class AccountDao : BaseDao<AccountEntity>
+public class AccountDAO : BaseDao<AccountEntity>
 {
-    private readonly ApplicationDbContext _context;
-    public AccountDao()
+    private static AccountDAO instance = null;
+    private static readonly object instanceLock = new object();
+    private AccountDAO() { }
+
+    public static AccountDAO Instance
     {
-        _context = new ApplicationDbContext();
+        get
+        {
+            lock (instanceLock)
+            {
+                if (instance == null)
+                {
+                    instance = new AccountDAO();
+                }
+            }
+            return instance;
+        }
     }
+
     public async Task<IList<AccountEntity>> GetAccountAsync()
     {
         try
         {
-            return await _context.Accounts.ToListAsync();
+            var _dbContext = new ApplicationDbContext();
+            return await _dbContext.Accounts.ToListAsync();
         }
         catch (Exception ex)
         {

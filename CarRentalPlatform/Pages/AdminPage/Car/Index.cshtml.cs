@@ -7,26 +7,23 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BuildObject.Entities;
 using DataAccess.DataAccessLayer;
+using Repository.Repository.Abstract;
+using Repository.Repository;
 
 namespace CarRentalPlatform.Pages.AdminPage.Car
 {
     public class IndexModel : PageModel
     {
-        private readonly CarEntityDAO _entityDAO;
+        private readonly ICarRepository _carRepository = new CarRepository();
 
-        public IndexModel(CarEntityDAO entityDAO)
-        {
-            _entityDAO = entityDAO;
-        }
-
-        public IList<CarEntity> CarEntity { get;set; } = default!;
+        public IList<CarEntity> CarEntity { get;set; }
 
         public async Task OnGetAsync()
         {
-            var cars = _entityDAO.GetAll();
+            var cars = _carRepository.GetAllCars();
             if (cars != null)
             {
-                CarEntity = await _entityDAO.GetCarsAsync();
+                CarEntity = await _carRepository.GetAllCars();
             }
         }
     }
