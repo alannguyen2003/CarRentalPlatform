@@ -1,8 +1,11 @@
 ﻿@page
+@using NuGet.Protocol
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model CarRentalPlatform.Pages.AdminPage.Account.IndexModel
 
 @{
     ViewData["Title"] = "Index";
+    Layout = "Shared/_LayoutDashboard";
 }
 
 <h1>Index</h1>
@@ -88,6 +91,11 @@
                 <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
-}
+    }
     </tbody>
 </table>
+<script>
+	if (@Model.IsLogin.ToJson() === false) {
+		window.location.href = "/login";	
+	}
+</script>

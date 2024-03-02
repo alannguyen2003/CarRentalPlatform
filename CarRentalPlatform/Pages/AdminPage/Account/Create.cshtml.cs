@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using BuildObject.Entities;
+using CarRentalPlatform.Configuration;
 using DataAccess.DataAccessLayer;
 using Repository.Repository.Abstract;
 using Repository.Repository;
@@ -18,12 +19,14 @@ namespace CarRentalPlatform.Pages.AdminPage.Account
 
         public IActionResult OnGet()
         {
+            IsLogin = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "isLogin");
             return Page();
         }
 
         [BindProperty]
         public AccountEntity AccountEntity { get; set; } = default!;
-
+        [BindProperty]
+        public bool IsLogin { get; set; }
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {

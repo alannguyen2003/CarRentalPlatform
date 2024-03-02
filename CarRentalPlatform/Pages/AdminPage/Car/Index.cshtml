@@ -1,8 +1,11 @@
 ﻿@page
+@using NuGet.Protocol
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model CarRentalPlatform.Pages.AdminPage.Car.IndexModel
 
 @{
     ViewData["Title"] = "Index";
+    Layout = "Shared/_LayoutDashboard";
 }
 
 <h1>Index</h1>
@@ -12,27 +15,27 @@
 </p>
 <table class="table">
     <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.CarEntity[0].Model)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CarEntity[0].LicensePlate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CarEntity[0].Status)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CarEntity[0].Brand)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CarEntity[0].Location)
-            </th>
-            <th></th>
-        </tr>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CarEntity[0].Model)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CarEntity[0].LicensePlate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CarEntity[0].Status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CarEntity[0].Brand)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CarEntity[0].Location)
+        </th>
+        <th></th>
+    </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.CarEntity) {
+    @foreach (var item in Model.CarEntity) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Model)
@@ -55,6 +58,11 @@
                 <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
-}
+    }
     </tbody>
 </table>
+<script>
+	if (@Model.IsLogin.ToJson() === false) {
+		window.location.href = "/login";	
+	}
+</script>

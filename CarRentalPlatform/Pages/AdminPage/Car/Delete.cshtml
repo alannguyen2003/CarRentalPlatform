@@ -1,8 +1,11 @@
 ﻿@page
+@using NuGet.Protocol
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model CarRentalPlatform.Pages.AdminPage.Car.DeleteModel
 
 @{
     ViewData["Title"] = "Delete";
+    Layout = "Shared/_LayoutDashboard";
 }
 
 <h1>Delete</h1>
@@ -49,4 +52,9 @@
         <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-page="./Index">Back to List</a>
     </form>
+    <script>
+    	if (@Model.IsLogin.ToJson() === false) {
+    		window.location.href = "/login";	
+    	}
+    </script>
 </div>
