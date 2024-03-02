@@ -7,18 +7,14 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using BuildObject.Entities;
 using DataAccess.DataAccessLayer;
+using Repository.Repository.Abstract;
+using Repository.Repository;
 
 namespace CarRentalPlatform.Pages.AdminPage.Account
 {
     public class CreateModel : PageModel
     {
-        private readonly AccountDao _accountDao;
-
-
-        public CreateModel( AccountDao accountDao)
-        {
-            _accountDao = accountDao;
-        }
+        private readonly IAccountRepository _accountRepository = new AccountRepository();
 
         public IActionResult OnGet()
         {
@@ -27,21 +23,20 @@ namespace CarRentalPlatform.Pages.AdminPage.Account
 
         [BindProperty]
         public AccountEntity AccountEntity { get; set; } = default!;
-        
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
             try
             {
-                var account = await _accountDao.GetAll();
-                if (account == null || AccountEntity == null)
+                var accounts = await _accountRepository.GetAllAccounts();
+                if (accounts == null || AccountEntity == null)
                 {
                     return Page();
                 }
                 AccountEntity.WalletBalance = 0;
                 AccountEntity.Role = 3;
-                await _accountDao.Create(AccountEntity);
+                await _accountRepository.CreateAccount(AccountEntity);
 
                 return RedirectToPage("./Index");
             }

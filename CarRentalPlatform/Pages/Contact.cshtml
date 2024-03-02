@@ -1,4 +1,6 @@
 ﻿@page "/contact"
+@using NuGet.Protocol
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model CarRentalPlatform.Pages.Contact
 
 @{
@@ -17,64 +19,69 @@
       </div>
     </section>
 
-    <section class="ftco-section contact-section">
-      <div class="container">
-        <div class="row d-flex mb-5 contact-info">
-        	<div class="col-md-4">
-        		<div class="row mb-5">
-		          <div class="col-md-12">
-		          	<div class="border w-100 p-4 rounded mb-2 d-flex">
-			          	<div class="icon mr-3">
-			          		<span class="icon-map-o"></span>
-			          	</div>
-			            <p><span>Address:</span> Lô E2a-7, Đường D1, Đ. D1, Long Thạnh Mỹ, Thành Phố Thủ Đức, Thành phố Hồ Chí Minh</p>
-			          </div>
-		          </div>
-		          <div class="col-md-12">
-		          	<div class="border w-100 p-4 rounded mb-2 d-flex">
-			          	<div class="icon mr-3">
-			          		<span class="icon-mobile-phone"></span>
-			          	</div>
-			            <p><span>Phone:</span> <a href="tel://1234567920">+84 847 919 292</a></p>
-			          </div>
-		          </div>
-		          <div class="col-md-12">
-		          	<div class="border w-100 p-4 rounded mb-2 d-flex">
-			          	<div class="icon mr-3">
-			          		<span class="icon-envelope-o"></span>
-			          	</div>
-			            <p><span>Email:</span> <a href="mailto:info@yoursite.com">nguyenhdtse172921@fpt.edu.vn</a></p>
-			          </div>
-		          </div>
-		        </div>
-          </div>
-          <div class="col-md-8 block-9 mb-md-5">
-            <form action="#" class="bg-light p-5 contact-form">
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Your Name">
-              </div>
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Your Email">
-              </div>
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Subject">
-              </div>
-              <div class="form-group">
-                <textarea name="" id="" cols="30" rows="7" class="form-control" placeholder="Message"></textarea>
-              </div>
-              <div class="form-group">
-                <input type="submit" value="Send Message" class="btn btn-primary py-3 px-5">
-              </div>
-            </form>
+<section class="ftco-section contact-section">
+	<div class="container">
+		<div class="row d-flex mb-5 contact-info">
+			<div class="col-md-4">
+				<div class="row mb-5">
+					<div class="col-md-12">
+						<div class="border w-100 p-4 rounded mb-2 d-flex">
+							<div class="icon mr-3">
+								<span class="icon-map-o"></span>
+							</div>
+							<p><span>Address:</span> Lô E2a-7, Đường D1, Đ. D1, Long Thạnh Mỹ, Thành Phố Thủ Đức, Thành phố Hồ Chí Minh</p>
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="border w-100 p-4 rounded mb-2 d-flex">
+							<div class="icon mr-3">
+								<span class="icon-mobile-phone"></span>
+							</div>
+							<p><span>Phone:</span> <a href="tel://1234567920">+84 847 919 292</a></p>
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="border w-100 p-4 rounded mb-2 d-flex">
+							<div class="icon mr-3">
+								<span class="icon-envelope-o"></span>
+							</div>
+							<p><span>Email:</span> <a href="mailto:info@yoursite.com">nguyenhdtse172921@fpt.edu.vn</a></p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-8 block-9 mb-md-5">
+				<form action="#" class="bg-light p-5 contact-form">
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Your Name">
+					</div>
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Your Email">
+					</div>
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Subject">
+					</div>
+					<div class="form-group">
+						<textarea name="" id="" cols="30" rows="7" class="form-control" placeholder="Message"></textarea>
+					</div>
+					<div class="form-group">
+						<input type="submit" value="Send Message" class="btn btn-primary py-3 px-5">
+					</div>
+				</form>
           
-          </div>
-        </div>
-        <div class="row justify-content-center">
-        	<div class="col-md-12">
-		        <div class="bg-white">
-			        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.6099415304834!2d106.80730807451796!3d10.841132857997929!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752731176b07b1%3A0xb752b24b379bae5e!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBGUFQgVFAuIEhDTQ!5e0!3m2!1svi!2s!4v1708757021963!5m2!1svi!2s" width="1150" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-		        </div>
-        	</div>
-        </div>
-      </div>
-    </section>
+			</div>
+		</div>
+		<div class="row justify-content-center">
+			<div class="col-md-12">
+				<div class="bg-white">
+					<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.6099415304834!2d106.80730807451796!3d10.841132857997929!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752731176b07b1%3A0xb752b24b379bae5e!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBGUFQgVFAuIEhDTQ!5e0!3m2!1svi!2s!4v1708757021963!5m2!1svi!2s" width="1150" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<script>
+	if (@Model.IsLogin.ToJson() === false) {
+		window.location.href = "/login";	
+	}
+</script>

@@ -10,19 +10,31 @@ using System.Threading.Tasks;
 namespace DataAccess.DataAccessLayer
 {
 
-    public class CarEntityDAO : BaseDao<CarEntity>
+    public class CarDAO : BaseDao<CarEntity>
     {
-        private readonly ApplicationDbContext _context;
-
-        public CarEntityDAO()
+        private static CarDAO instance = null;
+        private static readonly object instanceLock = new object();
+        private CarDAO() { }
+        public static CarDAO Instance
         {
-            _context = new ApplicationDbContext();
+            get
+            {
+                lock (instanceLock)
+                {
+                    if (instance == null)
+                    {
+                        instance = new CarDAO();
+                    }
+                }
+                return instance;
+            }
         }
         public async Task<IList<CarEntity>> GetCarsAsync()
         {
             try
             {
-                return await _context.Cars
+                var _dbContext = new ApplicationDbContext();
+                return await _dbContext.Cars
                 .Include(c => c.Brand)
                 .Include(c => c.Location).ToListAsync(); 
             }
@@ -31,11 +43,12 @@ namespace DataAccess.DataAccessLayer
                 throw new Exception($"Error: {ex.Message}" + ex);
             }
         }
-        public async Task<CarEntity> GetCarsByIdAsync(int? id)
+        public async Task<CarEntity?> GetCarsByIdAsync(int? id)
         {
             try
             {
-                return await _context.Cars
+                var _dbContext = new ApplicationDbContext();
+                return await _dbContext.Cars
                 .Include(c => c.Brand)
                 .Include(c => c.Location)
                 .Where(i => i.Id == id).FirstOrDefaultAsync();

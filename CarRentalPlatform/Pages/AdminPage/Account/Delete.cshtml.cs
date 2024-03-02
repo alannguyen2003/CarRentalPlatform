@@ -7,33 +7,29 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BuildObject.Entities;
 using DataAccess.DataAccessLayer;
+using Repository.Repository.Abstract;
+using Repository.Repository;
 
 namespace CarRentalPlatform.Pages.AdminPage.Account
 {
     public class DeleteModel : PageModel
     {
-        private readonly AccountDao _accountDao;
+        private readonly IAccountRepository _accountRepository = new AccountRepository();
 
-
-        public DeleteModel( AccountDao accountDao)
-        {
-            _accountDao = accountDao;
-        }
-
-        [BindProperty]
-      public AccountEntity AccountEntity { get; set; } = default!;
+     [BindProperty]
+    public AccountEntity AccountEntity { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             try
             {
-                var accounts = await _accountDao.GetAll();
+                var accounts = await _accountRepository.GetAllAccounts();
                 if (id == null || accounts == null)
                 {
                     return NotFound();
                 }
 
-                var accountentity = await _accountDao.GetEntityById((int)id);
+                var accountentity = await _accountRepository.GetAccountById((int)id);
 
                 if (accountentity == null)
                 {
@@ -52,17 +48,17 @@ namespace CarRentalPlatform.Pages.AdminPage.Account
         {
             try
             {
-                var getaccounts = _accountDao.GetAll();
+                var getaccounts = _accountRepository.GetAllAccounts();
                 if (id == null || getaccounts == null)
                 {
                     return NotFound();
                 }
-                var accountentity = await _accountDao.GetEntityById((int)id);
+                var accountentity = await _accountRepository.GetAccountById((int)id);
 
                 if (accountentity != null)
                 {
                     AccountEntity = accountentity;
-                    await _accountDao.DeleteEntity(AccountEntity);
+                    await _accountRepository.DeleteAccount(AccountEntity);
                 }
 
                 return RedirectToPage("./Index");

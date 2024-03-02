@@ -8,31 +8,29 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BuildObject.Entities;
 using DataAccess.DataAccessLayer;
+using Repository.Repository.Abstract;
+using Repository.Repository;
 
 namespace CarRentalPlatform.Pages.AdminPage.Account
 {
     public class EditModel : PageModel
     {
-        private readonly AccountDao _accountDao;
-        public EditModel(AccountDao accountDao)
-        {
-            _accountDao = accountDao;
-        }
+        private readonly IAccountRepository _accountRepository = new AccountRepository();
 
         [BindProperty]
-        public AccountEntity AccountEntity { get; set; } = default!;
+        public AccountEntity AccountEntity { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             try
             {
-                var accounts = await _accountDao.GetAll();
+                var accounts = await _accountRepository.GetAllAccounts();
                 if (id == null || accounts == null)
                 {
                     return NotFound();
                 }
 
-                var accountentity = await _accountDao.GetEntityById((int)id);
+                var accountentity = await _accountRepository.GetAccountById((int)id);
                 if (accountentity == null)
                 {
                     return NotFound();
@@ -54,13 +52,13 @@ namespace CarRentalPlatform.Pages.AdminPage.Account
             
             try
             {
-                var Account = await _accountDao.GetEntityById(AccountEntity.Id);
+                var Account = await _accountRepository.GetAccountById(AccountEntity.Id);
                 if (Account == null)
                 {
                     throw new Exception();
                 }
                 AccountEntity = Account;
-                await _accountDao.UpdateEntity(AccountEntity);
+                await _accountRepository.UpdateAccount(AccountEntity);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -79,7 +77,7 @@ namespace CarRentalPlatform.Pages.AdminPage.Account
 
         private async Task<bool> AccountEntityExists(int id)
         {
-          return (await _accountDao.GetEntityById(id)) != null;
+          return (await _accountRepository.GetAccountById(id)) != null;
         }
         
 }

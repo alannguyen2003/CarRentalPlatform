@@ -8,31 +8,27 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BuildObject.Entities;
 using DataAccess.DataAccessLayer;
+using Repository.Repository.Abstract;
+using Repository.Repository;
 
 namespace CarRentalPlatform.Pages.AdminPage.Car
 {
     public class EditModel : PageModel
     {
-        private readonly CarEntityDAO _entityDAO;
-
-
-        public EditModel(CarEntityDAO entityDAO)
-        {
-            _entityDAO = entityDAO;
-        }
+        private readonly ICarRepository _carRepository = new CarRepository();
 
         [BindProperty]
-        public CarEntity CarEntity { get; set; } = default!;
+        public CarEntity CarEntity { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            var cars = _entityDAO.GetAll();
+            var cars = _carRepository.GetAllCars();
             if (id == null || cars == null)
             {
                 return NotFound();
             }
 
-            var carentity =  await _entityDAO.GetCarsByIdAsync(id);
+            var carentity =  await _carRepository.GetCarById(id);
             if (carentity == null)
             {
                 return NotFound();
@@ -54,7 +50,7 @@ namespace CarRentalPlatform.Pages.AdminPage.Car
 
             try
             {
-                await _entityDAO.UpdateEntity(CarEntity);
+                await _carRepository.UpdateCar(CarEntity);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -73,7 +69,7 @@ namespace CarRentalPlatform.Pages.AdminPage.Car
 
         private async Task<bool> CarEntityExists(int id)
         {
-          return (await _entityDAO.GetEntityById(id)) != null;
+          return (await _carRepository.GetCarById(id)) != null;
         }
     }
 }

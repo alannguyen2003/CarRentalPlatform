@@ -1,4 +1,5 @@
 ﻿@page "/car"
+@using NuGet.Protocol
 @model CarRentalPlatform.Pages.CarSingle
 
 @{
@@ -355,4 +356,10 @@
         </div>
     	</div>
     </section>
+    
+    <script>
+    	if (@Model.IsLogin.ToJson() === false) {
+    		window.location.href = "/login";	
+    	}
+    </script>
     
