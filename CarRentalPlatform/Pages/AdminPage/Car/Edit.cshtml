@@ -1,8 +1,11 @@
 ﻿@page
+@using NuGet.Protocol
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model CarRentalPlatform.Pages.AdminPage.Car.EditModel
 
 @{
     ViewData["Title"] = "Edit";
+    Layout = "Shared/_LayoutDashboard";
 }
 
 <h1>Edit</h1>
@@ -53,6 +56,11 @@
     <a asp-page="./Index">Back to List</a>
 </div>
 
+<script>
+	if (@Model.IsLogin.ToJson() === false) {
+		window.location.href = "/login";	
+	}
+</script>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

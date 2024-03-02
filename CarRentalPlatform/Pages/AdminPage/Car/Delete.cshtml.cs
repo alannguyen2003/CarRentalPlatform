@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BuildObject.Entities;
+using CarRentalPlatform.Configuration;
 using DataAccess.DataAccessLayer;
 using Repository.Repository.Abstract;
 using Repository.Repository;
@@ -18,9 +19,12 @@ namespace CarRentalPlatform.Pages.AdminPage.Car
 
         [BindProperty]
         public CarEntity CarEntity { get; set; }
-
+        [BindProperty]
+        public bool IsLogin { get; set; }
+        
         public async Task<IActionResult> OnGetAsync(int? id)
         {
+            IsLogin = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "isLogin");
             var cars = _carRepository.GetAllCars();
             if (id == null || cars == null)
             {
@@ -52,7 +56,7 @@ namespace CarRentalPlatform.Pages.AdminPage.Car
 
             if (carentity != null)
             {
-                CarEntity = carentity;
+                CarEntity.Id = carentity.Id;
                 await _carRepository.DeleteCar(CarEntity);
             }
 
