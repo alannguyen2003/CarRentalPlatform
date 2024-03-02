@@ -14,16 +14,9 @@ namespace CarRentalPlatform.Pages.AdminPage.Car
 {
     public class CreateModel : PageModel
     {
-        private readonly ICarRepository _carRepository;
-        private readonly IBrandRepository _brandRepository;
-        private readonly ILocationRepository _locationRepository;
-
-        public CreateModel(CarRepository carRepository, BrandRepository brandRepository, LocationRepository locationRepository)
-        {
-            _carRepository = carRepository;
-            _brandRepository = brandRepository;
-            _locationRepository = locationRepository;
-        }
+        private readonly ICarRepository _carRepository = new CarRepository();
+        private readonly IBrandRepository _brandRepository = new BrandRepository();
+        private readonly ILocationRepository _locationRepository = new LocationRepository();
          
         public async Task<IActionResult> OnGet()
         {

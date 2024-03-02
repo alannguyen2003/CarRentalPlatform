@@ -14,13 +14,7 @@ namespace CarRentalPlatform.Pages.AdminPage.Account
 {
     public class DeleteModel : PageModel
     {
-        private readonly IAccountRepository _accountRepository;
-
-
-        public DeleteModel(AccountRepository accountRepository)
-        {
-            _accountRepository = accountRepository;
-        }
+        private readonly IAccountRepository _accountRepository = new AccountRepository();
 
      [BindProperty]
     public AccountEntity AccountEntity { get; set; } = default!;

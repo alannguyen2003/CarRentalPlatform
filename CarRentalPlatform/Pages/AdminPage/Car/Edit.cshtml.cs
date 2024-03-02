@@ -15,13 +15,7 @@ namespace CarRentalPlatform.Pages.AdminPage.Car
 {
     public class EditModel : PageModel
     {
-        private readonly ICarRepository _carRepository;
-
-
-        public EditModel(CarRepository carRepository)
-        {
-            _carRepository = carRepository;
-        }
+        private readonly ICarRepository _carRepository = new CarRepository();
 
         [BindProperty]
         public CarEntity CarEntity { get; set; }

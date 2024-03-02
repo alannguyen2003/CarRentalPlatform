@@ -14,14 +14,9 @@ namespace CarRentalPlatform.Pages.AdminPage.Account
 {
     public class IndexModel : PageModel
     {
-        private readonly IAccountRepository _accountRepository;
+        private readonly IAccountRepository _accountRepository = new AccountRepository();
 
-        public IndexModel(AccountRepository accountRepository)
-        {
-            _accountRepository = accountRepository;
-        }
-
-        public IList<AccountEntity> AccountEntity { get;set; } = default!;
+        public IList<AccountEntity> AccountEntity { get;set; }
 
         public async Task OnGetAsync()
         {

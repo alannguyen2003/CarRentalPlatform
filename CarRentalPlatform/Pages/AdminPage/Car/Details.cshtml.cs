@@ -14,14 +14,9 @@ namespace CarRentalPlatform.Pages.AdminPage.Car
 {
     public class DetailsModel : PageModel
     {
-        private readonly ICarRepository _carRepository;
+        private readonly ICarRepository _carRepository = new CarRepository();
 
-        public DetailsModel(CarRepository carRepository)
-        {
-            _carRepository = carRepository;
-        }
-
-        public CarEntity CarEntity { get; set; }
+        public CarEntity? CarEntity { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {

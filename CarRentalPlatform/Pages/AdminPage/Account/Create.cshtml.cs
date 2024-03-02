@@ -14,13 +14,7 @@ namespace CarRentalPlatform.Pages.AdminPage.Account
 {
     public class CreateModel : PageModel
     {
-        private readonly IAccountRepository _accountRepository;
-
-
-        public CreateModel(AccountRepository accountRepository)
-        {
-            _accountRepository = accountRepository;
-        }
+        private readonly IAccountRepository _accountRepository = new AccountRepository();
 
         public IActionResult OnGet()
         {

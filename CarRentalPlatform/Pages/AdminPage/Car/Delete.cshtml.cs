@@ -14,13 +14,7 @@ namespace CarRentalPlatform.Pages.AdminPage.Car
 {
     public class DeleteModel : PageModel
     {
-        private readonly ICarRepository _carRepository;
-
-
-        public DeleteModel(CarRepository carRepository)
-        {
-            _carRepository = carRepository;
-        }
+        private readonly ICarRepository _carRepository = new CarRepository();
 
         [BindProperty]
         public CarEntity CarEntity { get; set; }

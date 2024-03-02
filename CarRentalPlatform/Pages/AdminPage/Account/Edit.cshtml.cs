@@ -15,14 +15,10 @@ namespace CarRentalPlatform.Pages.AdminPage.Account
 {
     public class EditModel : PageModel
     {
-        private readonly IAccountRepository _accountRepository;
-        public EditModel(AccountRepository accountRepository)
-        {
-            _accountRepository = accountRepository;
-        }
+        private readonly IAccountRepository _accountRepository = new AccountRepository();
 
         [BindProperty]
-        public AccountEntity AccountEntity { get; set; } = default!;
+        public AccountEntity AccountEntity { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {

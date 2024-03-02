@@ -14,12 +14,7 @@ namespace CarRentalPlatform.Pages.AdminPage.Car
 {
     public class IndexModel : PageModel
     {
-        private readonly ICarRepository _carRepository;
-
-        public IndexModel(CarRepository carRepository)
-        {
-            _carRepository = carRepository;
-        }
+        private readonly ICarRepository _carRepository = new CarRepository();
 
         public IList<CarEntity> CarEntity { get;set; }
 

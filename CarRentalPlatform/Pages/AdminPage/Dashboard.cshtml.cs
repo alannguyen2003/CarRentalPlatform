@@ -15,14 +15,9 @@ namespace CarRentalPlatform.Pages.AdminPage
     public class DashboardModel : PageModel
     {
 
-        private readonly ICarRepository _carRepository;
+        private readonly ICarRepository _carRepository = new CarRepository();
         
-        private readonly IAccountRepository _accountRepository;
-        public DashboardModel(CarRepository carRepository, AccountRepository accountRepository)
-        {
-            _carRepository = carRepository;
-            _accountRepository = accountRepository;
-        }
+        private readonly IAccountRepository _accountRepository = new AccountRepository();
 
         public IList<AccountEntity> AccountEntity { get;set; }
         public IList<CarEntity> CarEntity { get; set; }
