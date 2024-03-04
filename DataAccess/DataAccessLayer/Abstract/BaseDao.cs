@@ -15,6 +15,7 @@ public class BaseDao<T> where T : class
     {
         await _context.Set<T>().AddAsync(entity);
         await _context.SaveChangesAsync();
+        _context.Entry(entity).State = EntityState.Detached;
     }
 
     public async Task<IQueryable<T>> GetAll()

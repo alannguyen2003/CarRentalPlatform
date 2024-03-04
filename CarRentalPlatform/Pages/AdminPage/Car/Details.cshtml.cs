@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BuildObject.Entities;
+using CarRentalPlatform.Configuration;
 using DataAccess.DataAccessLayer;
 using Repository.Repository.Abstract;
 using Repository.Repository;
@@ -18,6 +19,8 @@ namespace CarRentalPlatform.Pages.AdminPage.Car
 
         public CarEntity? CarEntity { get; set; }
 
+        [BindProperty]
+        public bool IsLogin { get; set; }
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             var cars = await _carRepository.GetAllCars();
@@ -35,6 +38,7 @@ namespace CarRentalPlatform.Pages.AdminPage.Car
             {
                 CarEntity = carEntity;
             }
+            IsLogin = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "isLogin");
             return Page();
         }
     }

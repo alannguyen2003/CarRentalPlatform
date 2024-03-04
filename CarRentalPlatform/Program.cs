@@ -16,7 +16,7 @@ builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30);
 });
-builder.Services.AddDependence(builder.Configuration);
+builder.Services.AddDependence();
 
 builder.Services.AddMvcCore();
 builder.Services.AddHttpContextAccessor();
