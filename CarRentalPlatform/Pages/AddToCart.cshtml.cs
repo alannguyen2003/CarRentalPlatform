@@ -3,13 +3,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Repository.Repository;
+using Repository.Repository.Abstract;
 
 namespace CarRentalPlatform.Pages
 {
     public class AddToCartModel : PageModel
     {
-        private readonly CarRepository _carRepo;
-        private readonly BookingRepository _bookingRepo;
+        private readonly ICarRepository _carRepo;
+        private readonly IBookingRepository _bookingRepo;
 
         public AddToCartModel(CarRepository carRepo, BookingRepository bookingRepo)
         {
@@ -42,6 +43,7 @@ namespace CarRentalPlatform.Pages
         public BookingEntity BookingEntity { get; set; }
         public async Task<IActionResult> OnPostAsync()
         {
+            //BookingEntity.CustomerId = 
             await _bookingRepo.CreateBooking(BookingEntity);
             return Page();
         }

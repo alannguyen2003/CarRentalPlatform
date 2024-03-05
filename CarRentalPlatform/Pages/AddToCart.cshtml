@@ -48,17 +48,15 @@
     <div class="col-md-4">
         <form method="post" asp-page="./ShoppingCart">
             <input type="hidden" name="CarId" value="@Model.CarEntity.Id" />
-            <div>
-                <label>Start Date:</label>
-                <input type="date" name="StartDate" required />
+            <div class="form-group">
+                <label asp-for="BookingEntity.StartDate" class="control-label">Start Date</label>
+                <input asp-for="BookingEntity.StartDate" class="form-control" type="date"/>
+                <span asp-validation-for="BookingEntity.StartDate" class="text-danger"></span>
             </div>
-            <div>
-                <label>Account Name:</label>
-                <input type="text" name="AccountName" required />
-            </div>
-            <div>
-                <label>Driver License:</label>
-                <input type="text" name="DriverLicense" required />
+            <div class="form-group">
+                <label asp-for="BookingEntity.EndDate" class="control-label">End Date</label>
+                <input asp-for="BookingEntity.EndDate" class="form-control" type="date" />
+                <span asp-validation-for="BookingEntity.EndDate" class="text-danger"></span>
             </div>
             <button type="submit">Add to Cart</button>
         </form>
