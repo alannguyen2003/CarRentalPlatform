@@ -1,31 +1,33 @@
 using BuildObject.Entities;
-using DataAccess.DataAccessLayer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Repository.Repository;
 
 namespace CarRentalPlatform.Pages
 {
     public class AddToCartModel : PageModel
     {
-        private readonly CarEntityDAO _entityDAO;
+        private readonly CarRepository _carRepo;
+        private readonly BookingRepository _bookingRepo;
 
-        public AddToCartModel(CarEntityDAO entityDAO)
+        public AddToCartModel(CarRepository carRepo, BookingRepository bookingRepo)
         {
-            _entityDAO = entityDAO;
+            _carRepo = carRepo;
+            _bookingRepo = bookingRepo;
         }
 
         public CarEntity CarEntity { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            var cars = await _entityDAO.GetAll();
+            var cars = await _carRepo.GetAllCars();
             if (id == null || cars == null)
             {
                 return NotFound();
             }
 
-            var carentity = await _entityDAO.GetCarsByIdAsync(id);
+            var carentity = await _carRepo.GetCarById(id);
             if (carentity == null)
             {
                 return NotFound();
@@ -34,6 +36,13 @@ namespace CarRentalPlatform.Pages
             {
                 CarEntity = carentity;
             }
+            return Page();
+        }
+
+        public BookingEntity BookingEntity { get; set; }
+        public async Task<IActionResult> OnPostAsync()
+        {
+            await _bookingRepo.CreateBooking(BookingEntity);
             return Page();
         }
     }

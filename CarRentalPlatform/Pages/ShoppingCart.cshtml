@@ -8,23 +8,22 @@
 <table class="table">
     <thead>
         <tr>
-            <th>Car</th>
-            <th>Start Date</th>
-            <th>Account name</th>
-            <th>Driver Licence</th>
+            <th>@Html.DisplayNameFor(model => model.BookingEntities[0].StartDate)</th>
+            <th>@Html.DisplayNameFor(model => model.BookingEntities[0].EndDate)</th>
+            <th>@Html.DisplayNameFor(model => model.BookingEntities[0].DepositAmount)</th>
+            <th>@Html.DisplayNameFor(model => model.BookingEntities[0].TotalAmount)</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.CartItems)
+        @foreach (var booking in Model.BookingEntities)
         {
             <tr>
-                <td>@item.Car.Model</td>
-                <td>@item.StartDate</td>
-                <td>@item.AccountName</td>
-                <td>@item.DriverLicense</td>
+                <td> @Html.DisplayFor(modelItem => booking.StartDate)</td>
+                <td>@Html.DisplayFor(modelItem => booking.EndDate)</td>
+                <td>@Html.DisplayFor(modelItem => booking.DepositAmount)</td>
+                <td>@Html.DisplayFor(modelItem => booking.TotalAmount)</td>
+                <td><a asp-page="./BookingDetail" asp-route-id="@booking.Id">Details</a>td>
             </tr>
         }
     </tbody>
 </table>
-
-<a asp-page="">Proceed to Checkout</a>

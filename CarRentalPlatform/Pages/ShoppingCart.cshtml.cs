@@ -1,43 +1,30 @@
 using BuildObject.Entities;
+using CarRentalPlatform.Configuration;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Repository.Repository;
+using Repository.Repository.Abstract;
 using System.Text.Json;
 
 namespace CarRentalPlatform.Pages
 {
     public class ShoppingCartModel : PageModel
     {
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IBookingRepository _bookingRepository;
 
-        public ShoppingCartModel(IHttpContextAccessor httpContextAccessor)
+        public ShoppingCartModel(IBookingRepository bookingRepository)
         {
-            _httpContextAccessor = httpContextAccessor;
+            _bookingRepository = bookingRepository;
         }
 
-        public List<CartItem> CartItems
+       public IList<BookingEntity> BookingEntities { get; set; }
+        public bool IsLogin { get; set; }
+        public async Task<IActionResult> OnGetAsync()
         {
-            get
-            {
-                var sessionData = _httpContextAccessor.HttpContext.Session.GetString("CartItems");
-                return sessionData != null ? JsonSerializer.Deserialize<List<CartItem>>(sessionData) : new List<CartItem>();
-            }
-            set
-            {
-                _httpContextAccessor.HttpContext.Session.SetString("CartItems", JsonSerializer.Serialize(value));
-            }
-        }
-
-        public class CartItem
-        {
-            public CarEntity Car { get; set; }
-            public string StartDate { get; set; }
-            public string AccountName { get; set; }
-            public string DriverLicense { get; set; }
-        }
-
-        public void OnGet()
-        {
+            var booking = await _bookingRepository.GetAllBookings();
+            IsLogin = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "isLogin");
+            return Page();
         }
     }
 }
