@@ -49,6 +49,11 @@
     <div class="col-md-4">
         <form method="post">
             <input type="hidden" name="CarId" value="@Model.CarEntity.Id"/>
+            <input type="hidden" name="CarEntity.Model" value="@Model.CarEntity.Model" />
+            <input type="hidden" name="CarEntity.LicensePlate" value="@Model.CarEntity.LicensePlate" />
+            <input type="hidden" name="CarEntity.Status" value="@Model.CarEntity.Status" />
+            <input type="hidden" name="CarEntity.BrandId" value="@Model.CarEntity.BrandId" />
+            <input type="hidden" name="CarEntity.LocationId" value="@Model.CarEntity.LocationId" />
             <div class="form-group">
                 <label asp-for="BookingEntity.StartDate" class="control-label">Start Date</label>
                 <input asp-for="BookingEntity.StartDate" class="form-control" type="date"/>
@@ -59,11 +64,74 @@
                 <input asp-for="BookingEntity.EndDate" class="form-control" type="date" />
                 <span asp-validation-for="BookingEntity.EndDate" class="text-danger"></span>
             </div>
-            @* <div class="form-group">
+            <!-- Input fields for AccountEntity properties -->
+            <div class="form-group">
+                <label asp-for="BookingEntity.Customer.FullName" class="control-label">Full Name</label>
+                <input asp-for="BookingEntity.Customer.FullName" class="form-control" type="text" />
+                <span asp-validation-for="BookingEntity.Customer.FullName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BookingEntity.Customer.LastName" class="control-label">Last Name</label>
+                <input asp-for="BookingEntity.Customer.LastName" class="form-control" type="text" />
+                <span asp-validation-for="BookingEntity.Customer.LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BookingEntity.Customer.Email" class="control-label">Email</label>
+                <input asp-for="BookingEntity.Customer.Email" class="form-control" type="email" />
+                <span asp-validation-for="BookingEntity.Customer.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BookingEntity.Customer.PhoneNumber" class="control-label">Phone Number</label>
+                <input asp-for="BookingEntity.Customer.PhoneNumber" class="form-control" type="text" />
+                <span asp-validation-for="BookingEntity.Customer.PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BookingEntity.Customer.Gender" class="control-label">Gender</label>
+                <select asp-for="BookingEntity.Customer.Gender" class="form-control">
+                    <option value="true">Male</option>
+                    <option value="false">Female</option>
+                </select>
+                <span asp-validation-for="BookingEntity.Customer.Gender" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BookingEntity.Customer.Password" class="control-label">Password</label>
+                <input asp-for="BookingEntity.Customer.Password" class="form-control" type="password" />
+                <span asp-validation-for="BookingEntity.Customer.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BookingEntity.Customer.WalletBalance" class="control-label">Wallet Balance</label>
+                <input asp-for="BookingEntity.Customer.WalletBalance" class="form-control" type="number" />
+                <span asp-validation-for="BookingEntity.Customer.WalletBalance" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BookingEntity.Customer.Role" class="control-label">Role</label>
+                <select asp-for="BookingEntity.Customer.Role" class="form-control">
+                    <option value="1">Admin</option>
+                    <option value="2">Employee</option>
+                    <option value="3">Customer</option>
+                </select>
+                <span asp-validation-for="BookingEntity.Customer.Role" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BookingEntity.Customer.DriverLicense" class="control-label">Driver's License</label>
+                <input asp-for="BookingEntity.Customer.DriverLicense" class="form-control" type="text" />
+                <span asp-validation-for="BookingEntity.Customer.DriverLicense" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BookingEntity.Customer.DriverLicenseIssueDate" class="control-label">Driver's License Issue Date</label>
+                <input asp-for="BookingEntity.Customer.DriverLicenseIssueDate" class="form-control" type="date" />
+                <span asp-validation-for="BookingEntity.Customer.DriverLicenseIssueDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="BookingEntity.TotalAmount" class="control-label">Total Amount</label>
-                <input asp-for="BookingEntity.TotalAmount" class="form-control" type="text"/>
+                <input asp-for="BookingEntity.TotalAmount" class="form-control" type="text" />
                 <span asp-validation-for="BookingEntity.TotalAmount" class="text-danger"></span>
-            </div> *@ 
+            </div>
+            <div class="form-group">
+                <label asp-for="BookingEntity.DepositAmount" class="control-label">Total Amount</label>
+                <input asp-for="BookingEntity.DepositAmount" class="form-control" type="text" />
+                <span asp-validation-for="BookingEntity.DepositAmount" class="text-danger"></span>
+            </div>
             <button type="submit">Add to Cart</button>
         </form>
     </div>

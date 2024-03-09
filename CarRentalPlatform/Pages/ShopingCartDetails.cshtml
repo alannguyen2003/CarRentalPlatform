@@ -1,8 +1,32 @@
 ﻿@page 
 @model CarRentalPlatform.Pages.ShopingCartDetailsModel
 @{
-    ViewData["Title"] = "Shoping Cart Details"
+    ViewData["Title"] = "Shoping Cart Details";
     Layout = "Shared/_LayoutDashboard";
 }
 
+<h1>Details</h1>
 
+<div>
+    <h4>CarEntity</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Booking.StartDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Booking.EndDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Booking.TotalAmount)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Booking.DepositAmount)
+        </dd>
+    </dl>
+</div>
+@* <script>
+    if (@Model.IsLogin.ToJson() === false) {
+        window.location.href = "/login";
+    }
+</script> *@

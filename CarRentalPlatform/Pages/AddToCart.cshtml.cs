@@ -12,7 +12,7 @@ namespace CarRentalPlatform.Pages
         private readonly ICarRepository _carRepo;
         private readonly IBookingRepository _bookingRepo;
 
-        public AddToCartModel(CarRepository carRepo, BookingRepository bookingRepo)
+        public AddToCartModel(ICarRepository carRepo, IBookingRepository bookingRepo)
         {
             _carRepo = carRepo;
             _bookingRepo = bookingRepo;
@@ -43,7 +43,11 @@ namespace CarRentalPlatform.Pages
         public BookingEntity BookingEntity { get; set; }
         public async Task<IActionResult> OnPostAsync()
         {
-            //BookingEntity.CustomerId = 
+            if (BookingEntity == null)
+            {
+                throw new ArgumentNullException(nameof(BookingEntity), "Entity cannot be null.");
+            }
+            //BookingEntity.CustomerId =
             await _bookingRepo.CreateBooking(BookingEntity);
             return Page();
         }
