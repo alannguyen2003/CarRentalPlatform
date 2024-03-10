@@ -6,19 +6,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repository.Repository
 {
     public class LocationRepository : ILocationRepository
     {
-        public Task CreateLocation(LocationEntity entity) => LocationDAO.Instance.Create(entity);
+        private readonly LocationDAO _locationDao;
 
-        public Task<IList<LocationEntity>> GetAllLocations() => LocationDAO.Instance.GetLocationsAsync();   
+        public LocationRepository()
+        {
+            _locationDao = new LocationDAO();
+        }
+        public Task CreateLocation(LocationEntity entity) => _locationDao.Create(entity);
 
-        public Task<LocationEntity?> GetLocationById(int id) => LocationDAO.Instance.GetEntityById(id);
+        public async Task<List<LocationEntity>> GetAllLocations() => await _locationDao.GetAll().Result.ToListAsync();   
 
-        public Task UpdateLocation(LocationEntity entity) => LocationDAO.Instance.UpdateEntity(entity);
+        public Task<LocationEntity?> GetLocationById(int id) => _locationDao.GetEntityById(id);
 
-        public Task DeleteLocation(LocationEntity entity) => LocationDAO.Instance.DeleteEntity(entity);
+        public Task UpdateLocation(LocationEntity entity) => _locationDao.UpdateEntity(entity);
+
+        public Task DeleteLocation(LocationEntity entity) => _locationDao.DeleteEntity(entity);
     }
 }

@@ -13,7 +13,7 @@ public class AccountEntity : BaseEntity
     
     [Required]
     [StringLength(100)]
-    public string? FullName { get; set; }
+    public string? FirstName { get; set; }
     
     [Required]
     [StringLength(100)]
@@ -35,7 +35,7 @@ public class AccountEntity : BaseEntity
     //3 -- CUSTOMER
     public int Role { get; set; }
     
-    [StringLength(10)]
+    [StringLength(12)]
     public string DriverLicense { get; set; }
     public DateTime DriverLicenseIssueDate { get; set; }
 }

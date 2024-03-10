@@ -6,19 +6,73 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataTransferLayer.DataTransfer;
+using DataTransferLayer.Page;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repository.Repository
 {
     public class CarRepository : ICarRepository
     {
-        public Task CreateCar(CarEntity entity) => CarDAO.Instance.Create(entity);
+        private readonly CarDAO _carDao;
 
-        public Task<IList<CarEntity>> GetAllCars() => CarDAO.Instance.GetCarsAsync();
+        public CarRepository()
+        {
+            _carDao = new CarDAO();
+        }
+        public Task CreateCar(CarEntity entity) => _carDao.Create(entity);
 
-        public Task<CarEntity?> GetCarById(int? id) => CarDAO.Instance.GetCarsByIdAsync(id);
+        public Task<CarEntity?> GetCarById(int? id) => _carDao.GetCarsByIdAsync(id);
 
-        public Task UpdateCar(CarEntity entity) => CarDAO.Instance.UpdateEntity(entity);
+        public Task<List<CarEntity>> GetAllCars() => _carDao.GetAll().Result.ToListAsync();
+        public async Task<CarCategoryPage> GetDataCarCategoryPage()
+        {
+            var cars = _carDao.GetCarsAsync().Result;
+            var carCategoryPage = new CarCategoryPage()
+            {
+                CurrentPage = 1
+            };
+            foreach (var item in cars)
+            {
+                var car = new CarDto()
+                {
+                    Id = item.Id,
+                    Model = item.Model,
+                    LicensePlate = item.LicensePlate,
+                    Description = item.Description,
+                    ThumbnailImage = item.ThumbnailImage,
+                    PricePerDay = item.PricePerDay,
+                    PricePerHour = item.PricePerHour,
+                    PricePerMonth = item.PricePerMonth,
+                    Brand = item.Brand.BrandName,
+                    Location = item.Location.Address
+                };
+                carCategoryPage.Cars.Add(car);
+            }
+            return carCategoryPage;
+        }
 
-        public Task DeleteCar(CarEntity entity) => CarDAO.Instance.DeleteEntity(entity);
+        public async Task<CarDto?> GetCarByIdDto(int? id)
+        {
+            var car = _carDao.GetCarsByIdAsync(id).Result;
+            var carDto = new CarDto()
+            {
+                Id = car.Id,
+                Model = car.Model,
+                LicensePlate = car.LicensePlate,
+                Description = car.Description,
+                ThumbnailImage = car.ThumbnailImage,
+                PricePerDay = car.PricePerDay,
+                PricePerHour = car.PricePerHour,
+                PricePerMonth = car.PricePerMonth,
+                Brand = car.Brand.BrandName,
+                Location = car.Location.Address
+            };
+            return carDto;
+        }
+
+        public Task UpdateCar(CarEntity entity) => _carDao.UpdateEntity(entity);
+
+        public Task DeleteCar(CarEntity entity) => _carDao.DeleteEntity(entity);
     }
 }

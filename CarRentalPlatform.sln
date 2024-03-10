@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarRentalPlatform", "CarRentalPlatform\CarRentalPlatform.csproj", "{B062157D-D402-4A9F-BD00-3966D2FEDE08}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildObject", "BuildObject\BuildObject.csproj", "{CF52EF8C-9B28-4F18-B41F-59161CCDA75A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessObject", "BusinessObject\BusinessObject.csproj", "{CF52EF8C-9B28-4F18-B41F-59161CCDA75A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{B64141DF-747A-47AE-BF75-D19279A2F1AE}"
 EndProject

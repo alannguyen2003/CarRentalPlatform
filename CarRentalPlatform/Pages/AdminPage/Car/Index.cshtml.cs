@@ -15,9 +15,14 @@ namespace CarRentalPlatform.Pages.AdminPage.Car
 {
     public class IndexModel : PageModel
     {
-        private readonly ICarRepository _carRepository = new CarRepository();
+        private readonly ICarRepository _carRepository;
 
-        public IList<CarEntity> CarEntity { get;set; }
+        public IndexModel(ICarRepository carRepository)
+        {
+            _carRepository = carRepository;
+        }
+        [BindProperty]
+        public List<CarEntity> CarEntity { get;set; }
         [BindProperty]
         public bool IsLogin { get; set; }
 
@@ -26,7 +31,7 @@ namespace CarRentalPlatform.Pages.AdminPage.Car
             var cars = _carRepository.GetAllCars();
             if (cars != null)
             {
-                CarEntity = await _carRepository.GetAllCars();
+                CarEntity = await cars;
             }
             IsLogin = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "isLogin");
 

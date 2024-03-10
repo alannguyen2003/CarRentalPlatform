@@ -1,11 +1,42 @@
 ﻿@page "/cars"
 @using NuGet.Protocol
+@using DataTransferLayer.Page
 @model CarRentalPlatform.Pages.CarCategory
 
 @{
     Layout = "Shared/_Layout";
 }
     
+	  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+	    <div class="container">
+	      <a class="navbar-brand" href="#">Car<span>Book</span></a>
+	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+	        <span class="oi oi-menu"></span> Menu
+	      </button>
+
+	      <div class="collapse navbar-collapse" id="ftco-nav">
+		      <ul class="navbar-nav ml-auto">
+			      <li class="nav-item active"><a href="/Index" class="nav-link">Home</a></li>
+			      <li class="nav-item"><a href="/about" class="nav-link">About</a></li>
+			      <li class="nav-item"><a href="/price" class="nav-link">Pricing</a></li>
+			      <li class="nav-item"><a href="/cars" class="nav-link">Cars</a></li>
+			      <li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
+		      </ul>
+		      <ul class="navbar-nav ml-auto">
+			      <li class="nav-item"><a href="/Cart" class="nav-link">Cart</a></li>
+			      @if (@Model.IsLogin == true)
+                              {
+                                <li class="nav-item"><a href="/Logout" class="nav-link">Logout</a></li>
+                              }
+                              else
+                              {
+                                <li class="nav-item"><a href="/Login" class="nav-link">Login</a></li>
+                              }
+		      </ul>
+	      </div>
+	    </div>
+	  </nav>
+    <!-- END nav -->
     <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('images/bg_3.jpg');" data-stellar-background-ratio="0.5">
       <div class="overlay"></div>
       <div class="container">
@@ -22,178 +53,30 @@
 <section class="ftco-section bg-light">
 	<div class="container">
 		<div class="row">
-			<div class="col-md-4">
-				<div class="car-wrap rounded ftco-animate">
-					<div class="img rounded d-flex align-items-end" style="background-image: url(images/car-1.jpg);">
-					</div>
-					<div class="text">
-						<h2 class="mb-0"><a href="/car">Mercedes Grand Sedan</a></h2>
-						<div class="d-flex mb-3">
-							<span class="cat">Cheverolet</span>
-							<p class="price ml-auto">$500 <span>/day</span></p>
+			@foreach (var item in Model.CarCategoryPage.Cars)
+			{
+				<div class="col-md-4">
+					<div class="car-wrap rounded ftco-animate">
+						<div class="img rounded d-flex align-items-end" style="background-image: url(@item.ThumbnailImage);">
 						</div>
-						<p class="d-flex mb-0 d-block"><a href="/car" class="btn btn-primary py-2 mr-1">Book now</a> <a href="/car" class="btn btn-secondary py-2 ml-1">Details</a></p>
+						<div class="text">
+							<h2 class="mb-0"><a href="/car">@item.Model</a></h2>
+							<div class="d-flex mb-3">
+								<span class="cat">@item.Brand</span>
+								<p class="price ml-auto">$@item.PricePerDay <span>/day</span></p>
+							</div>
+							<p class="d-flex mb-0 d-block">
+								<form asp-page-handler="addtocart" method="post" class="btn btn-primary py-2 ml-1">
+									<input type="hidden" name="id" value="@item.Id"/>
+									<button class="btn btn-primary">Add to cart</button>
+								</form>
+								<a href="/car/@item.Id" class="btn btn-secondary py-2 ml-1">Details</a>
+							</p>
+						</div>
 					</div>
 				</div>
+			}
 			</div>
-			<div class="col-md-4">
-				<div class="car-wrap rounded ftco-animate">
-					<div class="img rounded d-flex align-items-end" style="background-image: url(images/car-2.jpg);">
-					</div>
-					<div class="text">
-						<h2 class="mb-0"><a href="/car">Range Rover</a></h2>
-						<div class="d-flex mb-3">
-							<span class="cat">Subaru</span>
-							<p class="price ml-auto">$500 <span>/day</span></p>
-						</div>
-						<p class="d-flex mb-0 d-block"><a href="/car" class="btn btn-primary py-2 mr-1">Book now</a> <a href="/car" class="btn btn-secondary py-2 ml-1">Details</a></p>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="car-wrap rounded ftco-animate">
-					<div class="img rounded d-flex align-items-end" style="background-image: url(images/car-3.jpg);">
-					</div>
-					<div class="text">
-						<h2 class="mb-0"><a href="/car">Mercedes Grand Sedan</a></h2>
-						<div class="d-flex mb-3">
-							<span class="cat">Cheverolet</span>
-							<p class="price ml-auto">$500 <span>/day</span></p>
-						</div>
-						<p class="d-flex mb-0 d-block"><a href="/car" class="btn btn-primary py-2 mr-1">Book now</a> <a href="/car" class="btn btn-secondary py-2 ml-1">Details</a></p>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-md-4">
-				<div class="car-wrap rounded ftco-animate">
-					<div class="img rounded d-flex align-items-end" style="background-image: url(images/car-4.jpg);">
-					</div>
-					<div class="text">
-						<h2 class="mb-0"><a href="/car">Mercedes Grand Sedan</a></h2>
-						<div class="d-flex mb-3">
-							<span class="cat">Cheverolet</span>
-							<p class="price ml-auto">$500 <span>/day</span></p>
-						</div>
-						<p class="d-flex mb-0 d-block"><a href="/car" class="btn btn-primary py-2 mr-1">Book now</a> <a href="/car" class="btn btn-secondary py-2 ml-1">Details</a></p>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="car-wrap rounded ftco-animate">
-					<div class="img rounded d-flex align-items-end" style="background-image: url(images/car-5.jpg);">
-					</div>
-					<div class="text">
-						<h2 class="mb-0"><a href="#">Range Rover</a></h2>
-						<div class="d-flex mb-3">
-							<span class="cat">Subaru</span>
-							<p class="price ml-auto">$500 <span>/day</span></p>
-						</div>
-						<p class="d-flex mb-0 d-block"><a href="/car" class="btn btn-primary py-2 mr-1">Book now</a> <a href="/car" class="btn btn-secondary py-2 ml-1">Details</a></p>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="car-wrap rounded ftco-animate">
-					<div class="img rounded d-flex align-items-end" style="background-image: url(images/car-6.jpg);">
-					</div>
-					<div class="text">
-						<h2 class="mb-0"><a href="#">Mercedes Grand Sedan</a></h2>
-						<div class="d-flex mb-3">
-							<span class="cat">Cheverolet</span>
-							<p class="price ml-auto">$500 <span>/day</span></p>
-						</div>
-						<p class="d-flex mb-0 d-block"><a href="/car" class="btn btn-primary py-2 mr-1">Book now</a> <a href="/car" class="btn btn-secondary py-2 ml-1">Details</a></p>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-md-4">
-				<div class="car-wrap rounded ftco-animate">
-					<div class="img rounded d-flex align-items-end" style="background-image: url(images/car-7.jpg);">
-					</div>
-					<div class="text">
-						<h2 class="mb-0"><a href="#">Mercedes Grand Sedan</a></h2>
-						<div class="d-flex mb-3">
-							<span class="cat">Cheverolet</span>
-							<p class="price ml-auto">$500 <span>/day</span></p>
-						</div>
-						<p class="d-flex mb-0 d-block"><a href="/car" class="btn btn-primary py-2 mr-1">Book now</a> <a href="/car" class="btn btn-secondary py-2 ml-1">Details</a></p>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="car-wrap rounded ftco-animate">
-					<div class="img rounded d-flex align-items-end" style="background-image: url(images/car-8.jpg);">
-					</div>
-					<div class="text">
-						<h2 class="mb-0"><a href="#">Range Rover</a></h2>
-						<div class="d-flex mb-3">
-							<span class="cat">Subaru</span>
-							<p class="price ml-auto">$500 <span>/day</span></p>
-						</div>
-						<p class="d-flex mb-0 d-block"><a href="/car" class="btn btn-primary py-2 mr-1">Book now</a> <a href="/car" class="btn btn-secondary py-2 ml-1">Details</a></p>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="car-wrap rounded ftco-animate">
-					<div class="img rounded d-flex align-items-end" style="background-image: url(images/car-9.jpg);">
-					</div>
-					<div class="text">
-						<h2 class="mb-0"><a href="#">Mercedes Grand Sedan</a></h2>
-						<div class="d-flex mb-3">
-							<span class="cat">Cheverolet</span>
-							<p class="price ml-auto">$500 <span>/day</span></p>
-						</div>
-						<p class="d-flex mb-0 d-block"><a href="/car" class="btn btn-primary py-2 mr-1">Book now</a> <a href="/car" class="btn btn-secondary py-2 ml-1">Details</a></p>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-md-4">
-				<div class="car-wrap rounded ftco-animate">
-					<div class="img rounded d-flex align-items-end" style="background-image: url(images/car-10.jpg);">
-					</div>
-					<div class="text">
-						<h2 class="mb-0"><a href="#">Mercedes Grand Sedan</a></h2>
-						<div class="d-flex mb-3">
-							<span class="cat">Cheverolet</span>
-							<p class="price ml-auto">$500 <span>/day</span></p>
-						</div>
-						<p class="d-flex mb-0 d-block"><a href="/car" class="btn btn-primary py-2 mr-1">Book now</a> <a href="/car" class="btn btn-secondary py-2 ml-1">Details</a></p>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="car-wrap rounded ftco-animate">
-					<div class="img rounded d-flex align-items-end" style="background-image: url(images/car-11.jpg);">
-					</div>
-					<div class="text">
-						<h2 class="mb-0"><a href="#">Range Rover</a></h2>
-						<div class="d-flex mb-3">
-							<span class="cat">Subaru</span>
-							<p class="price ml-auto">$500 <span>/day</span></p>
-						</div>
-						<p class="d-flex mb-0 d-block"><a href="/car" class="btn btn-primary py-2 mr-1">Book now</a> <a href="/car" class="btn btn-secondary py-2 ml-1">Details</a></p>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="car-wrap rounded ftco-animate">
-					<div class="img rounded d-flex align-items-end" style="background-image: url(images/car-12.jpg);">
-					</div>
-					<div class="text">
-						<h2 class="mb-0"><a href="#">Mercedes Grand Sedan</a></h2>
-						<div class="d-flex mb-3">
-							<span class="cat">Cheverolet</span>
-							<p class="price ml-auto">$500 <span>/day</span></p>
-						</div>
-						<p class="d-flex mb-0 d-block"><a href="/car" class="btn btn-primary py-2 mr-1">Book now</a> <a href="/car" class="btn btn-secondary py-2 ml-1">Details</a></p>
-					</div>
-				</div>
-			</div>
-		</div>
 		<div class="row mt-5">
 			<div class="col text-center">
 				<div class="block-27">

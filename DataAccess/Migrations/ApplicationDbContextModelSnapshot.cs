@@ -32,8 +32,8 @@ namespace DataAccess.Migrations
 
                     b.Property<string>("DriverLicense")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasMaxLength(12)
+                        .HasColumnType("nvarchar(12)");
 
                     b.Property<DateTime>("DriverLicenseIssueDate")
                         .HasColumnType("datetime2");
@@ -43,7 +43,7 @@ namespace DataAccess.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("FullName")
+                    b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
@@ -152,6 +152,10 @@ namespace DataAccess.Migrations
                     b.Property<int>("BrandId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("LicensePlate")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -165,8 +169,21 @@ namespace DataAccess.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<int>("PricePerDay")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PricePerHour")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PricePerMonth")
+                        .HasColumnType("int");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
+
+                    b.Property<string>("ThumbnailImage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

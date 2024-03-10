@@ -4,14 +4,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataTransferLayer.DataTransfer;
+using DataTransferLayer.Page;
 
 namespace Repository.Repository.Abstract
 {
     public interface ICarRepository
     {
         Task CreateCar(CarEntity entity);
+        Task<CarDto?> GetCarByIdDto(int? id);
         Task<CarEntity?> GetCarById(int? id);
-        Task<IList<CarEntity>> GetAllCars();
+        Task<List<CarEntity>> GetAllCars();
+        Task<CarCategoryPage> GetDataCarCategoryPage();
         Task UpdateCar(CarEntity entity);
         Task DeleteCar(CarEntity entity);
     }

@@ -6,35 +6,13 @@ namespace DataAccess.DataAccessLayer;
 
 public class AccountDAO : BaseDao<AccountEntity>
 {
-    private static AccountDAO instance = null;
-    private static readonly object instanceLock = new object();
-    private AccountDAO() { }
+    private readonly ApplicationDbContext _context;
+    public AccountDAO() => _context = new ApplicationDbContext();
 
-    public static AccountDAO Instance
+    public async Task<AccountEntity?> Authentication(string email, string password)
     {
-        get
-        {
-            lock (instanceLock)
-            {
-                if (instance == null)
-                {
-                    instance = new AccountDAO();
-                }
-            }
-            return instance;
-        }
-    }
-
-    public async Task<IList<AccountEntity>> GetAccountAsync()
-    {
-        try
-        {
-            var _dbContext = new ApplicationDbContext();
-            return await _dbContext.Accounts.ToListAsync();
-        }
-        catch (Exception ex)
-        {
-            throw new Exception($"Error: {ex.Message}" + ex);
-        }
+        var account = _context.Accounts
+            .First(account => account.Email == email && account.Password == password);
+        return account;
     }
 }

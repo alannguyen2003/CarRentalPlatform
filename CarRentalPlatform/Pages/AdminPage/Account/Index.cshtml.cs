@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using BuildObject.Entities;
 using CarRentalPlatform.Configuration;
 using DataAccess.DataAccessLayer;
+using DataTransferLayer.DataTransfer;
 using Repository.Repository.Abstract;
 using Repository.Repository;
 
@@ -20,11 +21,19 @@ namespace CarRentalPlatform.Pages.AdminPage.Account
         public IList<AccountEntity> AccountEntity { get;set; }
         [BindProperty]
         public bool IsLogin { get; set; }
-        public async Task OnGetAsync()
+        [BindProperty]
+        public AccountDto Account { get; set; }
+        public async Task<IActionResult> OnGetAsync()
         {
             try
             {
                 IsLogin = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "isLogin");
+                Account = SessionHelper.GetObjectFromJson<AccountDto>(HttpContext.Session, "user");
+                if (Account.Id != 0)
+                {
+                    SessionHelper.ClearSession(HttpContext.Session);
+                    return RedirectToPage("/login");
+                }
                 var accountsQuery = await _accountRepository.GetAllAccounts();
 
                 if (accountsQuery != null)
@@ -37,6 +46,7 @@ namespace CarRentalPlatform.Pages.AdminPage.Account
             {
                 throw new Exception($"Error: {ex.Message}", ex);
             }
+            return null;
         }
     }
 }
