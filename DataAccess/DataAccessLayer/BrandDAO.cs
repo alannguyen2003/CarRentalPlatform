@@ -11,36 +11,8 @@ namespace DataAccess.DataAccessLayer
 {
     public class BrandDAO : BaseDao<BrandEntity>
     {
-        private static BrandDAO instance = null;
-        private static readonly object instanceLock = new object();
-        private BrandDAO() { }
+        private readonly ApplicationDbContext _context;
 
-        public static BrandDAO Instance
-        {
-            get
-            {
-                lock (instanceLock)
-                {
-                    if (instance == null)
-                    {
-                        instance = new BrandDAO();
-                    }
-                }
-                return instance;
-            }
-        }
-
-        public async Task <IList<BrandEntity>> GetAllBrandAsync()
-        {
-            try
-            {
-                var _dbContext = new ApplicationDbContext();
-                return await _dbContext.Brands.ToListAsync();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Error: {ex.Message}" + ex);
-            }
-        }
+        public BrandDAO() => _context = new ApplicationDbContext();
     }
 }

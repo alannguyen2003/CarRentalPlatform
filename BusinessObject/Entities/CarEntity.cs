@@ -12,8 +12,15 @@ public class CarEntity : BaseEntity
 
     [StringLength(50)] 
     public string LicensePlate { get; set; } = null!;
+
+    public string ThumbnailImage { get; set; } = null!;
+    
+    public int PricePerDay { get; set; }
+    public int PricePerHour { get; set; }
+    public int PricePerMonth { get; set; }
     
     public int Status { get; set; }
+    public string Description { get; set; } = null!;
     
     [ForeignKey("BrandId")]
     public int BrandId { get; set; }

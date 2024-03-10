@@ -11,7 +11,7 @@ namespace Repository.Repository.Abstract
     {
         Task CreateBooking(BookingEntity entity);
         Task<BookingEntity?> GetBookingById(int id);
-        Task<IList<BookingEntity>> GetAllBookings();
+        Task<List<BookingEntity>> GetAllBookings();
         Task UpdateBooking(BookingEntity entity);
         Task DeleteBooking(BookingEntity entity);
     }

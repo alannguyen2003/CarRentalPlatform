@@ -11,7 +11,7 @@ namespace Repository.Repository.Abstract
     {
         Task CreateLocation(LocationEntity entity);
         Task<LocationEntity?> GetLocationById(int id);
-        Task<IList<LocationEntity>> GetAllLocations();
+        Task<List<LocationEntity>> GetAllLocations();
         Task UpdateLocation(LocationEntity entity);
         Task DeleteLocation(LocationEntity entity);
     }

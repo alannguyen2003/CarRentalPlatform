@@ -11,7 +11,7 @@ namespace Repository.Repository.Abstract
     {
         Task CreateBrand(BrandEntity entity);
         Task<BrandEntity?> GetBrandById(int id);
-        Task<IList<BrandEntity>> GetAllBrands();
+        Task<List<BrandEntity>> GetAllBrands();
         Task UpdateBrand(BrandEntity entity);
         Task DeleteAccount(BrandEntity entity);
     }
