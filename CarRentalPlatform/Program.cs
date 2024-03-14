@@ -21,12 +21,7 @@ builder.Services.AddDependence();
 builder.Services.AddMvcCore();
 
 builder.Services.AddSession();
-
-builder.Services.AddScoped<IAccountRepository, AccountRepository>();
-builder.Services.AddScoped<ICarRepository, CarRepository>();
-builder.Services.AddScoped<ILocationRepository, LocationRepository>();
-builder.Services.AddScoped<IBrandRepository, BrandRepository>();
-builder.Services.AddScoped<IBookingRepository, BookingRepository>();
+builder.Services.AddLoggingInformation();
 
 var app = builder.Build();
 
@@ -54,7 +49,7 @@ if (!app.Environment.IsDevelopment())
 //    var logger = services.GetRequiredService<ILogger<Program>>();
 //    logger.LogError(ex, "An error while seeding data");
 //} 
-
+app.UseHttpLogging();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseSession();
