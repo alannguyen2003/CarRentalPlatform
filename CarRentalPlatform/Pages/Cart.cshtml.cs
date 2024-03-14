@@ -1,4 +1,5 @@
-﻿using CarRentalPlatform.Configuration;
+﻿using BuildObject.Entities;
+using CarRentalPlatform.Configuration;
 using DataTransferLayer.DataTransfer;
 using DataTransferLayer.Page;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +11,7 @@ namespace CarRentalPlatform.Pages;
 public class Cart : PageModel
 {
     private readonly ICarRepository _carRepository;
+    private readonly IAccountRepository _accountRepository;
     
     [BindProperty]
     public bool IsLogin { get; set; }
@@ -17,10 +19,11 @@ public class Cart : PageModel
 
     [BindProperty]
     public CartModel? CartModel { get; set; }
-
-    public Cart(ICarRepository carRepository)
+    
+    public Cart(ICarRepository carRepository, IAccountRepository accountRepository)
     {
         _carRepository = carRepository;
+        _accountRepository = accountRepository;
     }
 
     public void OnGet()
@@ -36,5 +39,10 @@ public class Cart : PageModel
                 }
             } : CartModel = SessionHelper.GetObjectFromJson<CartModel>(HttpContext.Session, "cart");
         if (CartModel.Car.Id != 0) CartModel.Car = _carRepository.GetCarByIdDto(CartModel.Car?.Id).Result;
+        AccountEntity? account = _accountRepository.GetAccountById(CartModel.Account.Id).Result;
+        if (account != null)
+        {
+            CartModel.Account.Email = account.Email;
+        }
     }
 }

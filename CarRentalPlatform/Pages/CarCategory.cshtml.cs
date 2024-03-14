@@ -38,6 +38,7 @@ public class CarCategory : PageModel
         {
             Account = new AccountDto()
             {
+                Id = account.Id,
                 Email = account.Email,
                 Name = account.Name
             },

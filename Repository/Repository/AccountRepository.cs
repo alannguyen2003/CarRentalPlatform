@@ -23,12 +23,16 @@ namespace Repository.Repository
         public async Task<AccountDto?> Login(string email, string password)
         {
             var account = await _accountDao.Authentication(email, password);
-            return new AccountDto()
+            if (account != null)
             {
-                Id = account.Id,
-                Name = account.LastName,
-                Email = account.Email
-            };
+                return new AccountDto()
+                {
+                    Id = account.Id,
+                    Name = account.LastName,
+                    Email = account.Email
+                };
+            }
+            return null;
         }
 
         public async Task<AccountCheckBilling?> GetAccountCheckBilling(int id)

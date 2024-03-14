@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataTransferLayer.DataTransfer;
 
 namespace Repository.Repository.Abstract
 {
     public interface IBookingRepository
     {
-        Task CreateBooking(BookingEntity entity);
+        Task CreateBooking(BookingRequest request);
         Task<BookingEntity?> GetBookingById(int id);
         Task<List<BookingEntity>> GetAllBookings();
         Task UpdateBooking(BookingEntity entity);
