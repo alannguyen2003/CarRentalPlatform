@@ -31,8 +31,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Pages\CustomerPage\Booking\" />
-      <Folder Include="wwwroot\cart\" />
+      <Folder Include="wwwroot\admin\" />
       <Folder Include="wwwroot\images\" />
     </ItemGroup>
 

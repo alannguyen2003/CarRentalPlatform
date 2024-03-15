@@ -36,7 +36,8 @@ public class Login : PageModel
             {
                 Id = 0,
                 Email = JsonConfiguration.GetValueFromAppSettings(JsonConfiguration.AdminEmail),
-                Name = JsonConfiguration.GetValueFromAppSettings(JsonConfiguration.AdminPassword)
+                Name = JsonConfiguration.GetValueFromAppSettings(JsonConfiguration.AdminPassword),
+                Role = 1
             };
             SessionHelper.SetObjectAsJson(HttpContext.Session,"isLogin", true);
             SessionHelper.SetObjectAsJson(HttpContext.Session,"user", (object) account);
@@ -49,7 +50,8 @@ public class Login : PageModel
             {
                 Id = accountDto.Id,
                 Email = accountDto.Email,
-                Name = accountDto.Name
+                Name = accountDto.Name,
+                Role = accountDto.Role
             };
             SessionHelper.SetObjectAsJson(HttpContext.Session,"isLogin", true);
             SessionHelper.SetObjectAsJson(HttpContext.Session,"user", (object) account);

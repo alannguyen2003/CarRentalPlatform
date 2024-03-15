@@ -26,23 +26,36 @@ public class Cart : PageModel
         _accountRepository = accountRepository;
     }
 
-    public void OnGet()
+    public IActionResult OnGet()
     {
         IsLogin = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "isLogin");
-        CartModel = SessionHelper.GetObjectFromJson<CartModel>(HttpContext.Session, "cart") == null?
-            new CartModel()
-            {
-                Account = new AccountDto(),
-                Car = new CarDto()
+        if (IsLogin == false)
+        {
+            return RedirectToPage("./login");
+        }
+        CartModel = SessionHelper.GetObjectFromJson<CartModel>(HttpContext.Session, "cart");
+        if (CartModel == null)
+        {
+            return RedirectToPage("./cars");
+        }
+        else
+        {
+            CartModel = SessionHelper.GetObjectFromJson<CartModel>(HttpContext.Session, "cart") == null?
+                new CartModel()
                 {
-                    Id = 0
-                }
-            } : CartModel = SessionHelper.GetObjectFromJson<CartModel>(HttpContext.Session, "cart");
+                    Account = new AccountDto(),
+                    Car = new CarDto()
+                    {
+                        Id = 0
+                    }
+                } : CartModel = SessionHelper.GetObjectFromJson<CartModel>(HttpContext.Session, "cart");
+        }
         if (CartModel.Car.Id != 0) CartModel.Car = _carRepository.GetCarByIdDto(CartModel.Car?.Id).Result;
         AccountEntity? account = _accountRepository.GetAccountById(CartModel.Account.Id).Result;
         if (account != null)
         {
             CartModel.Account.Email = account.Email;
         }
+        return null;
     }
 }
