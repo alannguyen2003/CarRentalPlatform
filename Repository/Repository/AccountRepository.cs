@@ -29,7 +29,8 @@ namespace Repository.Repository
                 {
                     Id = account.Id,
                     Name = account.LastName,
-                    Email = account.Email
+                    Email = account.Email,
+                    Role = account.Role
                 };
             }
             return null;

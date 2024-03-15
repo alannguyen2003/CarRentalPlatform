@@ -34,9 +34,13 @@ public class CheckOut : PageModel
     [BindProperty]
     public DateTime EndDate { get; set; }
     
-    public void OnGet()
+    public IActionResult OnGet()
     {
         IsLogin = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "isLogin");
+        if (IsLogin == false)
+        {
+            return RedirectToPage("./login");
+        }
         CartModel = SessionHelper.GetObjectFromJson<CartModel>(HttpContext.Session, "cart") == null?
             new CartModel()
             {
@@ -59,6 +63,7 @@ public class CheckOut : PageModel
                 DriverLicense = account.DriverLicense
             };
         }
+        return null;
     }
     
     public static int DaysBetween(DateTime startDate, DateTime endDate)
@@ -69,15 +74,23 @@ public class CheckOut : PageModel
     public async Task<IActionResult> OnPostAsync()
     {
         string note = Request.Form["note"];
-        CartModel = SessionHelper.GetObjectFromJson<CartModel>(HttpContext.Session, "cart") == null?
-            new CartModel()
-            {
-                Account = new AccountDto(),
-                Car = new CarDto()
+        CartModel = SessionHelper.GetObjectFromJson<CartModel>(HttpContext.Session, "cart");
+        if (CartModel == null)
+        {
+            return RedirectToPage("./cars");
+        }
+        else
+        {
+            CartModel = SessionHelper.GetObjectFromJson<CartModel>(HttpContext.Session, "cart") == null?
+                new CartModel()
                 {
-                    Id = 0
-                }
-            } : CartModel = SessionHelper.GetObjectFromJson<CartModel>(HttpContext.Session, "cart");
+                    Account = new AccountDto(),
+                    Car = new CarDto()
+                    {
+                        Id = 0
+                    }
+                } : CartModel = SessionHelper.GetObjectFromJson<CartModel>(HttpContext.Session, "cart");
+        }
         BookingRequest bookingRequest = new BookingRequest()
         {
             StartDate = StartDate,

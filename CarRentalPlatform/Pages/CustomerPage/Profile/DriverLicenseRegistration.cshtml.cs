@@ -85,7 +85,7 @@ namespace CarRentalPlatform.Pages.CustomerPage.Profile
 
             // Delete temp Infor after update
             HttpContext.Session.Remove("LicenseInfo");
-            return RedirectToPage("/DriverLicenseRegistration");
+            return RedirectToPage("./DriverLicenseRegistration");
             //return RedirectToPage("/CustomerPage/Profile/Index");
         }
 

@@ -25,6 +25,7 @@
 			      <li class="nav-item d-inline">
 				      <a href="/Cart" class="nav-link"><img width="20" height="20" src="https://img.icons8.com/ios-glyphs/30/FFFFFF/shopping-cart--v1.png" alt="shopping-cart--v1"/>Cart</a>
 			      </li>
+			      
 			      @if (@Model.IsLogin == true)
                               {
                                 <li class="nav-item"><a href="/Logout" class="nav-link">Logout</a></li>
@@ -457,10 +458,10 @@
 		</div>
 	</div>
 </section>
-<script>
+@*<script>
 	if (@Model.IsLogin.ToJson() === false) {
 		window.location.href = "/login";	
 	}
-</script>
+</script>*@
 
     
