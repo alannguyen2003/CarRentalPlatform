@@ -65,7 +65,6 @@ namespace CarRentalPlatform.Pages.CustomerPage.Profile
 
         public async Task<IActionResult> OnPostAsync()
         {
-            // Get Driver License Info from Session
             LicenseInfo licenseInfo = SessionHelper.GetObjectFromJson<LicenseInfo>(HttpContext.Session, "LicenseInfo");
 
             if (licenseInfo == null)
@@ -83,11 +82,16 @@ namespace CarRentalPlatform.Pages.CustomerPage.Profile
             await _accountRepository.UpdateDriverLicenseInfo(currentUserID, licenseInfo);
             TempData["Message"] = "Driver's License information has been successfully updated.";
 
-            // Delete temp Infor after update
             HttpContext.Session.Remove("LicenseInfo");
+<<<<<<< HEAD
+
+            return RedirectToPage("/CustomerPage/Profile/Index");
+=======
             return RedirectToPage("./DriverLicenseRegistration");
             //return RedirectToPage("/CustomerPage/Profile/Index");
+>>>>>>> 55f7b24c1c7997337895d80918ed7cabdd0f0f58
         }
+
 
 
         public async Task<LicenseInfo> ProcessLicenseImageAsync(string imagePath)
