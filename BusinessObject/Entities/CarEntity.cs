@@ -29,6 +29,4 @@ public class CarEntity : BaseEntity
     [ForeignKey("LocationId")]
     public int LocationId { get; set; }
     public virtual LocationEntity Location { get; set; }
-    
-    public ICollection<BookingEntity> Bookings { get; set; }
 }
