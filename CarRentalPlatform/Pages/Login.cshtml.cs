@@ -28,6 +28,7 @@ public class Login : PageModel
     {
         string email = Request.Form["email"]!;
         string password = Request.Form["password"]!;
+        AccountDto? accountCheck = _accountRepository.Login(email, password).Result;
         if (email.Equals(JsonConfiguration.GetValueFromAppSettings(JsonConfiguration.AdminEmail)) &&
                          password.Equals(JsonConfiguration.GetValueFromAppSettings(JsonConfiguration.AdminPassword)))
         {
@@ -35,20 +36,22 @@ public class Login : PageModel
             {
                 Id = 0,
                 Email = JsonConfiguration.GetValueFromAppSettings(JsonConfiguration.AdminEmail),
-                Name = JsonConfiguration.GetValueFromAppSettings(JsonConfiguration.AdminPassword)
+                Name = JsonConfiguration.GetValueFromAppSettings(JsonConfiguration.AdminPassword),
+                Role = 1
             };
             SessionHelper.SetObjectAsJson(HttpContext.Session,"isLogin", true);
             SessionHelper.SetObjectAsJson(HttpContext.Session,"user", (object) account);
             return RedirectToPage("./adminpage/account/index");
         }
-        else if (_accountRepository.Login(email, password) != null)
+        else if (accountCheck != null)
         {
-            var accountDto = _accountRepository.Login(email, password).Result;
-            AccountDto account = new AccountDto()
+            AccountDto? accountDto = _accountRepository.Login(email, password).Result;
+            AccountDto? account = new AccountDto()
             {
                 Id = accountDto.Id,
                 Email = accountDto.Email,
-                Name = accountDto.Name
+                Name = accountDto.Name,
+                Role = accountDto.Role
             };
             SessionHelper.SetObjectAsJson(HttpContext.Session,"isLogin", true);
             SessionHelper.SetObjectAsJson(HttpContext.Session,"user", (object) account);

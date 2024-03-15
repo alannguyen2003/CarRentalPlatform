@@ -17,16 +17,20 @@ public class CarSingle : PageModel
     }
     [BindProperty]
     public AccountDto? AccountDto { get; set; }
-    [BindProperty]
-    public bool IsLogin { get; set; }
+
+    [BindProperty] public bool IsLogin { get; set; } = false;
     [BindProperty]
     public CarDto? CarDto { get; set; }
 
     [BindProperty] public CartModel? CartModel { get; set; }
     
-    public void OnGet(int id)
+    public IActionResult OnGet(int id)
     {
         IsLogin = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "isLogin");
+        if (IsLogin == false)
+        {
+            return RedirectToPage("./login");
+        }
         CarDto = _carRepository.GetCarByIdDto(id).Result;
         AccountDto = SessionHelper.GetObjectFromJson<AccountDto>(HttpContext.Session, "user");
         CartModel = SessionHelper.GetObjectFromJson<CartModel>(HttpContext.Session, "cart") == null?
@@ -40,5 +44,6 @@ public class CarSingle : PageModel
                     },
                     Car = new CarDto()
                 } : CartModel = SessionHelper.GetObjectFromJson<CartModel>(HttpContext.Session, "cart");
+        return null;
     }
 }

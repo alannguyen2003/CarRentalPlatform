@@ -24,10 +24,15 @@ public class CarCategory : PageModel
 
     [BindProperty] public int CarId { get; set; }
 
-    public void OnGet()
+    public IActionResult OnGet()
     {
         IsLogin = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "isLogin");
+        if (IsLogin == false)
+        {
+            return RedirectToPage("./login");
+        }
         CarCategoryPage = _carRepository.GetDataCarCategoryPage().Result;
+        return null;
     }
 
     public IActionResult OnPostAddToCart()
@@ -38,6 +43,7 @@ public class CarCategory : PageModel
         {
             Account = new AccountDto()
             {
+                Id = account.Id,
                 Email = account.Email,
                 Name = account.Name
             },

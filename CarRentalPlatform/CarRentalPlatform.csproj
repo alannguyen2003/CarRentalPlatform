@@ -23,6 +23,7 @@
       <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
       <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.12" />
+      <PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />
     </ItemGroup>
 
     <ItemGroup>
@@ -30,7 +31,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Pages\CustomerPage\Booking\" />
+      <Folder Include="wwwroot\admin\" />
       <Folder Include="wwwroot\images\" />
     </ItemGroup>
 

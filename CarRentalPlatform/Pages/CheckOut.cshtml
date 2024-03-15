@@ -143,50 +143,18 @@
 						        </button>
 						      </h5>
 						    </div>
-
 						    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
 						      <div class="card-body">
 						        <div class="billing-address-form">
-						        	<form action="https://technext.github.io/frutika/index.html">
-						        		<p><input type="text" value="" placeholder="Name"></p>
-						        		<p><input type="text" placeholder="Address"></p>
-								        <p><input type="tel" value="" placeholder="Phone"></p>
-								        <p><input type="date" class="form-control" id="book_pick_date" placeholder="Pick-up date"></p>
-								        <p><input type="date" class="form-control" id="book_pick_date" placeholder="Drop-off date"></p>
-						        		<p><textarea name="bill" id="bill" cols="30" rows="10" placeholder="Note"></textarea></p>
-						        	</form>
-						        </div>
-						      </div>
-						    </div>
-						  </div>
-						  <div class="card single-accordion">
-						    <div class="card-header" id="headingTwo">
-						      <h5 class="mb-0">
-						        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-						          Shipping Address
-						        </button>
-						      </h5>
-						    </div>
-						    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-						      <div class="card-body">
-						        <div class="shipping-address-form">
-						        	<p>Your shipping address form is here.</p>
-						        </div>
-						      </div>
-						    </div>
-						  </div>
-						  <div class="card single-accordion">
-						    <div class="card-header" id="headingThree">
-						      <h5 class="mb-0">
-						        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-						          Card Details
-						        </button>
-						      </h5>
-						    </div>
-						    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-						      <div class="card-body">
-						        <div class="card-details">
-						        	<p>Your card details goes here.</p>
+							        <form method="post">
+								        <p><input type="text" value="@Model.AccountCheckBilling.Id" name="id" placeholder="Name" hidden></p>
+								        <p><input type="text" value="@Model.CartModel.Car.Id" placeholder="Name" disabled></p>
+								        <p><input type="tel" value="@Model.AccountCheckBilling.PhoneNumber" placeholder="Phone"></p>
+								        <p><input type="datetime-local" name="startDate" class="form-control" id="book_pick_date" asp-for="StartDate" placeholder="Pick-up date" onchange="handleInputStartDate()"></p>
+								        <p><input type="datetime-local" name="endDate" class="form-control" id="drop_off_date" asp-for="EndDate" placeholder="Drop-off date" onchange="handleInputEndDate()"></p>
+								        <p><textarea name="note" id="bill" cols="30" rows="10" placeholder="Note"></textarea></p>
+								        <p><button type="submit" class="boxed-btn">Place Order</button></p>
+							        </form>
 						        </div>
 						      </div>
 						    </div>
@@ -195,7 +163,6 @@
 
 					</div>
 				</div>
-
 				<div class="col-lg-4">
 					<div class="order-details-wrap">
 						<table class="order-details">
@@ -203,18 +170,21 @@
 							<tr>
 								<th>Your order Details</th>
 								<th>Price</th>
+								<th>Total Days Renting</th>
 							</tr>
 							</thead>
 							<tbody class="order-details-body">
 							<tr>
 								<td>@Model.CartModel.Car.Model</td>
 								<td>$@Model.CartModel.Car.PricePerDay</td>
+								<td id="renting_days"></td>
 							</tr>
 							</tbody>
 							<tbody class="checkout-details">
 							<tr>
 								<td>Total</td>
-								<td>$@subtotal</td>
+								<td></td>
+								<td id="total"></td>
 							</tr>
 							</tbody>
 						</table>
@@ -324,7 +294,42 @@
 		</div>
 	</div>
 	<!-- end copyright -->
-	
+	<script>
+		function daysBetween(time1, time2) {
+          const date1 = new Date(time1);
+          const date2 = new Date(time2);
+          const timeDiff = Math.abs(date2.getTime() - date1.getTime());
+		  const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+          return days;
+        }
+		
+		function handleInputStartDate() {
+			const startDate = document.getElementById("book_pick_date").value;
+			const endDate = document.getElementById("drop_off_date").value;
+			if (startDate != null || endDate != null) {
+            	const rentingDays = document.getElementById("renting_days");
+				const total = document.getElementById("total");
+            	const days = daysBetween(startDate, endDate);
+				if (isNaN(typeof days)) {
+					rentingDays.innerHTML = days + "";
+					total.innerHTML = "$" + @Model.CartModel.Car.PricePerDay * days;
+				}
+       		}
+		}
+		function handleInputEndDate() {
+        	const startDate = document.getElementById("book_pick_date").value;
+       		const endDate = document.getElementById("drop_off_date").value;
+			if (startDate != null || endDate != null) {
+				const rentingDays = document.getElementById("renting_days");
+                const days = daysBetween(startDate, endDate);
+				const total = document.getElementById("total");
+                if (isNaN(typeof days)) {
+                	rentingDays.innerHTML = days + "";
+					total.innerHTML = "$" + @Model.CartModel.Car.PricePerDay * days;
+                }
+			}
+      	}
+	</script>
 	<!-- jquery -->
     	<script src="~/js/jquery-1.11.3.min.js"></script>
     	<!-- bootstrap -->

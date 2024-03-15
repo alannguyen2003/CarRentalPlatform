@@ -9,8 +9,13 @@ public class Contact : PageModel
     
     [BindProperty]
     public bool IsLogin { get; set; }
-    public void OnGet()
+    public IActionResult OnGet()
     {
         IsLogin = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "isLogin");
+        if (IsLogin == false)
+        {
+            return RedirectToPage("./login");
+        }
+        return null;
     }
 }

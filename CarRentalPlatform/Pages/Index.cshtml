@@ -6,6 +6,7 @@
     ViewData["Title"] = "Home page";
 }
 
+<<<<<<< HEAD
 <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
         <a class="navbar-brand" href="#">Car<span>Book</span></a>
@@ -38,6 +39,52 @@
                     <li class="nav-item"><a href="/Login" class="nav-link">Login</a></li>
                 }
             </ul>
+=======
+	      <div class="collapse navbar-collapse" id="ftco-nav">
+		      <ul class="navbar-nav ml-auto">
+			      <li class="nav-item active"><a href="/Index" class="nav-link">Home</a></li>
+			      <li class="nav-item"><a href="/about" class="nav-link">About</a></li>
+			      <li class="nav-item"><a href="/price" class="nav-link">Pricing</a></li>
+			      <li class="nav-item"><a href="/cars" class="nav-link">Cars</a></li>
+			      <li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
+		      </ul>
+		      <ul class="navbar-nav ml-auto">
+			      <li class="nav-item d-inline">
+				      <a href="/Cart" class="nav-link"><img width="20" height="20" src="https://img.icons8.com/ios-glyphs/30/FFFFFF/shopping-cart--v1.png" alt="shopping-cart--v1"/>Cart</a>
+			      </li>
+			      
+			      @if (@Model.IsLogin == true)
+                              {
+                                <li class="nav-item"><a href="/Logout" class="nav-link">Logout</a></li>
+                              }
+                              else
+                              {
+                                <li class="nav-item"><a href="/Login" class="nav-link">Login</a></li>
+                              }
+		      </ul>
+	      </div>
+	    </div>
+	  </nav>
+    <!-- END nav -->
+<div class="hero-wrap ftco-degree-bg" style="background-image: url('images/bg_1.jpg');" data-stellar-background-ratio="0.5">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row no-gutters slider-text justify-content-start align-items-center justify-content-center">
+          <div class="col-lg-8 ftco-animate">
+          	<div class="text w-100 text-center mb-md-5 pb-md-5">
+	            <h1 class="mb-4">Fast &amp; Easy Way To Rent A Car</h1>
+	            <p style="font-size: 18px;">A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts</p>
+	            <a href="https://vimeo.com/45830194" class="icon-wrap popup-vimeo d-flex align-items-center mt-4 justify-content-center">
+	            	<div class="icon d-flex align-items-center justify-content-center">
+	            		<span class="ion-ios-play"></span>
+	            	</div>
+	            	<div class="heading-title ml-5">
+		            	<span>Easy steps for renting a car</span>
+	            	</div>
+	            </a>
+            </div>
+          </div>
+>>>>>>> 55f7b24c1c7997337895d80918ed7cabdd0f0f58
         </div>
     </div>
 </nav>
@@ -461,9 +508,17 @@
         </div>
     </div>
 </section>
+<<<<<<< HEAD
 <script>
     if (@Model.IsLogin.ToJson() === false) {
         window.location.href = "/login";
     }
 </script>
+=======
+@*<script>
+	if (@Model.IsLogin.ToJson() === false) {
+		window.location.href = "/login";	
+	}
+</script>*@
+>>>>>>> 55f7b24c1c7997337895d80918ed7cabdd0f0f58
 

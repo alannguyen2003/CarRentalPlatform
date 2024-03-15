@@ -25,5 +25,5 @@ public class BookingEntity : BaseEntity
     
     [ForeignKey("CarId")]
     public int CarId { get; set; }
-    public virtual CarEntity Car { get; set; }
+    public virtual CarEntity Car { get; set; } = null!;
 }
