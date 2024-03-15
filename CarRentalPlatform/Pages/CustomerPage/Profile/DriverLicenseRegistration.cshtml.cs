@@ -83,13 +83,8 @@ namespace CarRentalPlatform.Pages.CustomerPage.Profile
             TempData["Message"] = "Driver's License information has been successfully updated.";
 
             HttpContext.Session.Remove("LicenseInfo");
-<<<<<<< HEAD
 
             return RedirectToPage("/CustomerPage/Profile/Index");
-=======
-            return RedirectToPage("./DriverLicenseRegistration");
-            //return RedirectToPage("/CustomerPage/Profile/Index");
->>>>>>> 55f7b24c1c7997337895d80918ed7cabdd0f0f58
         }
 
 
