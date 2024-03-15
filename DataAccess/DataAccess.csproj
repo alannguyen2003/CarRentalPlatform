@@ -24,6 +24,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\BusinessObject\BusinessObject.csproj" />
+      <ProjectReference Include="..\DataTransferLayer\DataTransferLayer.csproj" />
     </ItemGroup>
 
 </Project>

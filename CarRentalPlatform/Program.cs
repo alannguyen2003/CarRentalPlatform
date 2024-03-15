@@ -21,7 +21,18 @@ builder.Services.AddDependence();
 builder.Services.AddMvcCore();
 
 builder.Services.AddSession();
+
+
+builder.Services.AddHttpClient();
+
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<ICarRepository, CarRepository>();
+builder.Services.AddScoped<ILocationRepository, LocationRepository>();
+builder.Services.AddScoped<IBrandRepository, BrandRepository>();
+builder.Services.AddScoped<IBookingRepository, BookingRepository>();
+
 builder.Services.AddLoggingInformation();
+
 
 var app = builder.Build();
 
@@ -54,7 +65,6 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseSession();
 app.UseRouting();
-
 app.UseAuthorization();
 
 app.MapRazorPages();

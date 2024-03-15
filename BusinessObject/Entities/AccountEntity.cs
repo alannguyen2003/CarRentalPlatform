@@ -37,5 +37,4 @@ public class AccountEntity : BaseEntity
     
     [StringLength(12)]
     public string DriverLicense { get; set; }
-    public DateTime DriverLicenseIssueDate { get; set; }
 }

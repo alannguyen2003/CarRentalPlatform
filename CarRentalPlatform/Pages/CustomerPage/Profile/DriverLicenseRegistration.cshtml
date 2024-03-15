@@ -1,0 +1,52 @@
+﻿@page "/DriverLicenseRegistration"
+@model CarRentalPlatform.Pages.CustomerPage.Profile.DriverLicenseRegistrationModel
+
+@{
+    Layout = "Shared/_Layout";
+    ViewData["Title"] = "Driver License Registration";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@if (ViewData["Message"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @ViewData["Message"]
+    </div>
+}
+
+<form method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="licenseImage">Driver's License Image:</label>
+        <input type="file" class="form-control-file" id="licenseImage" name="licenseImage">
+    </div>
+    <button type="submit" class="btn btn-secondary" asp-page-handler="CheckLicense">Check</button>
+</form>
+
+
+@if (Model.LicenseInfo != null)
+{
+    <form method="post" enctype="multipart/form-data" asp-page-handler="">
+        <h2>Driver's License Information:</h2>
+        <div>
+            <input type="text" value="@Model.LicenseInfo.DriverLicense" disabled />
+        </div>
+        <div>
+            <input type="text" value="@Model.LicenseInfo.DriverLicenseName" disabled />
+        </div>
+        <div>
+            <input type="text" value="@Model.LicenseInfo.Address" disabled />
+        </div>
+        <div>
+            <input type="text" value="@Model.LicenseInfo.Nation" disabled />
+        </div>
+        <div>
+            <input type="text" value="@Model.LicenseInfo.PlaceIssue" disabled />
+        </div>
+        <div>
+            <input type="text" value="@Model.LicenseInfo.Class" disabled />
+        </div>
+        <!-- Add more inputs as needed -->
+        <button type="submit" class="btn btn-primary">Agree</button>
+    </form>
+}

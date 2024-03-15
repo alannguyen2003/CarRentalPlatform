@@ -31,8 +31,15 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Pages\CustomerPage\Booking\" />
       <Folder Include="wwwroot\cart\" />
       <Folder Include="wwwroot\images\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Update="appsettings.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
 </Project>

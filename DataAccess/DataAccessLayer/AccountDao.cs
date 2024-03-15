@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using BuildObject.Entities;
 using DataAccess.DataAccessLayer.Abstract;
+using DataTransferLayer.DataTransfer;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.DataAccessLayer;
@@ -17,3 +18,4 @@ public class AccountDAO : BaseDao<AccountEntity>
         return account;
     }
 }
+
