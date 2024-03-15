@@ -44,6 +44,24 @@ namespace Repository.Repository
             };
         }
 
+        public async Task UpdateDriverLicenseInfo(int accountId, LicenseInfo licenseInfo)
+        {
+            var account = await _accountDao.GetEntityById(accountId);
+            if (account != null)
+            {
+                // Map infor from LicenseInfo to AccountEntity
+                account.DriverLicense = licenseInfo.DriverLicense;
+
+                // UpdateEntity
+                await _accountDao.UpdateEntity(account);
+            }
+            else
+            {
+                throw new Exception("Account not found");
+            }
+        }
+
+
         public Task CreateAccount(AccountEntity entity) => _accountDao.Create(entity);
 
         public async Task<List<AccountEntity>> GetAllAccounts() => await _accountDao.GetAll().Result.ToListAsync();

@@ -22,6 +22,8 @@ builder.Services.AddMvcCore();
 
 builder.Services.AddSession();
 
+builder.Services.AddHttpClient();
+
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<ICarRepository, CarRepository>();
 builder.Services.AddScoped<ILocationRepository, LocationRepository>();
@@ -59,7 +61,6 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseSession();
 app.UseRouting();
-
 app.UseAuthorization();
 
 app.MapRazorPages();
