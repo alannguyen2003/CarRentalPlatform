@@ -33,7 +33,7 @@ public class ApplicationDbContext : DbContext
             .AddJsonFile("appsettings.json", true, true)
             .Build();
         var stringConnection = configuration.GetConnectionString(ConnectionString);
-        return stringConnection ?? "";
+        return stringConnection;
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

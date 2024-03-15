@@ -18,5 +18,7 @@ namespace Repository.Repository.Abstract
         Task<List<AccountEntity>> GetAllAccounts();
         Task UpdateAccount(AccountEntity entity);
         Task DeleteAccount(AccountEntity entity);
+        Task UpdateDriverLicenseInfo(int accountId, LicenseInfo licenseInfo);
+
     }
 }
