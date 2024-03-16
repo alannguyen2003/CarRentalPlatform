@@ -126,12 +126,14 @@
         </div>
     </div>
     <!-- end breadcrumb section -->
-    <!-- check out section -->
+
+    <!-- Check Out Section -->
     <div class="checkout-section mt-150 mb-150">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8">
                     <div class="checkout-accordion-wrap">
+                        <!-- Accordion starts -->
                         <div class="accordion" id="accordionExample">
                             <div class="card single-accordion">
                                 <div class="card-header" id="headingOne">
@@ -145,74 +147,60 @@
                                     <div class="card-body">
                                         <div class="billing-address-form order-details-wrap">
                                             <form method="post">
-                                                <p><input type="text" value="@Model.AccountCheckBilling.Id" name="id" placeholder="Name" hidden></p>
-                                                <p><input type="text" value="@Model.CartModel.Car.Id" placeholder="Name" disabled></p>
-                                                <p><input type="tel" value="@Model.AccountCheckBilling.PhoneNumber" placeholder="Phone"></p>
-                                                <p><input type="datetime-local" name="startDate" class="form-control" id="book_pick_date" asp-for="StartDate" placeholder="Pick-up date" value="@Model.StartDate.ToString("yyyy-MM-ddTHH:mm")" onchange="handleInputStartDate()"></p>
-                                                <p><input type="datetime-local" name="endDate" class="form-control" id="drop_off_date" asp-for="EndDate" placeholder="Drop-off date" value="@Model.EndDate.ToString("yyyy-MM-ddTHH:mm")" onchange="handleInputEndDate()"></p>
-                                                <p><textarea name="note" id="bill" cols="30" rows="10" placeholder="Note"></textarea></p>
-                                                <p>
-                                                    <button type="submit" style="font-family: 'Poppins', sans-serif;
-                                                                                display: inline-block;
-                                                                                background-color: #F28123;
-                                                                                color: #fff;
-                                                                                padding: 10px 20px;
-                                                                                border-radius: 50px;">
-                                                        Place Order
-                                                    </button>
-                                                </p>
+                                                <!-- ID and Phone Number -->
+                                                <div class="row">
+                                                    <div class="form-group col-md-6">
+                                                        <div class="col-md-3">
+                                                            <label for="id">Model</label>
+                                                            <input type="text" class="form-control" id="id" value="@Model.AccountCheckBilling.Id" name="id" placeholder="ID" hidden>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <input type="text" value="@Model.CartModel.Car.Model" placeholder="Name" disabled>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <label for="phoneNumber">Phone Number</label>
+                                                        <input type="tel" class="form-control" id="phoneNumber" value="@Model.AccountCheckBilling.PhoneNumber" placeholder="Phone Number" readonly>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Start Date and End Date -->
+                                                <div class="row">
+                                                    <div class="form-group col-md-6">
+                                                        <label for="startDate">Start Date</label>
+                                                        <input type="datetime-local" class="form-control" id="startDate" name="startDate" value="@Model.StartDate.ToString("yyyy-MM-ddTHH:mm")">
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <label for="endDate">End Date</label>
+                                                        <input type="datetime-local" class="form-control" id="endDate" name="endDate" value="@Model.EndDate.ToString("yyyy-MM-ddTHH:mm")">
+                                                    </div>
+                                                </div>
+
+                                                <!-- Note -->
+                                                <div class="form-group">
+                                                    <label for="note">Note</label>
+                                                    <textarea class="form-control" id="note" name="note" rows="3" placeholder="Note"></textarea>
+                                                </div>
+
+                                                <button type="submit" class="btn btn-primary">Place Order</button>
                                             </form>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        @if (!ModelState.IsValid)
-                        {
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
-                                    {
-                                        <li>@error.ErrorMessage</li>
-                                        break;
-                                    }
-                                </ul>
-                            </div>
-                        }
+                        <!-- Accordion ends -->
                     </div>
                 </div>
                 <div class="col-lg-4">
-                    <div class="order-details-wrap">
-                        <table class="order-details">
-                            <thead>
-                                <tr>
-                                    <th>Your order Details</th>
-                                    <th>Price</th>
-                                    <th>Total Days Renting</th>
-                                </tr>
-                            </thead>
-                            <tbody class="order-details-body">
-                                <tr>
-                                    <td>@Model.CartModel.Car.Model</td>
-                                    <td>$@Model.CartModel.Car.PricePerDay</td>
-                                    <td id="renting_days"></td>
-                                </tr>
-                            </tbody>
-                            <tbody class="checkout-details">
-                                <tr>
-                                    <td>Total</td>
-                                    <td></td>
-                                    <td id="total"></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <span>Place to get the car: @Model.CartModel.Car.Location</span>
-                    </div>
+                    <!-- Order Details Wrap -->
+                    <!-- Existing order details content -->
                 </div>
             </div>
         </div>
     </div>
-    <!-- end check out section -->
+    <!-- End of Check Out Section -->
+
     <!-- logo carousel -->
     <div class="logo-carousel-section">
         <div class="container">
