@@ -16,5 +16,7 @@ namespace Repository.Repository.Abstract
         Task UpdateBooking(BookingEntity entity);
         Task DeleteBooking(BookingEntity entity);
         List<BookingEntity> GetBookingsForCar(int carID);
-    }
+        Task<List<BookingEntity>> GetBookingsByCustomerId(int customerID);
+
+	}
 }

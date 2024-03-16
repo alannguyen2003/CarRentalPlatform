@@ -22,7 +22,22 @@ namespace DataAccess.DataAccessLayer
             }
         }
 
-        public List<BookingEntity> GetBookingsForCar(int carID)
+		public List<BookingEntity> GetBookingsByCustomerId(int customerID)
+		{
+			List<BookingEntity> result;
+			try
+			{
+				var context = new ApplicationDbContext();
+				result = context.Bookings.Where(x => x.CustomerId == customerID).ToList();
+			}
+			catch (Exception ex)
+			{
+				throw new Exception(ex.Message);
+			}
+			return result;
+		}
+
+		public List<BookingEntity> GetBookingsForCar(int carID)
         {
             List<BookingEntity> result;
             try

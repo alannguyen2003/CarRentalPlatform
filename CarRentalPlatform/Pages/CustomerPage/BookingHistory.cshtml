@@ -1,0 +1,41 @@
+﻿@page "/BookingHistory"
+@model CarRentalPlatform.Pages.CustomerPage.BookingHistoryModel
+@{
+    Layout = "_LayoutCustomer";
+    ViewData["Title"] = "Booking History";
+}
+<div class="container mt-5">
+    <h2 class="mb-4">@ViewData["Title"]</h2>
+
+    @if (Model.Bookings != null && Model.Bookings.Count > 0)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Booking ID</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Car ID</th>
+                    <th>Deposit Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var booking in Model.Bookings)
+                {
+                    <tr>
+                        <td>@booking.Id</td>
+                        <td>@booking.StartDate.ToString("dd/MM/yyyy")</td>
+                        <td>@booking.EndDate.ToString("dd/MM/yyyy")</td>
+                        <td>@booking.CarId</td>
+                        <td>@booking.DepositAmount</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No bookings found.</p>
+    }
+</div>
+
