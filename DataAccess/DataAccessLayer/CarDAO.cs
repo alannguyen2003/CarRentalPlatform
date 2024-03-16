@@ -38,7 +38,6 @@ namespace DataAccess.DataAccessLayer
                 throw new Exception($"Error: {ex.Message}" + ex);
             }
         }
-        
-        
+
     }
 }

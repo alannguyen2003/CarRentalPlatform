@@ -21,5 +21,20 @@ namespace DataAccess.DataAccessLayer
                 throw new Exception($"Error: {ex.Message}" + ex);
             }
         }
+
+        public List<BookingEntity> GetBookingsForCar(int carID)
+        {
+            List<BookingEntity> result;
+            try
+            {
+                var context = new ApplicationDbContext();
+                result = context.Bookings.Where(x => x.CarId == carID).ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return result;
+        }
     }
 }
