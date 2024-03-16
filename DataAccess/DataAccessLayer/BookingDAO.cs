@@ -23,7 +23,7 @@ namespace DataAccess.DataAccessLayer
             }
         }
 
-		public List<BookingEntity> GetBookingsByCustomerId(int customerID)
+        public List<BookingEntity> GetBookingsByCustomerId(int customerID)
 		{
 			List<BookingEntity> result;
 			try
@@ -64,7 +64,7 @@ namespace DataAccess.DataAccessLayer
                     StartDate = b.StartDate,
                     EndDate = b.EndDate,
                     CarModel = b.Car.Model,
-                    CustomerFirstName = b.Customer.FirstName,
+                    CustomerFirstName = b.Customer.FirstName + (b.Customer.LastName != null ? " " + b.Customer.LastName : ""),
                     Status = b.Status,
                     DepositAmount = b.DepositAmount,
                     TotalAmount = b.TotalAmount
@@ -85,7 +85,7 @@ namespace DataAccess.DataAccessLayer
                     StartDate = b.StartDate,
                     EndDate = b.EndDate,
                     CarModel = b.Car.Model,
-                    CustomerFirstName = b.Customer.FirstName,
+                    CustomerFirstName = b.Customer.FirstName + (b.Customer.LastName != null ? " " + b.Customer.LastName : ""),
                     Status = b.Status,
                     DepositAmount = b.DepositAmount,
                     TotalAmount = b.TotalAmount
@@ -94,6 +94,26 @@ namespace DataAccess.DataAccessLayer
             return bookingDetail;
         }
 
+        public async Task<List<BookingDetailDTO>> GetBookingDetailsByCustomerID(int customerID)
+        {
+            var bookingDetails = await _context.Bookings
+                .Where(b => b.CustomerId == customerID)
+                .Include(b => b.Car)
+                .Include(b => b.Customer)
+                .Select(b => new BookingDetailDTO
+                {
+                    BookingId = b.Id,
+                    StartDate = b.StartDate,
+                    EndDate = b.EndDate,
+                    CarModel = b.Car.Model,
+                    CustomerFirstName = b.Customer.FirstName + (b.Customer.LastName != null ? " " + b.Customer.LastName : ""),
+                    Status = b.Status,
+                    DepositAmount = b.DepositAmount,
+                    TotalAmount = b.TotalAmount
+                }).ToListAsync();
+
+            return bookingDetails;
+        }
 
     }
 }

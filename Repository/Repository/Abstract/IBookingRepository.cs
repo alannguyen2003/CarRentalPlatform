@@ -15,10 +15,12 @@ namespace Repository.Repository.Abstract
         Task<List<BookingEntity>> GetAllBookings();
         Task UpdateBooking(BookingEntity entity);
         Task DeleteBooking(BookingEntity entity);
+        Task UpdateBookingStatus(int bookingId, int newStatus);
         List<BookingEntity> GetBookingsForCar(int carID);
         Task<List<BookingEntity>> GetBookingsByCustomerId(int customerID);
         Task<List<BookingDetailDTO>> GetAllBookingDetails();
         Task<BookingDetailDTO> GetBookingDetailsById(int bookingId);
+        Task<List<BookingDetailDTO>> GetBookingDetailsByCustomerID(int customerID);
 
 
     }

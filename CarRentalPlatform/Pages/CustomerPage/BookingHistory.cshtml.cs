@@ -11,7 +11,7 @@ namespace CarRentalPlatform.Pages.CustomerPage
     {
 		private readonly IBookingRepository _bookingRepository;
 
-		public List<BookingEntity> Bookings { get; set; }
+		public List<BookingDetailDTO> Bookings { get; set; }
 
 		[BindProperty]
 		public AccountDto UserAccount { get; set; }
@@ -34,7 +34,7 @@ namespace CarRentalPlatform.Pages.CustomerPage
 			UserAccount = SessionHelper.GetObjectFromJson<AccountDto>(HttpContext.Session, "user");
 			if (UserAccount != null && UserAccount.Role == 3)
 			{
-				Bookings = await _bookingRepository.GetBookingsByCustomerId(UserAccount.Id);
+				Bookings = await _bookingRepository.GetBookingDetailsByCustomerID(UserAccount.Id);
 			}
 			else
 			{
