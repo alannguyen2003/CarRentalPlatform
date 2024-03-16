@@ -54,6 +54,7 @@
 						</li>
 					}
 
+
 					@if (@Model.IsLogin == true)
 					{
 						<li class="nav-item dropdown">
@@ -63,6 +64,10 @@
 							<div class="dropdown-menu" aria-labelledby="navbarDropdownProfile">
 								<a class="dropdown-item" href="/CustomerProfile">View Profile</a>
 								<a class="dropdown-item" href="/BookingHistory">My Booking</a>
+								@if (@Model.UserAccount.Role == 2)
+								{
+									<a class="dropdown-item" href="/EmployeeBookingManagement">Manage Booking</a>
+								}
 								<div class="dropdown-divider"></div>
 								<a class="dropdown-item" href="/Logout">Logout</a>
 							</div>
