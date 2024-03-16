@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataTransferLayer.DataTransfer;
+using DataTransferLayer.DataTransfer.Response;
 using DataTransferLayer.Page;
 
 namespace Repository.Repository.Abstract
@@ -15,6 +16,7 @@ namespace Repository.Repository.Abstract
         Task<CarDto?> GetCarByIdDto(int? id);
         Task<CarEntity?> GetCarById(int? id);
         Task<List<CarEntity>> GetAllCars();
+        Task<List<CarResponse>> GetAllCarResponses();
         Task<CarCategoryPage> GetDataCarCategoryPage();
         Task UpdateCar(CarEntity entity);
         Task DeleteCar(CarEntity entity);

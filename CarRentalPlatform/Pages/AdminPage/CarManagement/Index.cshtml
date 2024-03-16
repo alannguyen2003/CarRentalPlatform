@@ -1,0 +1,64 @@
+﻿@page "/admin/car/index"
+@model CarRentalPlatform.Pages.AdminPage.CarManagement.Index
+
+@{
+    Layout = "Shared/_LayoutAdminDashboard";
+}
+<main>
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">Tables</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item">
+                <a href="/admin/index">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active">Cars</li>
+        </ol>
+        <div class="card mb-4">
+            <div class="card-body">This is a table for managing cars of platform.</div>
+        </div>
+        <div class="card mb-4">
+            <div class="card-header">
+                <a href="#">Create</a>
+            </div>
+            <div class="card-body">
+                <table id="datatablesSimple">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Model</th>
+                        <th>License Plate</th>
+                        <th>Brand</th>
+                        <th>Thumbnail</th>
+                        <th>Status</th>
+                        <th>Price/day</th>
+                        <th>Description</th>
+                        <th>Location</th>
+                        <th>Operation</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in @Model.ListCars)
+                        {
+                            <tr>
+                                <td>@item.Id</td>
+                                <td>@item.Model</td>
+                                <td>@item.LicensePlate</td>
+                                <td>@item.Brand</td>
+                                <td><img src="~/@item.ThumbnailImage" width="100px" height="80px"/></td>
+                                <td>@item.Status</td>
+                                <td>$@item.PricePerDay</td>
+                                <td>@item.Description</td>
+                                <td>@item.Location</td>
+                                <td>
+                                    <a href="#">Detail</a>
+                                    <a href="#">Edit</a>
+                                    <a href="#">Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>

@@ -19,6 +19,10 @@ public class CarEntity : BaseEntity
     public int PricePerHour { get; set; }
     public int PricePerMonth { get; set; }
     
+    //1 --> Available 
+    //2 --> On booking
+    //3 --> On checking
+    //4 --> Unavailable
     public int Status { get; set; }
     public string Description { get; set; } = null!;
     
