@@ -118,6 +118,7 @@ namespace DataAccess
                 var bookings = new List<BookingEntity>
             {
                 new BookingEntity { StartDate = DateTime.Now.AddDays(-10), EndDate = DateTime.Now.AddDays(-5), ActualReturnDate = DateTime.Now.AddDays(-5), Feedback = "Very good service", Note = "No issues", DepositAmount = 100, TotalAmount = 500, CustomerId = accounts[3].Id, CarId = cars[0].Id, Status = 4 },
+
                 new BookingEntity { StartDate = DateTime.Now.AddDays(-20), EndDate = DateTime.Now.AddDays(-15), ActualReturnDate = DateTime.Now.AddDays(-14), Feedback = "Excellent car", Note = "Minor scratches", DepositAmount = 200, TotalAmount = 600, CustomerId = accounts[4].Id, CarId = cars[3].Id, Status = 4 },
                 new BookingEntity { StartDate = DateTime.Now.AddDays(-30), EndDate = DateTime.Now.AddDays(-25), ActualReturnDate = DateTime.Now.AddDays(-24), Feedback = "Okay experience", Note = "Late return", DepositAmount = 150, TotalAmount = 550, CustomerId = accounts[3].Id, CarId = cars[2].Id, Status = 4 },
                 new BookingEntity { StartDate = DateTime.Now.AddDays(-15), EndDate = DateTime.Now.AddDays(-10), ActualReturnDate = DateTime.Now.AddDays(-9), Feedback = "Great car, will rent again", Note = "All good", DepositAmount = 100, TotalAmount = 500, CustomerId = accounts[4].Id, CarId = cars[1].Id, Status = 4 },

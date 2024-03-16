@@ -1,5 +1,6 @@
 ﻿using CarRentalPlatform.Configuration.Validation;
 using DataTransferLayer.DataTransfer.Request;
+using DataTransferLayer.DataTransfer.Response;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -7,37 +8,39 @@ using Repository.Repository.Abstract;
 
 namespace CarRentalPlatform.Pages.AdminPage.AccountManagement;
 
-public class Create : PageModel
+public class Edit : PageModel
 {
     private readonly IAccountRepository _accountRepository;
 
-    public Create(IAccountRepository accountRepository)
+    public Edit(IAccountRepository accountRepository)
     {
         _accountRepository = accountRepository;
     }
     
-    [BindProperty]
-    public CreateAccountRequest? CreateAccountRequest { get; set; }
+    [BindProperty] 
+    public AccountRequest? AccountRequest { get; set; }
     [BindProperty]
     public string Message { get; set; }
-    
-    public IActionResult OnGet()
+
+    public IActionResult OnGet(int id)
     {
-        ResetFormData();
+        ResetFormData(id);
         return Page();
     }
 
     public IActionResult OnPost()
     {
         int gender = Int32.Parse(Request.Form["gender"]);
-        if (CreateAccountRequest != null)
+        if (AccountRequest != null)
         {
-            if (AccountValidation.IsValidEmail(CreateAccountRequest.Email) &&
-                AccountValidation.IsValidPhoneNumber(CreateAccountRequest.PhoneNumber) &&
-                AccountValidation.IsValidPassword(CreateAccountRequest.Password))
+            if (AccountValidation.IsValidEmail(AccountRequest.Email) &&
+                AccountValidation.IsValidPhoneNumber(AccountRequest.PhoneNumber) &&
+                AccountValidation.IsValidPassword(AccountRequest.Password))
             {
-                bool checkCreate = _accountRepository.CreateAccountFromRequest(CreateAccountRequest).Result;
-                if (checkCreate) return RedirectToPage("./index");
+                Message = AccountRequest.Id + " " + AccountRequest.Email;
+                return Page();
+                bool checkEdit = _accountRepository.ModifyAccountFromRequest(AccountRequest).Result;
+                if (checkEdit) return RedirectToPage("./index");
                 else
                 {
                     Message = "Error!";
@@ -48,11 +51,12 @@ public class Create : PageModel
                 Message = "Your email was indentical, or your phone number has wrong format, please check again!";
             }
         }
-        ResetFormData();
+        ResetFormData(Int32.Parse(Request.Form["id"]));
+        Message = AccountRequest.Id + " " + AccountRequest.Email;
         return Page();
     }
 
-    public void ResetFormData()
+    public void ResetFormData(int id)
     {
         List<RoleRequest> listRoleRequest = new List<RoleRequest>();
         listRoleRequest.Add(new RoleRequest()
@@ -81,5 +85,6 @@ public class Create : PageModel
         });
         ViewData["RoleId"] = new SelectList(listRoleRequest, "Id", "Role");
         ViewData["GenderId"] = new SelectList(listGenderRequest, "Id", "Gender");
+        AccountRequest = _accountRepository.GetAccountForEdit(id).Result;
     }
 }
