@@ -57,9 +57,9 @@
                             {
                                 <a href="/ReturnCar/@booking.BookingId" class="btn btn-info">Return Car</a>
                             }
-                            else if (booking.TotalAmount != null && booking.Status == 3)
+                            else if (booking.TotalAmount != 0 && booking.Status == 3)
                             {
-                                <a href="/PayTotalAmount/@booking.BookingId" class="btn btn-primary">Pay</a>
+                                <a href="/PayTotalAmount/@booking.BookingId" class="btn btn-primary" onclick="confirmPayment('@booking.BookingId')">Pay</a>
                             }
                             else
                             {
@@ -76,3 +76,11 @@
         <p>No bookings found.</p>
     }
 </div>
+
+<script>
+    function confirmPayment(bookingId) {
+        if (confirm("Do you want to proceed with the payment?")) {
+            window.location.href = `/PayTotalAmount/${bookingId}`;
+        }
+    }
+</script>
