@@ -15,52 +15,58 @@ public class Login : PageModel
     {
         _accountRepository = accountRepository;
     }
-
-    [BindProperty]
-    public string Message { get; set; }
     
     public void OnGet()
     {
-        Message = "";
+
     }
 
     public IActionResult OnPost()
     {
-        string email = Request.Form["email"]!;
-        string password = Request.Form["password"]!;
-        AccountDto? accountCheck = _accountRepository.Login(email, password).Result;
-        if (email.Equals(JsonConfiguration.GetValueFromAppSettings(JsonConfiguration.AdminEmail)) &&
-                         password.Equals(JsonConfiguration.GetValueFromAppSettings(JsonConfiguration.AdminPassword)))
+        
+        if (!ModelState.IsValid) return Page();
+        try
         {
-            AccountDto account = new AccountDto()
+            string email = Request.Form["email"]!;
+            string password = Request.Form["password"]!;
+            AccountDto? accountCheck = _accountRepository.Login(email, password).Result;
+            if (email.Equals(JsonConfiguration.GetValueFromAppSettings(JsonConfiguration.AdminEmail)) &&
+                             password.Equals(JsonConfiguration.GetValueFromAppSettings(JsonConfiguration.AdminPassword)))
             {
-                Id = 0,
-                Email = JsonConfiguration.GetValueFromAppSettings(JsonConfiguration.AdminEmail),
-                Name = JsonConfiguration.GetValueFromAppSettings(JsonConfiguration.AdminPassword),
-                Role = 1
-            };
-            SessionHelper.SetObjectAsJson(HttpContext.Session,"isLogin", true);
-            SessionHelper.SetObjectAsJson(HttpContext.Session,"user", (object) account);
-            return RedirectToPage("./adminpage/account/index");
-        }
-        else if (accountCheck != null)
-        {
-            AccountDto? accountDto = _accountRepository.Login(email, password).Result;
-            AccountDto? account = new AccountDto()
+                AccountDto account = new AccountDto()
+                {
+                    Id = 0,
+                    Email = JsonConfiguration.GetValueFromAppSettings(JsonConfiguration.AdminEmail),
+                    Name = JsonConfiguration.GetValueFromAppSettings(JsonConfiguration.AdminPassword),
+                    Role = 1
+                };
+                SessionHelper.SetObjectAsJson(HttpContext.Session, "isLogin", true);
+                SessionHelper.SetObjectAsJson(HttpContext.Session, "user", (object)account);
+                return RedirectToPage("./adminpage/account/index");
+            }
+            else if (accountCheck != null)
             {
-                Id = accountDto.Id,
-                Email = accountDto.Email,
-                Name = accountDto.Name,
-                Role = accountDto.Role
-            };
-            SessionHelper.SetObjectAsJson(HttpContext.Session,"isLogin", true);
-            SessionHelper.SetObjectAsJson(HttpContext.Session,"user", (object) account);
-            return RedirectToPage("./Index");
+                AccountDto? accountDto = _accountRepository.Login(email, password).Result;
+                AccountDto? account = new AccountDto()
+                {
+                    Id = accountDto.Id,
+                    Email = accountDto.Email,
+                    Name = accountDto.Name,
+                    Role = accountDto.Role
+                };
+                SessionHelper.SetObjectAsJson(HttpContext.Session, "isLogin", true);
+                SessionHelper.SetObjectAsJson(HttpContext.Session, "user", (object)account);
+                return RedirectToPage("./Index");
+            }
+            else
+            {
+                ModelState.AddModelError("Account", "Invalid account");
+            }
         }
-        else
+        catch (Exception ex)
         {
-            Message = "Wrong email or password!";
+            ModelState.AddModelError("Account", "An error occured during login proccess");
         }
-        return null;
+        return Page();
     }
 }
