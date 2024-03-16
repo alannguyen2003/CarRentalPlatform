@@ -20,6 +20,7 @@ public class BookingEntity : BaseEntity
     //2 --> Car Takeaway
     //3 --> On Checking
     //4 --> Done
+    //5 --> Cancel
     public int Status { get; set; }
 
     public int DepositAmount { get; set; }
@@ -32,4 +33,5 @@ public class BookingEntity : BaseEntity
     [ForeignKey("CarId")]
     public int CarId { get; set; }
     public virtual CarEntity Car { get; set; } = null!;
+
 }
