@@ -212,7 +212,7 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("BuildObject.Entities.BookingEntity", b =>
                 {
                     b.HasOne("BuildObject.Entities.CarEntity", "Car")
-                        .WithMany("Bookings")
+                        .WithMany()
                         .HasForeignKey("CarId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -250,11 +250,6 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("BuildObject.Entities.BrandEntity", b =>
                 {
                     b.Navigation("Cars");
-                });
-
-            modelBuilder.Entity("BuildObject.Entities.CarEntity", b =>
-                {
-                    b.Navigation("Bookings");
                 });
 
             modelBuilder.Entity("BuildObject.Entities.LocationEntity", b =>
