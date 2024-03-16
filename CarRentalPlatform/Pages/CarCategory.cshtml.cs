@@ -19,6 +19,9 @@ public class CarCategory : PageModel
     
     [BindProperty]
     public bool IsLogin { get; set; }
+
+    public AccountDto account { get; set; }
+
     [BindProperty]
     public CarCategoryPage CarCategoryPage { get; set; }
 
@@ -27,6 +30,7 @@ public class CarCategory : PageModel
     public IActionResult OnGet()
     {
         IsLogin = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "isLogin");
+        account = SessionHelper.GetObjectFromJson<AccountDto>(HttpContext.Session, "user");
         if (IsLogin == false)
         {
             return RedirectToPage("./login");
@@ -38,7 +42,7 @@ public class CarCategory : PageModel
     public IActionResult OnPostAddToCart()
     {
         int id = Int32.Parse(Request.Form["id"]);
-        AccountDto account = SessionHelper.GetObjectFromJson<AccountDto>(HttpContext.Session, "user");
+        account = SessionHelper.GetObjectFromJson<AccountDto>(HttpContext.Session, "user");
         CartModel cartModel = new CartModel()
         {
             Account = new AccountDto()
