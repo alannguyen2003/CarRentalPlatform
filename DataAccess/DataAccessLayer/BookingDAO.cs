@@ -65,6 +65,7 @@ namespace DataAccess.DataAccessLayer
                     EndDate = b.EndDate,
                     CarModel = b.Car.Model,
                     CustomerFirstName = b.Customer.FirstName,
+                    Status = b.Status,
                     DepositAmount = b.DepositAmount,
                     TotalAmount = b.TotalAmount
                 }).ToListAsync();
@@ -85,6 +86,7 @@ namespace DataAccess.DataAccessLayer
                     EndDate = b.EndDate,
                     CarModel = b.Car.Model,
                     CustomerFirstName = b.Customer.FirstName,
+                    Status = b.Status,
                     DepositAmount = b.DepositAmount,
                     TotalAmount = b.TotalAmount
                 }).FirstOrDefaultAsync();

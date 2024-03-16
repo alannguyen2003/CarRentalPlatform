@@ -19,6 +19,15 @@
                     <input type="text" value="@Model.Booking.BookingId" class="form-control" readonly />
                 </div>
             </div>
+            <div class="col-2">
+                <div class="form-group">
+                    <label>Status</label>
+                    <div class="@Model.Booking.GetStatusClass() p-1 rounded d-flex align-items-center justify-content-center">
+                        @Model.Booking.GetStatusText()
+                    </div>
+                </div>
+            </div>
+
         </div>
 
         <div class="row">

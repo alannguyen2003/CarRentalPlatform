@@ -15,9 +15,9 @@ namespace DataAccess
     {
         public static async Task SeedAccount(ApplicationDbContext context)
         {
-            if (!await context.Accounts.AnyAsync()) { return; }
-
-            var accounts = new List<AccountEntity>
+            if (!await context.Accounts.AnyAsync())
+            {
+                var accounts = new List<AccountEntity>
             {
                 new AccountEntity { Email = "a1@gmail.com", FirstName = "Admin1", LastName = "Seed", PhoneNumber = "0214567894", Gender = true, Password = "1", WalletBalance = 100, DriverLicense = "103103103103", Role = 1 },
                 new AccountEntity { Email = "a2@gmail.com", FirstName = "Admin2", LastName = "Seed", PhoneNumber = "2345678901", Gender = false, Password = "1", WalletBalance = 600, DriverLicense = "234567890123", Role = 2 },
@@ -28,12 +28,15 @@ namespace DataAccess
             };
 
 
-            foreach (var account in accounts)
-            {
-                await context.Accounts.AddAsync(account);
+                foreach (var account in accounts)
+                {
+                    await context.Accounts.AddAsync(account);
+                }
+
+                await context.SaveChangesAsync();
             }
 
-            await context.SaveChangesAsync();
+
         }
 
         public static async Task SeedBrand(ApplicationDbContext context)
@@ -117,11 +120,10 @@ namespace DataAccess
 
                 var bookings = new List<BookingEntity>
             {
-                new BookingEntity { StartDate = DateTime.Now.AddDays(-10), EndDate = DateTime.Now.AddDays(-5), ActualReturnDate = DateTime.Now.AddDays(-5), Feedback = "Very good service", Note = "No issues", DepositAmount = 100, TotalAmount = 500, CustomerId = accounts[3].Id, CarId = cars[0].Id, Status = 4 },
-
-                new BookingEntity { StartDate = DateTime.Now.AddDays(-20), EndDate = DateTime.Now.AddDays(-15), ActualReturnDate = DateTime.Now.AddDays(-14), Feedback = "Excellent car", Note = "Minor scratches", DepositAmount = 200, TotalAmount = 600, CustomerId = accounts[4].Id, CarId = cars[3].Id, Status = 4 },
+                new BookingEntity { StartDate = DateTime.Now.AddDays(-10), EndDate = DateTime.Now.AddDays(-5), ActualReturnDate = DateTime.Now.AddDays(-5), Feedback = "Very good service", Note = "No issues", DepositAmount = 100, TotalAmount = 500, CustomerId = accounts[3].Id, CarId = cars[0].Id, Status = 5 },
+                new BookingEntity { StartDate = DateTime.Now.AddDays(-20), EndDate = DateTime.Now.AddDays(-15), ActualReturnDate = DateTime.Now.AddDays(-14), Feedback = "Excellent car", Note = "Minor scratches", DepositAmount = 200, TotalAmount = 600, CustomerId = accounts[4].Id, CarId = cars[3].Id, Status = 5 },
                 new BookingEntity { StartDate = DateTime.Now.AddDays(-30), EndDate = DateTime.Now.AddDays(-25), ActualReturnDate = DateTime.Now.AddDays(-24), Feedback = "Okay experience", Note = "Late return", DepositAmount = 150, TotalAmount = 550, CustomerId = accounts[3].Id, CarId = cars[2].Id, Status = 4 },
-                new BookingEntity { StartDate = DateTime.Now.AddDays(-15), EndDate = DateTime.Now.AddDays(-10), ActualReturnDate = DateTime.Now.AddDays(-9), Feedback = "Great car, will rent again", Note = "All good", DepositAmount = 100, TotalAmount = 500, CustomerId = accounts[4].Id, CarId = cars[1].Id, Status = 4 },
+                new BookingEntity { StartDate = DateTime.Now.AddDays(-15), EndDate = DateTime.Now.AddDays(-10), ActualReturnDate = DateTime.Now.AddDays(-9), Feedback = "Great car, will rent again", Note = "All good", DepositAmount = 100, TotalAmount = 500, CustomerId = accounts[4].Id, CarId = cars[1].Id, Status = 5 },
                 new BookingEntity { StartDate = DateTime.Now.AddDays(-5), EndDate = DateTime.Now.AddDays(-1), ActualReturnDate = DateTime.Now, Feedback = "Car was not clean", Note = "Dirty interior", DepositAmount = 120, TotalAmount = 520, CustomerId = accounts[3].Id, CarId = cars[4].Id, Status = 4 }
             };
 

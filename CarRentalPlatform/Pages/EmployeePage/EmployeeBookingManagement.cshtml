@@ -6,49 +6,55 @@
 }
 
 <div class="container mt-5">
-<h2 class="mb-4">@ViewData["Title"]</h2>
+    <h2 class="mb-4">@ViewData["Title"]</h2>
 
-@if (!ModelState.IsValid)
-{
-    <div class="alert alert-danger">
-        <ul>
-            @foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
-            {
-                <li>@error.ErrorMessage</li>
-            }
-        </ul>
-    </div>
-}
+    @if (!ModelState.IsValid)
+    {
+        <div class="alert alert-danger">
+            <ul>
+                @foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    <li>@error.ErrorMessage</li>
+                }
+            </ul>
+        </div>
+    }
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Booking ID</th>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th>Car ID</th>
-            <th>Customer ID</th>
-            <th>Deposit Amount</th>
-            <th>Total Amount</th>
-            <th>Action</th> <!-- For Edit button -->
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var booking in Model.Bookings)
-        {
+    <table class="table">
+        <thead>
             <tr>
-                <td>@booking.BookingId</td>
-                <td>@booking.StartDate.ToString("yyyy-MM-dd")</td>
-                <td>@booking.EndDate.ToString("yyyy-MM-dd")</td>
-                <td>@booking.CarModel</td>
-                <td>@booking.CustomerFirstName</td>
-                <td>@booking.DepositAmount</td>
-                <td>@booking.TotalAmount</td>
-                <td>
-                    <a href="/EditBookingTotal/@booking.BookingId" class="btn btn-primary">Edit</a>
-                </td>
+                <th>Booking ID</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Car ID</th>
+                <th>Customer ID</th>
+                <th>Status</th>
+                <th>Deposit Amount</th>
+                <th>Total Amount</th>
+                <th>Action</th> <!-- For Edit button -->
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var booking in Model.Bookings)
+            {
+                <tr>
+                    <td class="text-center">@booking.BookingId</td>
+                    <td>@booking.StartDate.ToString("yyyy-MM-dd")</td>
+                    <td>@booking.EndDate.ToString("yyyy-MM-dd")</td>
+                    <td>@booking.CarModel</td>
+                    <td>@booking.CustomerFirstName</td>
+                    <td>
+                        <div class="@booking.GetStatusClass() p-1 rounded text-center">
+                            @booking.GetStatusText()
+                        </div>
+                    </td>
+                    <td class="text-center">@booking.DepositAmount</td>
+                    <td class="text-center">@booking.TotalAmount</td>
+                    <td>
+                        <a href="/EditBookingTotal/@booking.BookingId" class="btn btn-primary">Edit</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
