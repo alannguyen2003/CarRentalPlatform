@@ -131,7 +131,6 @@ namespace DataAccess
                 {
                     await context.Bookings.AddAsync(booking);
                 }
-
                 await context.SaveChangesAsync();
             }
         }

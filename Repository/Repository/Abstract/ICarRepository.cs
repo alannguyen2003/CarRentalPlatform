@@ -15,6 +15,7 @@ namespace Repository.Repository.Abstract
         Task CreateCar(CarEntity entity);
         Task<CarDto?> GetCarByIdDto(int? id);
         Task<CarEntity?> GetCarById(int? id);
+        Task<CarResponse?> GetCarResponseById(int? id);
         Task<List<CarEntity>> GetAllCars();
         Task<List<CarResponse>> GetAllCarResponses();
         Task<CarCategoryPage> GetDataCarCategoryPage();
