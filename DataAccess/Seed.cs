@@ -20,10 +20,10 @@ namespace DataAccess
             var accounts = new List<AccountEntity>
             {
                 new AccountEntity { Email = "a1@gmail.com", FirstName = "Admin1", LastName = "Seed", PhoneNumber = "0214567894", Gender = true, Password = "1", WalletBalance = 100, DriverLicense = "103103103103", Role = 1 },
-                new AccountEntity { Email = "a2@example.com", FirstName = "Admin2", LastName = "Seed", PhoneNumber = "2345678901", Gender = false, Password = "1", WalletBalance = 600, DriverLicense = "234567890123", Role = 2 },
-                new AccountEntity { Email = "e1@example.com", FirstName = "Employ1", LastName = "Seed", PhoneNumber = "3456789012", Gender = true, Password = "1", WalletBalance = 700, DriverLicense = "345678901234", Role = 2 },
-                new AccountEntity { Email = "c1@example.com", FirstName = "Cus1", LastName = "Seed", PhoneNumber = "4567890123", Gender = false, Password = "1", WalletBalance = 800, DriverLicense = "456789012345", Role = 3 },
-                new AccountEntity { Email = "c2@example.com", FirstName = "Cus2", LastName = "Seed", PhoneNumber = "5678901234", Gender = true, Password = "1", WalletBalance = 900, DriverLicense = "567890123456", Role = 3 }
+                new AccountEntity { Email = "a2@gmail.com", FirstName = "Admin2", LastName = "Seed", PhoneNumber = "2345678901", Gender = false, Password = "1", WalletBalance = 600, DriverLicense = "234567890123", Role = 2 },
+                new AccountEntity { Email = "e1@gmail.com", FirstName = "Employ1", LastName = "Seed", PhoneNumber = "3456789012", Gender = true, Password = "1", WalletBalance = 700, DriverLicense = "345678901234", Role = 2 },
+                new AccountEntity { Email = "c1@gmail.com", FirstName = "Cus1", LastName = "Seed", PhoneNumber = "4567890123", Gender = false, Password = "1", WalletBalance = 800, DriverLicense = "456789012345", Role = 3 },
+                new AccountEntity { Email = "c2@gmail.com", FirstName = "Cus2", LastName = "Seed", PhoneNumber = "5678901234", Gender = true, Password = "1", WalletBalance = 900, DriverLicense = "567890123456", Role = 3 }
 
             };
 

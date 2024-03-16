@@ -18,7 +18,8 @@ namespace Repository.Repository
             _carDao = new CarDAO();
         }
         public async Task<List<BookingEntity>> GetAllBookings() => await _bookingDao.GetAll().Result.ToListAsync();
-        public async Task CreateBooking(BookingRequest request)
+        public async Task<List<BookingEntity>> GetBookingsByCustomerId(int customerID) => _bookingDao.GetBookingsByCustomerId(customerID);
+		public async Task CreateBooking(BookingRequest request)
         {
             BookingEntity entity = new BookingEntity()
             {
@@ -42,5 +43,6 @@ namespace Repository.Repository
         public Task<BookingEntity?> GetBookingById(int id) => _bookingDao.GetEntityById(id);
         public Task UpdateBooking(BookingEntity entity) => _bookingDao.UpdateEntity(entity);
         public Task DeleteBooking(BookingEntity entity) => _bookingDao.DeleteEntity(entity);
+        public List<BookingEntity> GetBookingsForCar(int carID) => _bookingDao.GetBookingsForCar(carID);
     }
 }
