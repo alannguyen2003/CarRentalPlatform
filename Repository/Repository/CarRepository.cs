@@ -7,8 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataTransferLayer.DataTransfer;
+using DataTransferLayer.DataTransfer.Response;
 using DataTransferLayer.Page;
 using Microsoft.EntityFrameworkCore;
+using Repository.Repository.Utils;
 
 namespace Repository.Repository
 {
@@ -25,6 +27,29 @@ namespace Repository.Repository
         public Task<CarEntity?> GetCarById(int? id) => _carDao.GetCarsByIdAsync(id);
 
         public Task<List<CarEntity>> GetAllCars() => _carDao.GetAll().Result.ToListAsync();
+        public async Task<List<CarResponse>> GetAllCarResponses()
+        {
+            var cars =  _carDao.GetCarsAsync().Result;
+            List<CarResponse> listResponse = new List<CarResponse>();
+            foreach (var item in cars)
+            {
+                CarResponse carResponse = new CarResponse()
+                {
+                    Id = item.Id,
+                    Model = item.Model,
+                    LicensePlate = item.LicensePlate,
+                    PricePerDay = item.PricePerDay,
+                    Description = item.Description,
+                    ThumbnailImage = item.ThumbnailImage,
+                    Location = item.Location.Address,
+                    Brand = item.Brand.BrandName,
+                    Status = ConvertUtilization.GetCarStatus(item.Status)
+                };
+                listResponse.Add(carResponse);
+            }
+            return listResponse;
+        }
+
         public async Task<CarCategoryPage> GetDataCarCategoryPage()
         {
             var cars = _carDao.GetCarsAsync().Result;

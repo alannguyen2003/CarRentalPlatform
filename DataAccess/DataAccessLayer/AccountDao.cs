@@ -17,5 +17,27 @@ public class AccountDAO : BaseDao<AccountEntity>
             .First(account => account.Email == email && account.Password == password);
         return account;
     }
+
+    public async Task<AccountEntity?> CheckExistEmail(string email)
+    {
+        if (_context.Accounts != null)
+        {
+            var account = _context.Accounts
+                .First(account => account.Email == email);
+            return account;
+        }
+        return null;
+    }
+    
+    public async Task<AccountEntity?> CheckExistPhoneNumber(string phoneNumber)
+    {
+        if (_context.Accounts != null)
+        {
+            var account = _context.Accounts
+                .First(account => account.PhoneNumber == phoneNumber);
+            return account;
+        }
+        return null;
+    }
 }
 
