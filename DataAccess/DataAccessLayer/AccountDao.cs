@@ -18,26 +18,25 @@ public class AccountDAO : BaseDao<AccountEntity>
         return account;
     }
 
-    public async Task<AccountEntity?> CheckExistEmail(string email)
+    public async Task<bool?> CheckExistEmail(string email)
     {
         if (_context.Accounts != null)
         {
-            var account = _context.Accounts
-                .First(account => account.Email == email);
-            return account;
+            var isFound = _context.Accounts
+                .Any(account => account.Email == email);
+            return isFound;
         }
-        return null;
+        return false;
     }
-    
-    public async Task<AccountEntity?> CheckExistPhoneNumber(string phoneNumber)
+
+    public async Task<bool?> CheckExistPhoneNumber(string phoneNumber)
     {
         if (_context.Accounts != null)
         {
-            var account = _context.Accounts
-                .First(account => account.PhoneNumber == phoneNumber);
-            return account;
+            var isFound = _context.Accounts
+                .Any(account => account.PhoneNumber == phoneNumber);
+            return isFound;
         }
-        return null;
+        return false;
     }
 }
-

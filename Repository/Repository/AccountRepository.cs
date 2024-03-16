@@ -68,15 +68,48 @@ namespace Repository.Repository
                 throw new Exception("Account not found");
             }
         }
-        
-        
+
+        public async Task<AccountResponse?> GetAccountForRequest(int id)
+        {
+            var account = _accountDao.GetEntityById(id).Result;
+            return new AccountResponse()
+            {
+                Id = account.Id,
+                FirstName = account.FirstName, 
+                LastName = account.LastName, 
+                PhoneNumber = account.PhoneNumber,
+                WalletBalance = account.WalletBalance, 
+                Gender = ConvertUtilization.GetGender(account.Gender), 
+                Role = ConvertUtilization.GetRole(account.Role), 
+                Email = account.Email,
+                DriverLicense = account.DriverLicense
+            };
+        }
+
+        public async Task<AccountRequest?> GetAccountForEdit(int id)
+        {
+            var account = _accountDao.GetEntityById(id).Result;
+            return new AccountRequest()
+            {
+                Id = account.Id,
+                FirstName = account.FirstName, 
+                LastName = account.LastName, 
+                PhoneNumber = account.PhoneNumber,
+                WalletBalance = account.WalletBalance, 
+                Gender = 1, 
+                Role = 1, 
+                Email = account.Email,
+                DriverLicense = account.DriverLicense
+            };
+        }
+
 
         public Task CreateAccount(AccountEntity entity) => _accountDao.Create(entity);
         public async Task<bool> CreateAccountFromRequest(CreateAccountRequest request)
         {
-            var account = _accountDao.CheckExistEmail(request.Email).Result;
-            var account1 = _accountDao.CheckExistPhoneNumber(request.PhoneNumber).Result;
-            if (account != null && account1 != null)
+            var isFoundEmail = _accountDao.CheckExistEmail(request.Email).Result;
+            var isFoundPhoneNumber = _accountDao.CheckExistPhoneNumber(request.PhoneNumber).Result;
+            if (isFoundEmail == false && isFoundPhoneNumber == false)
             {
                 AccountEntity entity = new AccountEntity()
                 {
@@ -88,11 +121,31 @@ namespace Repository.Repository
                     Role = request.Role,
                     WalletBalance = request.WalletBalance,
                     Gender = ConvertUtilization.GetGender_2(request.Gender),
+                    DriverLicense = ""
                 };
                 await _accountDao.Create(entity);
                 return true;
             }
             return false;
+        }
+
+        public async Task<bool> ModifyAccountFromRequest(AccountRequest request)
+        {
+            AccountEntity entity = new AccountEntity()
+            {
+                Id = request.Id,
+                Email = request.Email,
+                PhoneNumber = request.PhoneNumber,
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                Password = request.Password,
+                Role = request.Role,
+                WalletBalance = request.WalletBalance,
+                Gender = ConvertUtilization.GetGender_2(request.Gender),
+                DriverLicense = ""
+            };
+            await _accountDao.UpdateEntity(entity);
+            return true;
         }
 
         public async Task<List<AccountResponse>> GetAllAccountResponse()

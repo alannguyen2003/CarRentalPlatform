@@ -1,10 +1,9 @@
-﻿@page "/admin/account/create"
-@model CarRentalPlatform.Pages.AdminPage.AccountManagement.Create
+﻿@page "/edit"
+@model CarRentalPlatform.Pages.AdminPage.AccountManagement.Edit
 
 @{
     Layout = "Shared/_LayoutAdminDashboard";
 }
-
 <main>
     <div class="container-fluid px-4">
         <h1 class="mt-4">Tables</h1>
@@ -19,27 +18,31 @@
         </div>
         <div class="card mb-4">
             <div class="card-header">
-                Create
+                Edit
             </div>
             <form method="post" class="m-4">
                 <div class="form-floating mb-3">
-                    <input asp-for="CreateAccountRequest.Email" class="form-control" id="inputEmail" type="email" placeholder="name@example.com"/>
+                    <input asp-for="AccountRequest.Id" class="form-control" id="inputEmail" value="@Model.AccountRequest.Id" type="number" placeholder="name@example.com" disabled/>
+                    <label for="inputEmail">Id</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input asp-for="AccountRequest.Email" class="form-control" id="inputEmail" value="@Model.AccountRequest.Email" type="email" placeholder="name@example.com"/>
                     <label for="inputEmail">Email address</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input asp-for="CreateAccountRequest.FirstName" class="form-control" id="inputEmail" type="text" placeholder="name@example.com"/>
+                    <input asp-for="AccountRequest.FirstName" class="form-control" id="inputEmail" value="@Model.AccountRequest.FirstName" type="text" placeholder="name@example.com"/>
                     <label for="inputEmail">First name</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input asp-for="CreateAccountRequest.LastName" class="form-control" id="inputEmail" type="text" placeholder="name@example.com"/>
+                    <input asp-for="AccountRequest.LastName" class="form-control" id="inputEmail" value="@Model.AccountRequest.LastName" type="text" placeholder="name@example.com"/>
                     <label for="inputEmail">Last name</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input asp-for="CreateAccountRequest.Password" class="form-control" id="inputEmail" type="password" placeholder="name@example.com"/>
+                    <input asp-for="AccountRequest.Password" class="form-control" id="inputEmail" value="@Model.AccountRequest.Password" type="password" placeholder="name@example.com"/>
                     <label for="inputEmail">Password</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input asp-for="CreateAccountRequest.PhoneNumber" class="form-control" id="inputEmail" type="text" placeholder="name@example.com"/>
+                    <input asp-for="AccountRequest.PhoneNumber" class="form-control" id="inputEmail" value="@Model.AccountRequest.PhoneNumber" type="text" placeholder="name@example.com"/>
                     <label for="inputEmail">Phone number (format: 0123 456 789)</label>
                 </div>
                 <div class="form-floating mb-3">
@@ -47,19 +50,18 @@
                     <label for="inputEmail">Gender</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input asp-for="CreateAccountRequest.WalletBalance" class="form-control" id="inputEmail" type="number" placeholder="name@example.com"/>
+                    <input asp-for="AccountRequest.WalletBalance" class="form-control" value="@Model.AccountRequest.WalletBalance" id="inputEmail" type="number" placeholder="name@example.com"/>
                     <label for="inputEmail">Wallet</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <select asp-for="CreateAccountRequest.Role" class="form-control" asp-items="ViewBag.RoleId"></select>
+                    <select asp-for="AccountRequest.Role" class="form-control" asp-items="ViewBag.RoleId"></select>
                     <label for="inputEmail">Role</label>
                 </div>
                 <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
                     <p style="color: red;">@Model.Message</p>
-                    <button type="submit" class="btn btn-primary">Create</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
             </form>
         </div>
     </div>
 </main>
-
