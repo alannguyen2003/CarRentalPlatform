@@ -1,5 +1,6 @@
 ﻿using BuildObject.Entities;
 using DataAccess.DataAccessLayer.Abstract;
+using DataTransferLayer.DataTransfer;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.DataAccessLayer
@@ -51,5 +52,48 @@ namespace DataAccess.DataAccessLayer
             }
             return result;
         }
+
+        public async Task<List<BookingDetailDTO>> GetAllBookingDetails()
+        {
+            var bookingDetails = await _context.Bookings
+                .Include(b => b.Car)
+                .Include(b => b.Customer)
+                .Select(b => new BookingDetailDTO
+                {
+                    BookingId = b.Id,
+                    StartDate = b.StartDate,
+                    EndDate = b.EndDate,
+                    CarModel = b.Car.Model,
+                    CustomerFirstName = b.Customer.FirstName,
+                    Status = b.Status,
+                    DepositAmount = b.DepositAmount,
+                    TotalAmount = b.TotalAmount
+                }).ToListAsync();
+
+            return bookingDetails;
+        }
+
+        public async Task<BookingDetailDTO> GetBookingDetailsById(int bookingId)
+        {
+            var bookingDetail = await _context.Bookings
+                .Where(b => b.Id == bookingId)
+                .Include(b => b.Car)
+                .Include(b => b.Customer)
+                .Select(b => new BookingDetailDTO
+                {
+                    BookingId = b.Id,
+                    StartDate = b.StartDate,
+                    EndDate = b.EndDate,
+                    CarModel = b.Car.Model,
+                    CustomerFirstName = b.Customer.FirstName,
+                    Status = b.Status,
+                    DepositAmount = b.DepositAmount,
+                    TotalAmount = b.TotalAmount
+                }).FirstOrDefaultAsync();
+
+            return bookingDetail;
+        }
+
+
     }
 }
