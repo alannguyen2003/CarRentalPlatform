@@ -25,6 +25,10 @@ namespace Repository.Repository
         public Task CreateCar(CarEntity entity) => _carDao.Create(entity);
 
         public Task<CarEntity?> GetCarById(int? id) => _carDao.GetCarsByIdAsync(id);
+        public Task<CarResponse?> GetCarResponseById(int? id)
+        {
+            throw new NotImplementedException();
+        }
 
         public Task<List<CarEntity>> GetAllCars() => _carDao.GetAll().Result.ToListAsync();
         public async Task<List<CarResponse>> GetAllCarResponses()
