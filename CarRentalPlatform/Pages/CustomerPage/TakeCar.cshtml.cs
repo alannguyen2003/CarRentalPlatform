@@ -14,7 +14,7 @@ namespace CarRentalPlatform.Pages.CustomerPage
         public async Task<IActionResult> OnGetAsync(int id)
         {
             await _bookingRepository.UpdateBookingStatus(id, 2);
-            return RedirectToPage("/BookingHistory");
+            return RedirectToPage("./BookingHistory");
         }
     }
 }

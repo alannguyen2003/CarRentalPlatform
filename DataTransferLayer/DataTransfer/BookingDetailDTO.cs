@@ -36,7 +36,7 @@ namespace DataTransferLayer.DataTransfer
             {
                 1 => "bg-warning border border-dark text-white",
                 2 => "bg-primary border border-dark text-white",
-                3 => "bg-info border border-dark text-dark",
+                3 => "bg-info border border-dark text-white",
                 4 => "bg-success border border-dark text-white",
                 5 => "bg-danger border border-dark text-white",
                 _ => "bg-secondary border border-dark"
