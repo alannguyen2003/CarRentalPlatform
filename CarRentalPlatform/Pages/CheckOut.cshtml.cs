@@ -124,7 +124,6 @@ public class CheckOut : PageModel
 			ModelState.AddModelError(string.Empty, "The selected date range overlaps with an existing booking.");
 			return Page(); // Return to the page to display the error
 		}
-
 		await _bookingRepository.CreateBooking(bookingRequest);
 		return RedirectToPage("./Index");
 	}

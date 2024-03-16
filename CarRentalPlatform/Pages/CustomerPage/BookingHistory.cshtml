@@ -6,6 +6,17 @@
 }
 <div class="container mt-5">
     <h2 class="mb-4">@ViewData["Title"]</h2>
+    @if (!ModelState.IsValid)
+    {
+        <div class="alert alert-danger">
+            <ul>
+                @foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    <li>@error.ErrorMessage</li>
+                }
+            </ul>
+        </div>
+    }
 
     @if (Model.Bookings != null && Model.Bookings.Count > 0)
     {
