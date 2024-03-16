@@ -15,7 +15,13 @@ public class BookingEntity : BaseEntity
     public string Feedback { get; set; } = null!;
 
     public string Note { get; set; } = null!;
-    
+
+    //1 --> On Booking
+    //2 --> Car Takeaway
+    //3 --> On Checking
+    //4 --> Done
+    public int Status { get; set; }
+
     public int DepositAmount { get; set; }
     public int TotalAmount { get; set; }
     

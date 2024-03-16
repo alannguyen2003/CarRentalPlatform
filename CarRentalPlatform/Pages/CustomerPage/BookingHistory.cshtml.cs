@@ -26,6 +26,11 @@ namespace CarRentalPlatform.Pages.CustomerPage
 		public async Task<IActionResult> OnGet()
 		{
 			IsLogin = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "isLogin");
+			if (!IsLogin)
+			{
+				return RedirectToPage("./login");
+			}
+
 			UserAccount = SessionHelper.GetObjectFromJson<AccountDto>(HttpContext.Session, "user");
 			if (UserAccount != null && UserAccount.Role == 3)
 			{
