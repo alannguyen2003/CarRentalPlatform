@@ -42,5 +42,6 @@ namespace Repository.Repository
         public Task<BookingEntity?> GetBookingById(int id) => _bookingDao.GetEntityById(id);
         public Task UpdateBooking(BookingEntity entity) => _bookingDao.UpdateEntity(entity);
         public Task DeleteBooking(BookingEntity entity) => _bookingDao.DeleteEntity(entity);
+        public List<BookingEntity> GetBookingsForCar(int carID) => _bookingDao.GetBookingsForCar(carID);
     }
 }
