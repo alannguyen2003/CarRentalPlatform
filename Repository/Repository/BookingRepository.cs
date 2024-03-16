@@ -41,12 +41,24 @@ namespace Repository.Repository
             await _bookingDao.InsertNewBooking(entity);
         }
 
+        // In BookingRepository.cs
+        public async Task UpdateBookingStatus(int bookingId, int newStatus)
+        {
+            var booking = await _bookingDao.GetEntityById(bookingId);
+            if (booking != null)
+            {
+                booking.Status = newStatus;
+                await _bookingDao.UpdateEntity(booking);
+            }
+        }
+
         public Task<BookingEntity?> GetBookingById(int id) => _bookingDao.GetEntityById(id);
         public Task UpdateBooking(BookingEntity entity) => _bookingDao.UpdateEntity(entity);
         public Task DeleteBooking(BookingEntity entity) => _bookingDao.DeleteEntity(entity);
         public List<BookingEntity> GetBookingsForCar(int carID) => _bookingDao.GetBookingsForCar(carID);
         public async Task<List<BookingDetailDTO>> GetAllBookingDetails() => await _bookingDao.GetAllBookingDetails();
         public async Task<BookingDetailDTO> GetBookingDetailsById(int bookingId) => await _bookingDao.GetBookingDetailsById(bookingId);
+        public async Task<List<BookingDetailDTO>> GetBookingDetailsByCustomerID(int customerID) => await _bookingDao.GetBookingDetailsByCustomerID(customerID);
 
     }
 }
