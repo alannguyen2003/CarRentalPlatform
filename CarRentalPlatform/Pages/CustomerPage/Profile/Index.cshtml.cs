@@ -13,7 +13,9 @@ namespace CarRentalPlatform.Pages.CustomerPage.Profile
     {
         private readonly IAccountRepository _accountRepository;
 
-        [BindProperty]
+		[BindProperty]
+		public bool IsLogin { get; set; }
+		[BindProperty]
         public AccountEntity UserAccount { get; set; }
 
         [TempData]
@@ -26,7 +28,8 @@ namespace CarRentalPlatform.Pages.CustomerPage.Profile
 
         public async Task<IActionResult> OnGetAsync()
         {
-            AccountDto accountDto = SessionHelper.GetObjectFromJson<AccountDto>(HttpContext.Session, "user");
+			IsLogin = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "isLogin");
+			AccountDto accountDto = SessionHelper.GetObjectFromJson<AccountDto>(HttpContext.Session, "user");
             if (accountDto != null)
             {
                 UserAccount = await _accountRepository.GetAccountById(accountDto.Id);

@@ -18,7 +18,8 @@ namespace Repository.Repository
             _carDao = new CarDAO();
         }
         public async Task<List<BookingEntity>> GetAllBookings() => await _bookingDao.GetAll().Result.ToListAsync();
-        public async Task CreateBooking(BookingRequest request)
+        public async Task<List<BookingEntity>> GetBookingsByCustomerId(int customerID) => _bookingDao.GetBookingsByCustomerId(customerID);
+		public async Task CreateBooking(BookingRequest request)
         {
             BookingEntity entity = new BookingEntity()
             {
