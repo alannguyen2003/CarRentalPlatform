@@ -18,9 +18,9 @@ public static class AccountValidation
         return Regex.IsMatch(phoneNumber, regex);
     }
 
-    public static bool IsValidPassword(string password)
+    public static bool IsValidPassword(string? password)
     {
-        return password.Length >= 8;
+        return password != null && password.Length >= 8;
     }
 
     

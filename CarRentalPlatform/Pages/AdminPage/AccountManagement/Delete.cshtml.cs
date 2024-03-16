@@ -1,19 +1,21 @@
-﻿using DataTransferLayer.DataTransfer.Response;
+﻿using BuildObject.Entities;
+using DataTransferLayer.DataTransfer.Request;
+using DataTransferLayer.DataTransfer.Response;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Repository.Repository.Abstract;
 
 namespace CarRentalPlatform.Pages.AdminPage.AccountManagement;
 
-public class Detail : PageModel
+public class Delete : PageModel
 {
     private readonly IAccountRepository _accountRepository;
 
-    public Detail(IAccountRepository accountRepository)
+    public Delete(IAccountRepository accountRepository)
     {
         _accountRepository = accountRepository;
     }
-    
+
     [BindProperty] 
     public AccountResponse? AccountResponse { get; set; }
     [BindProperty]
@@ -27,7 +29,11 @@ public class Detail : PageModel
 
     public IActionResult OnPost()
     {
-        return RedirectToPage("./edit?id" + AccountResponse.Id);
+        _accountRepository.DeleteAccount(new AccountEntity()
+        {
+            Id = AccountResponse.Id
+        });
+        return RedirectToPage("./index");
     }
 
     public void ResetFormData(int id)
