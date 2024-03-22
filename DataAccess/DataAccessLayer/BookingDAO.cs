@@ -1,40 +1,119 @@
 ﻿using BuildObject.Entities;
-using DataAccess.DataAccessLayer;
 using DataAccess.DataAccessLayer.Abstract;
+using DataTransferLayer.DataTransfer;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace DataAccess
+namespace DataAccess.DataAccessLayer
 {
     public class BookingDAO : BaseDao<BookingEntity>
     {
-        private static BookingDAO instance = null;
-        private static readonly object instanceLock = new object();
-        private BookingDAO() { }
+        private readonly ApplicationDbContext _context;
 
-        public static BookingDAO Instance
+        public BookingDAO() => _context = new ApplicationDbContext();
+        public async Task InsertNewBooking(BookingEntity entity)
         {
-            get
+            try
             {
-                lock (instanceLock)
-                {
-                    if (instance == null)
-                    {
-                        instance = new BookingDAO();
-                    }
-                }
-                return instance;
+                await _context.Set<BookingEntity>().AddAsync(entity);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error: {ex.Message}" + ex);
             }
         }
 
-        public async Task<IList<BookingEntity>> GetAllBookingAsync()
+        public List<BookingEntity> GetBookingsByCustomerId(int customerID)
+		{
+			List<BookingEntity> result;
+			try
+			{
+				var context = new ApplicationDbContext();
+				result = context.Bookings.Where(x => x.CustomerId == customerID).ToList();
+			}
+			catch (Exception ex)
+			{
+				throw new Exception(ex.Message);
+			}
+			return result;
+		}
+
+		public List<BookingEntity> GetBookingsForCar(int carID)
         {
-            var _dbContext = new ApplicationDbContext();
-            return await _dbContext.Bookings.ToListAsync();
+            List<BookingEntity> result;
+            try
+            {
+                var context = new ApplicationDbContext();
+                result = context.Bookings.Where(x => x.CarId == carID).ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return result;
         }
+
+        public async Task<List<BookingDetailDTO>> GetAllBookingDetails()
+        {
+            var bookingDetails = await _context.Bookings
+                .Include(b => b.Car)
+                .Include(b => b.Customer)
+                .Select(b => new BookingDetailDTO
+                {
+                    BookingId = b.Id,
+                    StartDate = b.StartDate,
+                    EndDate = b.EndDate,
+                    CarModel = b.Car.Model,
+                    CustomerFirstName = b.Customer.FirstName + (b.Customer.LastName != null ? " " + b.Customer.LastName : ""),
+                    Status = b.Status,
+                    DepositAmount = b.DepositAmount,
+                    TotalAmount = b.TotalAmount
+                }).ToListAsync();
+
+            return bookingDetails;
+        }
+
+        public async Task<BookingDetailDTO> GetBookingDetailsById(int bookingId)
+        {
+            var bookingDetail = await _context.Bookings
+                .Where(b => b.Id == bookingId)
+                .Include(b => b.Car)
+                .Include(b => b.Customer)
+                .Select(b => new BookingDetailDTO
+                {
+                    BookingId = b.Id,
+                    StartDate = b.StartDate,
+                    EndDate = b.EndDate,
+                    CarModel = b.Car.Model,
+                    CustomerFirstName = b.Customer.FirstName + (b.Customer.LastName != null ? " " + b.Customer.LastName : ""),
+                    Status = b.Status,
+                    DepositAmount = b.DepositAmount,
+                    TotalAmount = b.TotalAmount
+                }).FirstOrDefaultAsync();
+
+            return bookingDetail;
+        }
+
+        public async Task<List<BookingDetailDTO>> GetBookingDetailsByCustomerID(int customerID)
+        {
+            var bookingDetails = await _context.Bookings
+                .Where(b => b.CustomerId == customerID)
+                .Include(b => b.Car)
+                .Include(b => b.Customer)
+                .Select(b => new BookingDetailDTO
+                {
+                    BookingId = b.Id,
+                    StartDate = b.StartDate,
+                    EndDate = b.EndDate,
+                    CarModel = b.Car.Model,
+                    CustomerFirstName = b.Customer.FirstName + (b.Customer.LastName != null ? " " + b.Customer.LastName : ""),
+                    Status = b.Status,
+                    DepositAmount = b.DepositAmount,
+                    TotalAmount = b.TotalAmount
+                }).ToListAsync();
+
+            return bookingDetails;
+        }
+
     }
 }

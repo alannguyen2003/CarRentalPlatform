@@ -9,6 +9,7 @@ namespace CarRentalPlatform.Pages;
 public class ErrorModel : PageModel
 {
     public string? RequestId { get; set; }
+    public string? Exception { get; set; }
 
     public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
 
@@ -19,8 +20,10 @@ public class ErrorModel : PageModel
         _logger = logger;
     }
 
-    public void OnGet()
+    public void OnGet(string exceptionSource, string exception)
     {
-        RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier;
+        RequestId = exceptionSource;
+        Exception = exception;
     }
+    
 }

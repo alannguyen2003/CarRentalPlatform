@@ -1,0 +1,64 @@
+﻿@page "/admin/account/index"
+@model CarRentalPlatform.Pages.AdminPage.AccountManagement.IndexModel
+
+@{
+    Layout = "Shared/_LayoutAdminDashboard";
+}
+<main>
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">Tables</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item">
+                <a href="/admin/index">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active">Accounts</li>
+        </ol>
+        <div class="card mb-4">
+            <div class="card-body">This is a table for managing accounts of platform.</div>
+        </div>
+        <div class="card mb-4">
+            <div class="card-header">
+                <a href="/admin/account/create">Create</a>
+            </div>
+            <div class="card-body">
+                <table id="datatablesSimple">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Email</th>
+                        <th>First name</th>
+                        <th>Last name</th>
+                        <th>Phone number</th>
+                        <th>Gender</th>
+                        <th>Role</th>
+                        <th>Wallet</th>
+                        <th>Driver License</th>
+                        <th>Operation</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var item in @Model.ListAccounts)
+                    {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td>@item.Email</td>
+                            <td>@item.FirstName</td>
+                            <td>@item.LastName</td>
+                            <td>@item.PhoneNumber</td>
+                            <td>@item.Gender</td>
+                            <td>@item.Role</td>
+                            <td>$@item.WalletBalance</td>
+                            <td>@item.DriverLicense</td>
+                            <td>
+                                <a asp-page="./detail" asp-route-id="@item.Id">Detail</a>
+                                <a asp-page="./edit" asp-route-id="@item.Id">Edit</a>
+                                <a asp-page="./delete" asp-route-id="@item.Id">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>

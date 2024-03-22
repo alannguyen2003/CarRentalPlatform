@@ -17,5 +17,18 @@ public static class DependencyInjection
         services.AddScoped<ApplicationDbContext>();
         return services;
     }
+
+    public static IServiceCollection AddLoggingInformation(this IServiceCollection services)
+    {
+        services.AddHttpLogging(logging =>
+        {
+            logging.LoggingFields = Microsoft.AspNetCore.HttpLogging.HttpLoggingFields.Response;
+            logging.LoggingFields = Microsoft.AspNetCore.HttpLogging.HttpLoggingFields.Request;
+            logging.LoggingFields = Microsoft.AspNetCore.HttpLogging.HttpLoggingFields.ResponseBody;
+            logging.LoggingFields = Microsoft.AspNetCore.HttpLogging.HttpLoggingFields.RequestBody;
+            logging.LoggingFields = Microsoft.AspNetCore.HttpLogging.HttpLoggingFields.RequestPath;
+        });
+        return services;
+    }
     
 }

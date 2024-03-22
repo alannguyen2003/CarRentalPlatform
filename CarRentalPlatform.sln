@@ -1,14 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.8.34330.188
+VisualStudioVersion = 17.9.34607.119
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarRentalPlatform", "CarRentalPlatform\CarRentalPlatform.csproj", "{B062157D-D402-4A9F-BD00-3966D2FEDE08}"
-	ProjectSection(ProjectDependencies) = postProject
-		{B64141DF-747A-47AE-BF75-D19279A2F1AE} = {B64141DF-747A-47AE-BF75-D19279A2F1AE}
-	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildObject", "BuildObject\BuildObject.csproj", "{CF52EF8C-9B28-4F18-B41F-59161CCDA75A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessObject", "BusinessObject\BusinessObject.csproj", "{CF52EF8C-9B28-4F18-B41F-59161CCDA75A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{B64141DF-747A-47AE-BF75-D19279A2F1AE}"
 EndProject
@@ -47,6 +44,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {D9AA8576-5355-45DD-BB93-D6766289F5ED}
+		SolutionGuid = {DA769691-9F5B-4671-8445-06B876F75073}
 	EndGlobalSection
 EndGlobal

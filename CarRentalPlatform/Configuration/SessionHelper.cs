@@ -14,4 +14,14 @@ public static class SessionHelper
         var value = session.GetString(key);
         return value == null ? default(T) : JsonSerializer.Deserialize<T>(value);
     }
+
+    public static void RemoveSession(this ISession session, string key)
+    {
+        session.Remove(key);
+    }
+
+    public static void ClearSession(this ISession session)
+    {
+        session.Clear();
+    }
 }

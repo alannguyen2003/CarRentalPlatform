@@ -1,0 +1,86 @@
+﻿@page "/BookingHistory"
+@model CarRentalPlatform.Pages.CustomerPage.BookingHistoryModel
+@{
+    Layout = "_LayoutCustomer";
+    ViewData["Title"] = "Booking History";
+}
+<div class="container mt-5">
+    <h2 class="mb-4">@ViewData["Title"]</h2>
+    @if (!ModelState.IsValid)
+    {
+        <div class="alert alert-danger">
+            <ul>
+                @foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    <li>@error.ErrorMessage</li>
+                }
+            </ul>
+        </div>
+    }
+
+    @if (Model.Bookings != null && Model.Bookings.Count > 0)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="text-center">Booking ID</th>
+                    <th class="text-center">Start Date</th>
+                    <th class="text-center">End Date</th>
+                    <th class="text-center">Car Model</th>
+                    <th class="text-center">Deposit Amount</th>
+                    <th class="text-center">Total Amount</th>
+                    <th class="text-center">Status</th>
+                    <th class="text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var booking in Model.Bookings)
+                {
+                    <tr>
+                        <td class="text-center">@booking.BookingId</td>
+                        <td class="text-center">@booking.StartDate.ToString("dd/MM/yyyy")</td>
+                        <td class="text-center">@booking.EndDate.ToString("dd/MM/yyyy")</td>
+                        <td class="text-center">@booking.CarModel</td>
+                        <td class="text-center">@booking.DepositAmount</td>
+                        <td class="text-center">@booking.TotalAmount</td>
+                        <td class="text-center">
+                            <div class="@booking.GetStatusClass() p-1 rounded text-center">
+                                @booking.GetStatusText()
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            @if (booking.Status == 1)
+                            {
+                                <a href="/TakeCar/@booking.BookingId" class="btn btn-warning">Take Car</a>
+                            }
+                            else if (booking.Status == 2)
+                            {
+                                <a href="/ReturnCar/@booking.BookingId" class="btn btn-info">Return Car</a>
+                            }
+                            else if (booking.TotalAmount != 0 && booking.Status == 3)
+                            {
+                                <a href="/PayTotalAmount/@booking.BookingId" class="btn btn-primary" onclick="confirmPayment('@booking.BookingId')">Pay</a>
+                            }
+                            else
+                            {
+                                <button class="btn btn-secondary" disabled>No Action</button>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No bookings found.</p>
+    }
+</div>
+
+<script>
+    function confirmPayment(bookingId) {
+        if (confirm("Do you want to proceed with the payment?")) {
+            window.location.href = `/PayTotalAmount/${bookingId}`;
+        }
+    }
+</script>

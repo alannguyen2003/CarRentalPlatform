@@ -1,0 +1,60 @@
+﻿@page "/detail"
+@model CarRentalPlatform.Pages.AdminPage.AccountManagement.Detail
+
+@{
+    Layout = "Shared/_LayoutAdminDashboard";
+}
+
+<main>
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">Tables</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item">
+                <a href="/admin/index">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active">Accounts</li>
+        </ol>
+        <div class="card mb-4">
+            <div class="card-body">This is a form for managing accounts of platform.</div>
+        </div>
+        <div class="card mb-4">
+            <div class="card-header">
+                Delete
+            </div>
+            <form method="post" class="m-4">
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="inputEmail" type="text" value="@Model.AccountResponse.Email" placeholder="name@example.com" disabled/>
+                    <label for="inputEmail">Email address</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="inputEmail" type="text" value="@Model.AccountResponse.FirstName" placeholder="name@example.com" disabled/>
+                    <label for="inputEmail">First name</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="inputEmail" type="text" value="@Model.AccountResponse.LastName" placeholder="name@example.com" disabled/>
+                    <label for="inputEmail">Last name</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="inputEmail" type="text" value="@Model.AccountResponse.PhoneNumber" placeholder="name@example.com" disabled/>
+                    <label for="inputEmail">Phone number (format: 0123 456 789)</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="inputEmail" type="text" value="@Model.AccountResponse.Gender" placeholder="name@example.com" disabled/>
+                    <label for="inputEmail">Gender</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="inputEmail" type="text" value="@Model.AccountResponse.WalletBalance" placeholder="name@example.com" disabled/>
+                    <label for="inputEmail">Wallet</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="inputEmail" type="text" value="@Model.AccountResponse.Role" placeholder="name@example.com" disabled/>
+                    <label for="inputEmail">Role</label>
+                </div>
+                <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
+                    <p style="color: red;">Do you you want to edit?</p>
+                    <button type="submit" class="btn btn-danger">Edit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>

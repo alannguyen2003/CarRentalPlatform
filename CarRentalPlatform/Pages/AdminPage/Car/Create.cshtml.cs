@@ -42,7 +42,7 @@ namespace CarRentalPlatform.Pages.AdminPage.Car
             {
                 return Page();
             }*/
-
+           CarEntity.ThumbnailImage = "";
             await _carRepository.CreateCar(CarEntity);
 
             return RedirectToPage("./Index");

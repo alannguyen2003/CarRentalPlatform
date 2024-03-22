@@ -22,11 +22,16 @@ builder.Services.AddMvcCore();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSession();
 
+builder.Services.AddHttpClient();
+
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<ICarRepository, CarRepository>();
 builder.Services.AddScoped<ILocationRepository, LocationRepository>();
 builder.Services.AddScoped<IBrandRepository, BrandRepository>();
 builder.Services.AddScoped<IBookingRepository, BookingRepository>();
+
+builder.Services.AddLoggingInformation();
+
 
 var app = builder.Build();
 
@@ -38,31 +43,29 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-//using var scope = app.Services.CreateScope();
-//var services = scope.ServiceProvider;
-//try
-//{
-//    var context = services.GetRequiredService<ApplicationDbContext>();
-//    var userManager = services.GetRequiredService<UserManager<AccountEntity>>();
-//    var roleManager = services.GetRequiredService<RoleManager<RoleE>>();
-//    await context.Database.MigrateAsync();
-//    await Seed.SeedImage(context);
-//    await Seed.SeedUser(userManager, roleManager);
-//}
-//catch (Exception ex)
-//{
-//    var logger = services.GetRequiredService<ILogger<Program>>();
-//    logger.LogError(ex, "An error while seeding data");
-//} 
-
+app.UseHttpLogging();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseSession();
 app.UseRouting();
-app.UseSession();
-
 app.UseAuthorization();
 
 app.MapRazorPages();
-
+using var scope = app.Services.CreateScope();
+var services = scope.ServiceProvider;
+try
+{
+    var context = services.GetRequiredService<ApplicationDbContext>();
+    await context.Database.MigrateAsync();
+    await Seed.SeedAccount(context);
+    await Seed.SeedBrand(context);
+    await Seed.SeedLocation(context);
+    await Seed.SeedCar(context);
+    await Seed.SeedBooking(context);
+}
+catch (Exception ex)
+{
+    var logger = services.GetRequiredService<ILogger<Program>>();
+    logger.LogError(ex, "An error while seeding data");
+}
 app.Run();

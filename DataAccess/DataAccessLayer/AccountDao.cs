@@ -1,40 +1,42 @@
-﻿using BuildObject.Entities;
+﻿using System.Diagnostics;
+using BuildObject.Entities;
 using DataAccess.DataAccessLayer.Abstract;
+using DataTransferLayer.DataTransfer;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.DataAccessLayer;
 
 public class AccountDAO : BaseDao<AccountEntity>
 {
-    private static AccountDAO instance = null;
-    private static readonly object instanceLock = new object();
-    private AccountDAO() { }
+    private readonly ApplicationDbContext _context;
+    public AccountDAO() => _context = new ApplicationDbContext();
 
-    public static AccountDAO Instance
+    public async Task<AccountEntity?> Authentication(string email, string password)
     {
-        get
-        {
-            lock (instanceLock)
-            {
-                if (instance == null)
-                {
-                    instance = new AccountDAO();
-                }
-            }
-            return instance;
-        }
+        var account = _context.Accounts
+            .First(account => account.Email == email && account.Password == password);
+        return account;
     }
 
-    public async Task<IList<AccountEntity>> GetAccountAsync()
+    public async Task<bool?> CheckExistEmail(string email)
     {
-        try
+        if (_context.Accounts != null)
         {
-            var _dbContext = new ApplicationDbContext();
-            return await _dbContext.Accounts.ToListAsync();
+            var isFound = _context.Accounts
+                .Any(account => account.Email == email);
+            return isFound;
         }
-        catch (Exception ex)
+        return false;
+    }
+
+    public async Task<bool?> CheckExistPhoneNumber(string phoneNumber)
+    {
+        if (_context.Accounts != null)
         {
-            throw new Exception($"Error: {ex.Message}" + ex);
+            var isFound = _context.Accounts
+                .Any(account => account.PhoneNumber == phoneNumber);
+            return isFound;
         }
+        return false;
     }
 }
