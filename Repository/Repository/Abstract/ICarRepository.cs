@@ -21,5 +21,7 @@ namespace Repository.Repository.Abstract
         Task<CarCategoryPage> GetDataCarCategoryPage();
         Task UpdateCar(CarEntity entity);
         Task DeleteCar(CarEntity entity);
+
+        Task<List<CarEntity>> GetPaginatedResult(int currentPage);
     }
 }

@@ -103,5 +103,6 @@ namespace Repository.Repository
         public Task UpdateCar(CarEntity entity) => _carDao.UpdateEntity(entity);
 
         public Task DeleteCar(CarEntity entity) => _carDao.DeleteEntity(entity);
+        public Task<List<CarEntity>> GetPaginatedResult(int currentPage) => _carDao.GetPaginatedResult(currentPage);
     }
 }

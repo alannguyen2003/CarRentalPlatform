@@ -38,6 +38,10 @@ namespace DataAccess.DataAccessLayer
                 throw new Exception($"Error: {ex.Message}" + ex);
             }
         }
-
+        public async Task<List<CarEntity>> GetPaginatedResult(int currentPage)
+        {
+            var car = await _context.Cars.ToListAsync();
+            return car.Skip((currentPage-1)*12).Take(12).ToList();
+        }
     }
 }

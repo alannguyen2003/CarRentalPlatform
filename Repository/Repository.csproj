@@ -11,4 +11,10 @@
       <ProjectReference Include="..\DataTransferLayer\DataTransferLayer.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Reference Include="BusinessObject">
+        <HintPath>..\BusinessObject\obj\Debug\net7.0\ref\BusinessObject.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
 </Project>
