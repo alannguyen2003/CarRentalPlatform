@@ -101,8 +101,29 @@ namespace Repository.Repository
         }
 
         public Task UpdateCar(CarEntity entity) => _carDao.UpdateEntity(entity);
-
         public Task DeleteCar(CarEntity entity) => _carDao.DeleteEntity(entity);
         public Task<List<CarEntity>> GetPaginatedResult(int currentPage) => _carDao.GetPaginatedResult(currentPage);
+        public async Task<List<CarEntity>> FilterCarsByBrandAsync(string? brandName)
+        {
+            var result = await _carDao.FilterCarsByBrandAsync(brandName);
+            return result;
+        }
+        public async Task<List<CarEntity>> SearchCarsAsync(string? searchTerm = null)
+        {
+            var result = await _carDao.SearchCarsAsync(searchTerm);
+            return result;
+        }
+
+        public async Task<List<CarEntity>> FilterCarsByLocationAsync(string? location)
+        {
+            var result = await _carDao.FilterCarsByLocationAsync(location);
+            return result;
+        }
+
+        public async Task<List<CarEntity>> FilterCarsByModelAsync(string? model)
+        {
+            var result = await _carDao.FilterCarsByMocelAsync(model);
+            return result;
+        }
     }
 }

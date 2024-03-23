@@ -21,7 +21,10 @@ namespace Repository.Repository.Abstract
         Task<CarCategoryPage> GetDataCarCategoryPage();
         Task UpdateCar(CarEntity entity);
         Task DeleteCar(CarEntity entity);
-
         Task<List<CarEntity>> GetPaginatedResult(int currentPage);
+        Task<List<CarEntity>> FilterCarsByBrandAsync(string? brandName);
+        Task<List<CarEntity>> FilterCarsByLocationAsync(string? location);
+        Task<List<CarEntity>> FilterCarsByModelAsync(string? model);
+        Task<List<CarEntity>> SearchCarsAsync(string? searchTerm);
     }
 }
