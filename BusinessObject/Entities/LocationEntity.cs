@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using BuildObject.Entities.Abstract;
 
-namespace BuildObject.Entities;
+namespace BusinessObject.Entities;
 
 [Table("Locations")]
 public class LocationEntity : BaseEntity

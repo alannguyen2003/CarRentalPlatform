@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BuildObject.Entities;
+using BusinessObject.Entities;
 using DataAccess.DataAccessLayer;
 
 namespace CarRentalPlatform.Pages.AdminPage.AccountGenerate

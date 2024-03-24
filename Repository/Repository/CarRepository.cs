@@ -1,11 +1,7 @@
 ﻿using BuildObject.Entities;
+using BusinessObject.Entities;
 using DataAccess.DataAccessLayer;
 using Repository.Repository.Abstract;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DataTransferLayer.DataTransfer;
 using DataTransferLayer.DataTransfer.Response;
 using DataTransferLayer.Page;
@@ -103,5 +99,6 @@ namespace Repository.Repository
         public Task UpdateCar(CarEntity entity) => _carDao.UpdateEntity(entity);
 
         public Task DeleteCar(CarEntity entity) => _carDao.DeleteEntity(entity);
+        public Task<List<CarEntity>> GetPaginatedResult(int currentPage) => _carDao.GetPaginatedResult(currentPage);
     }
 }

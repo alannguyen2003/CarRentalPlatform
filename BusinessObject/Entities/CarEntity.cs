@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using BuildObject.Entities;
 using BuildObject.Entities.Abstract;
 
-namespace BuildObject.Entities;
+namespace BusinessObject.Entities;
 
 [Table("Cars")]
 public class CarEntity : BaseEntity

@@ -1,4 +1,5 @@
 ﻿using BuildObject.Entities;
+using BusinessObject.Entities;
 using CarRentalPlatform.Configuration;
 using DataTransferLayer.DataTransfer;
 using DataTransferLayer.Page;
