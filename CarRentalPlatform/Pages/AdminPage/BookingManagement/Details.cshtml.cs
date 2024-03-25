@@ -22,12 +22,16 @@ namespace CarRentalPlatform.Pages.AdminPage.BookingManagement
         }
 
         [BindProperty]
-        public Task<BookingRequestAdmin> BookingAdmin { get; set; } = default!;
-        public IActionResult OnGet(int? id)
+        public BookingRequestAdmin BookingAdmin { get; set; } = default!;
+        public async Task<IActionResult> OnGet(int? id)
         {
             try
             {
-               BookingAdmin = _bookingRepository.GetAllBookingsbyId((int)id);
+               BookingAdmin = await _bookingRepository.GetAllBookingsbyId((int)id);
+                if (BookingAdmin == null)
+                {
+                    return NotFound();
+                }
             }
             catch {
                 throw new Exception();
