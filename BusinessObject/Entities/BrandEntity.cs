@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using BuildObject.Entities.Abstract;
 
-namespace BuildObject.Entities;
+namespace BusinessObject.Entities;
 
 [Table("Brands")]
 public class BrandEntity : BaseEntity

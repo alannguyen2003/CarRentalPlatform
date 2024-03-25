@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BusinessObject.Entities;
 using DataTransferLayer.DataTransfer;
 using DataTransferLayer.DataTransfer.Response;
 using DataTransferLayer.Page;
@@ -21,5 +22,7 @@ namespace Repository.Repository.Abstract
         Task<CarCategoryPage> GetDataCarCategoryPage();
         Task UpdateCar(CarEntity entity);
         Task DeleteCar(CarEntity entity);
+
+        Task<List<CarEntity>> GetPaginatedResult(int currentPage);
     }
 }

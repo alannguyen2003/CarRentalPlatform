@@ -1,0 +1,61 @@
+@page "/admin/bookings/index"
+@model CarRentalPlatform.Pages.AdminPage.BookingManagement.IndexModel
+
+@{
+    ViewData["Title"] = "Bookings";
+    Layout = "~/Pages/Shared/_LayoutAdminDashboard.cshtml";
+}
+<main>
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">Tables</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item">
+                <a href="/admin/index">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active">Bookings</li>
+        </ol>
+        <div class="card mb-4">
+            <div class="card-body">This is a table for managing bookings of platform.</div>
+        </div>
+        <div class="card mb-4">
+            <div class="card-header">
+            </div>
+            <div class="card-body">
+                <table id="datatablesSimple">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Customer</th>
+                        <th>Renting date</th>
+                        <th>Return date</th>
+                        <th>Car model</th>
+                        <th>License Plate</th>
+                        <th>Feedback</th>
+                        <th>Note</th>
+                        <th>Deposit</th>
+                        <th>Total</th>
+                        <th>Operation</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>ehe</td>
+                            <td>ehe</td>
+                            <td>ehe</td>
+                            <td>ehe</td>
+                            <td>ehe</td>
+                            <td>ehe</td>
+                            <td>ehe</td>
+                            <td>ehe</td>
+                            <td>ehe</td>
+                            <td>ehe</td>
+                            <td>
+                                <a asp-page="./admin/bookings/detail" asp-route-id=1>Detail</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>

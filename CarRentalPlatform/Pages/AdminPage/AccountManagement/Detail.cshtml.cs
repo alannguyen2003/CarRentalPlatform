@@ -27,7 +27,7 @@ public class Detail : PageModel
 
     public IActionResult OnPost()
     {
-        return RedirectToPage("./edit?id" + AccountResponse.Id);
+        return Redirect("./edit?id=" + AccountResponse.Id);
     }
 
     public void ResetFormData(int id)

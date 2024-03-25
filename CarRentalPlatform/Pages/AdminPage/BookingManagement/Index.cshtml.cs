@@ -5,11 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using BuildObject.Entities;
 using BusinessObject.Entities;
 using DataAccess.DataAccessLayer;
 
-namespace CarRentalPlatform.Pages.AdminPage.AccountGenerate
+namespace CarRentalPlatform.Pages.AdminPage.BookingManagement
 {
     public class IndexModel : PageModel
     {
@@ -20,15 +19,15 @@ namespace CarRentalPlatform.Pages.AdminPage.AccountGenerate
             _context = context;
         }
 
-        public IList<CarEntity> CarEntity { get;set; } = default!;
+        public IList<BookingEntity> BookingEntity { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
-            if (_context.Cars != null)
+            if (_context.Bookings != null)
             {
-                CarEntity = await _context.Cars
-                .Include(c => c.Brand)
-                .Include(c => c.Location).ToListAsync();
+                BookingEntity = await _context.Bookings
+                .Include(b => b.Car)
+                .Include(b => b.Customer).ToListAsync();
             }
         }
     }

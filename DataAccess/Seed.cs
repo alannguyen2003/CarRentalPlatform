@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using BusinessObject.Entities;
 
 namespace DataAccess
 {
@@ -20,12 +21,12 @@ namespace DataAccess
             {
                 var accounts = new List<AccountEntity>
             {
-                new AccountEntity { Email = "a1@gmail.com", FirstName = "Admin1", LastName = "Seed", PhoneNumber = "0214567894", Gender = true, Password = "1", WalletBalance = 100, DriverLicense = "103103103103", Role = 1 },
-                new AccountEntity { Email = "a2@gmail.com", FirstName = "Admin2", LastName = "Seed", PhoneNumber = "2345678901", Gender = false, Password = "1", WalletBalance = 600, DriverLicense = "234567890123", Role = 2 },
-                new AccountEntity { Email = "e1@gmail.com", FirstName = "Employ1", LastName = "Seed", PhoneNumber = "3456789012", Gender = true, Password = "1", WalletBalance = 700, DriverLicense = "345678901234", Role = 2 },
-                new AccountEntity { Email = "c1@gmail.com", FirstName = "Cus1", LastName = "Seed", PhoneNumber = "4567890123", Gender = false, Password = "1", WalletBalance = 800, DriverLicense = "456789012345", Role = 3 },
-                new AccountEntity { Email = "c2@gmail.com", FirstName = "Cus2", LastName = "Seed", PhoneNumber = "5678901234", Gender = true, Password = "1", WalletBalance = 900, DriverLicense = "567890123456", Role = 3 }
-
+                new AccountEntity { Email = "admin@gmail.com", FirstName = "Admin", LastName = "Nguyen", PhoneNumber = "0847919292", Gender = true, Password = "1", WalletBalance = 2000000, DriverLicense = "103103103103", Role = 1 },
+                new AccountEntity { Email = "employee1@gmail.com", FirstName = "Tran Minh", LastName = "Quoc", PhoneNumber = "0913243528", Gender = false, Password = "1", WalletBalance = 6000000, DriverLicense = "234567890123", Role = 2 },
+                new AccountEntity { Email = "employee2@gmail.com", FirstName = "Ho Duong", LastName = "Trung Nguyen", PhoneNumber = "0386392391", Gender = true, Password = "1", WalletBalance = 820000, DriverLicense = "345678901234", Role = 2 },
+                new AccountEntity { Email = "customer1@gmail.com", FirstName = "Nguyen", LastName = "Phuong Kiet", PhoneNumber = "0913823109", Gender = false, Password = "1", WalletBalance = 9500000, DriverLicense = "456789012345", Role = 3 },
+                new AccountEntity { Email = "customer2@gmail.com", FirstName = "Vo", LastName = "Son Nghi", PhoneNumber = "0934192391", Gender = true, Password = "1", WalletBalance = 8300000, DriverLicense = "567890123456", Role = 3 },
+                new AccountEntity { Email = "customer3@gmail.com", FirstName = "Vo", LastName = "Tan Tai", PhoneNumber = "0941923841", Gender = true, Password = "1", WalletBalance = 923000, DriverLicense = "567890123456", Role = 3 }
             };
 
 
@@ -89,6 +90,8 @@ namespace DataAccess
                     new LocationEntity { Address = "123 Main St, City, Country" },
                     new LocationEntity { Address = "456 Elm St, City, Country" },
                     new LocationEntity { Address = "789 Pine St, City, Country" }
+                    new LocationEntity { Address = "Lô E2a-7, Đường D1, Long Thạnh Mỹ, Thành Phố Thủ Đức, Thành phố Hồ Chí Minh" },
+                    new LocationEntity { Address = "Nhà Văn Hóa Sinh Viên, Lưu Hữu Phước, Đông Hoà, Dĩ An, Bình Dương" }
                 };
 
                 foreach (var location in locations)
@@ -147,6 +150,7 @@ namespace DataAccess
                     new CarEntity { Model = "Supra", LicensePlate = "TOYSUP", ThumbnailImage = "images/car-toyota-supra.jpg", PricePerDay = 190, PricePerHour = 19, PricePerMonth = 5700, Status = 1, Description = "Iconic sports car reborn", BrandId = brands.First(b => b.BrandName == "Toyota").Id, LocationId = locations[new Random().Next(locations.Count)].Id },
                     new CarEntity { Model = "Cullinan", LicensePlate = "RRCULL", ThumbnailImage = "images/car-rollsroyce-cullinan.jpg", PricePerDay = 400, PricePerHour = 40, PricePerMonth = 12000, Status = 1, Description = "Luxury SUV offering unmatched off-road capabilities", BrandId = brands.First(b => b.BrandName == "Rolls-Royce").Id, LocationId = locations[new Random().Next(locations.Count)].Id },
                     new CarEntity { Model = "Mulsanne", LicensePlate = "BNTMUL", ThumbnailImage = "images/car-bentley-mulsanne.jpg", PricePerDay = 350, PricePerHour = 35, PricePerMonth = 10500, Status = 1, Description = "A pinnacle of luxury and performance", BrandId = brands.First(b => b.BrandName == "Bentley").Id, LocationId = locations[new Random().Next(locations.Count)].Id },
+
                 };
 
                 foreach (var car in cars)
@@ -166,11 +170,11 @@ namespace DataAccess
 
                 var bookings = new List<BookingEntity>
             {
-                new BookingEntity { StartDate = DateTime.Now.AddDays(-10), EndDate = DateTime.Now.AddDays(-5), ActualReturnDate = DateTime.Now.AddDays(-5), Feedback = "Very good service", Note = "No issues", DepositAmount = 100, TotalAmount = 500, CustomerId = accounts[3].Id, CarId = cars[0].Id, Status = 5 },
-                new BookingEntity { StartDate = DateTime.Now.AddDays(-20), EndDate = DateTime.Now.AddDays(-15), ActualReturnDate = DateTime.Now.AddDays(-14), Feedback = "Excellent car", Note = "Minor scratches", DepositAmount = 200, TotalAmount = 600, CustomerId = accounts[4].Id, CarId = cars[3].Id, Status = 5 },
-                new BookingEntity { StartDate = DateTime.Now.AddDays(-30), EndDate = DateTime.Now.AddDays(-25), ActualReturnDate = DateTime.Now.AddDays(-24), Feedback = "Okay experience", Note = "Late return", DepositAmount = 150, TotalAmount = 550, CustomerId = accounts[3].Id, CarId = cars[2].Id, Status = 4 },
-                new BookingEntity { StartDate = DateTime.Now.AddDays(-15), EndDate = DateTime.Now.AddDays(-10), ActualReturnDate = DateTime.Now.AddDays(-9), Feedback = "Great car, will rent again", Note = "All good", DepositAmount = 100, TotalAmount = 500, CustomerId = accounts[4].Id, CarId = cars[1].Id, Status = 5 },
-                new BookingEntity { StartDate = DateTime.Now.AddDays(-5), EndDate = DateTime.Now.AddDays(-1), ActualReturnDate = DateTime.Now, Feedback = "Car was not clean", Note = "Dirty interior", DepositAmount = 120, TotalAmount = 520, CustomerId = accounts[3].Id, CarId = cars[4].Id, Status = 4 }
+                new BookingEntity { StartDate = DateTime.Now.AddDays(-10), EndDate = DateTime.Now.AddDays(-5), ActualReturnDate = DateTime.Now.AddDays(-5), Feedback = "Very good service", Note = "No issues", DepositAmount = 2500000, TotalAmount = 5000000, CustomerId = accounts[3].Id, CarId = cars[0].Id, Status = 5 },
+                new BookingEntity { StartDate = DateTime.Now.AddDays(-20), EndDate = DateTime.Now.AddDays(-15), ActualReturnDate = DateTime.Now.AddDays(-14), Feedback = "Excellent car", Note = "Minor scratches", DepositAmount = 2250000, TotalAmount = 4500000, CustomerId = accounts[4].Id, CarId = cars[3].Id, Status = 5 },
+                new BookingEntity { StartDate = DateTime.Now.AddDays(-30), EndDate = DateTime.Now.AddDays(-25), ActualReturnDate = DateTime.Now.AddDays(-24), Feedback = "Okay experience", Note = "Late return", DepositAmount = 2000000, TotalAmount = 4000000, CustomerId = accounts[3].Id, CarId = cars[2].Id, Status = 4 },
+                new BookingEntity { StartDate = DateTime.Now.AddDays(-15), EndDate = DateTime.Now.AddDays(-10), ActualReturnDate = DateTime.Now.AddDays(-9), Feedback = "Great car, will rent again", Note = "All good", DepositAmount = 1875000, TotalAmount = 3750000, CustomerId = accounts[4].Id, CarId = cars[1].Id, Status = 5 },
+                new BookingEntity { StartDate = DateTime.Now.AddDays(-5), EndDate = DateTime.Now.AddDays(-1), ActualReturnDate = DateTime.Now, Feedback = "Car was not clean", Note = "Dirty interior", DepositAmount = 1000000, TotalAmount = 2000000, CustomerId = accounts[3].Id, CarId = cars[4].Id, Status = 4 }
             };
 
                 foreach (var booking in bookings)

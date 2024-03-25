@@ -27,11 +27,13 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
       <ProjectReference Include="..\Repository\Repository.csproj" />
     </ItemGroup>
 
     <ItemGroup>
       <Folder Include="Pages\AdminPage\AccountGenerate\" />
+      <Folder Include="Pages\AdminPage\BookingManagement\" />
       <Folder Include="wwwroot\admin\" />
       <Folder Include="wwwroot\images\" />
     </ItemGroup>

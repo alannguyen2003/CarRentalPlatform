@@ -1,5 +1,4 @@
-﻿using BuildObject.Entities;
-using DataAccess;
+﻿using BusinessObject.Entities;
 using Repository.Repository.Abstract;
 using DataAccess.DataAccessLayer;
 using DataTransferLayer.DataTransfer;
