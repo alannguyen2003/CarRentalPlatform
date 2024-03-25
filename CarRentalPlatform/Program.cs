@@ -19,7 +19,7 @@ builder.Services.AddSession(options =>
 builder.Services.AddDependence();
 
 builder.Services.AddMvcCore();
-
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddSession();
 
 builder.Services.AddHttpClient();

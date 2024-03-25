@@ -6,6 +6,7 @@ using BuildObject.Entities;
 using DataTransferLayer.DataTransfer;
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
+using BusinessObject.Entities;
 
 namespace CarRentalPlatform.Pages.CustomerPage.Profile
 {

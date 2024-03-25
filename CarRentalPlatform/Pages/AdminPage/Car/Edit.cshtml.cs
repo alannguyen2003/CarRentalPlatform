@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BuildObject.Entities;
+using BusinessObject.Entities;
 using CarRentalPlatform.Configuration;
 using DataAccess.DataAccessLayer;
 using Repository.Repository.Abstract;

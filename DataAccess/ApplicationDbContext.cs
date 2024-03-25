@@ -1,5 +1,6 @@
 ﻿using BuildObject;
 using BuildObject.Entities;
+using BusinessObject.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 

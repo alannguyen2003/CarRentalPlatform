@@ -1,8 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.Diagnostics.Contracts;
 using BuildObject.Entities.Abstract;
 
-namespace BuildObject.Entities;
+namespace BusinessObject.Entities;
 
 [Table("Bookings")]
 public class BookingEntity : BaseEntity

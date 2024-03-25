@@ -22,7 +22,7 @@ namespace DataAccess.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("BuildObject.Entities.AccountEntity", b =>
+            modelBuilder.Entity("BusinessObject.Entities.AccountEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -74,7 +74,7 @@ namespace DataAccess.Migrations
                     b.ToTable("Accounts");
                 });
 
-            modelBuilder.Entity("BuildObject.Entities.BookingEntity", b =>
+            modelBuilder.Entity("BusinessObject.Entities.BookingEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -123,7 +123,7 @@ namespace DataAccess.Migrations
                     b.ToTable("Bookings");
                 });
 
-            modelBuilder.Entity("BuildObject.Entities.BrandEntity", b =>
+            modelBuilder.Entity("BusinessObject.Entities.BrandEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -141,7 +141,7 @@ namespace DataAccess.Migrations
                     b.ToTable("Brands");
                 });
 
-            modelBuilder.Entity("BuildObject.Entities.CarEntity", b =>
+            modelBuilder.Entity("BusinessObject.Entities.CarEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -194,7 +194,7 @@ namespace DataAccess.Migrations
                     b.ToTable("Cars");
                 });
 
-            modelBuilder.Entity("BuildObject.Entities.LocationEntity", b =>
+            modelBuilder.Entity("BusinessObject.Entities.LocationEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -212,15 +212,15 @@ namespace DataAccess.Migrations
                     b.ToTable("Locations");
                 });
 
-            modelBuilder.Entity("BuildObject.Entities.BookingEntity", b =>
+            modelBuilder.Entity("BusinessObject.Entities.BookingEntity", b =>
                 {
-                    b.HasOne("BuildObject.Entities.CarEntity", "Car")
+                    b.HasOne("BusinessObject.Entities.CarEntity", "Car")
                         .WithMany()
                         .HasForeignKey("CarId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BuildObject.Entities.AccountEntity", "Customer")
+                    b.HasOne("BusinessObject.Entities.AccountEntity", "Customer")
                         .WithMany()
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -231,15 +231,15 @@ namespace DataAccess.Migrations
                     b.Navigation("Customer");
                 });
 
-            modelBuilder.Entity("BuildObject.Entities.CarEntity", b =>
+            modelBuilder.Entity("BusinessObject.Entities.CarEntity", b =>
                 {
-                    b.HasOne("BuildObject.Entities.BrandEntity", "Brand")
+                    b.HasOne("BusinessObject.Entities.BrandEntity", "Brand")
                         .WithMany("Cars")
                         .HasForeignKey("BrandId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BuildObject.Entities.LocationEntity", "Location")
+                    b.HasOne("BusinessObject.Entities.LocationEntity", "Location")
                         .WithMany("Cars")
                         .HasForeignKey("LocationId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -250,12 +250,12 @@ namespace DataAccess.Migrations
                     b.Navigation("Location");
                 });
 
-            modelBuilder.Entity("BuildObject.Entities.BrandEntity", b =>
+            modelBuilder.Entity("BusinessObject.Entities.BrandEntity", b =>
                 {
                     b.Navigation("Cars");
                 });
 
-            modelBuilder.Entity("BuildObject.Entities.LocationEntity", b =>
+            modelBuilder.Entity("BusinessObject.Entities.LocationEntity", b =>
                 {
                     b.Navigation("Cars");
                 });
