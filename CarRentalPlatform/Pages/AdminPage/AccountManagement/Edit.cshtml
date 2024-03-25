@@ -22,7 +22,7 @@
             </div>
             <form method="post" class="m-4">
                 <div class="form-floating mb-3">
-                    <input asp-for="AccountRequest.Id" class="form-control" id="inputEmail" value="@Model.AccountRequest.Id" type="number" placeholder="name@example.com" disabled/>
+                    <input asp-for="AccountRequest.Id" class="form-control" id="inputEmail" value="@Model.AccountRequest.Id" type="number" placeholder="name@example.com" readonly />
                     <label for="inputEmail">Id</label>
                 </div>
                 <div class="form-floating mb-3">
@@ -38,7 +38,7 @@
                     <label for="inputEmail">Last name</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input asp-for="AccountRequest.Password" class="form-control" id="inputEmail" value="@Model.AccountRequest.Password" type="password" placeholder="name@example.com"/>
+                    <input asp-for="AccountRequest.Password" class="form-control" id="inputEmail" value="@Model.AccountRequest.Password" type="password" placeholder="name@example.com" required/>
                     <label for="inputEmail">Password</label>
                 </div>
                 <div class="form-floating mb-3">
@@ -46,7 +46,7 @@
                     <label for="inputEmail">Phone number (format: 0123 456 789)</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <select class="form-control" name="gender" asp-items="ViewBag.GenderId"></select>
+                    <select class="form-control" asp-for="AccountRequest.Gender" asp-items="ViewBag.Gender"></select>
                     <label for="inputEmail">Gender</label>
                 </div>
                 <div class="form-floating mb-3">
@@ -54,7 +54,7 @@
                     <label for="inputEmail">Wallet</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <select asp-for="AccountRequest.Role" class="form-control" asp-items="ViewBag.RoleId"></select>
+                    <select asp-for="AccountRequest.Role" class="form-control" asp-items="ViewBag.Role"></select>
                     <label for="inputEmail">Role</label>
                 </div>
                 <div class="d-flex align-items-center justify-content-between mt-4 mb-0">

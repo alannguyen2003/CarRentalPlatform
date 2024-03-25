@@ -132,19 +132,17 @@ namespace Repository.Repository
 
         public async Task<bool> ModifyAccountFromRequest(AccountRequest request)
         {
-            AccountEntity entity = new AccountEntity()
-            {
-                Id = request.Id,
-                Email = request.Email,
-                PhoneNumber = request.PhoneNumber,
-                FirstName = request.FirstName,
-                LastName = request.LastName,
-                Password = request.Password,
-                Role = request.Role,
-                WalletBalance = request.WalletBalance,
-                Gender = ConvertUtilization.GetGender_2(request.Gender),
-                DriverLicense = ""
-            };
+            AccountEntity entity = await _accountDao.GetEntityById(request.Id);
+
+            entity.Email = request.Email;
+            entity.PhoneNumber = request.PhoneNumber;
+            entity.FirstName = request.FirstName;
+            entity.LastName = request.LastName;
+            entity.Password = request.Password;
+            entity.Role = request.Role;
+            entity.WalletBalance = request.WalletBalance;
+            entity.Gender = ConvertUtilization.GetGender_2(request.Gender);
+
             await _accountDao.UpdateEntity(entity);
             return true;
         }

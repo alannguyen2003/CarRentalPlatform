@@ -30,7 +30,6 @@ public class Edit : PageModel
 
     public IActionResult OnPost()
     {
-        int gender = Int32.Parse(Request.Form["gender"]);
         if (AccountRequest != null)
         {
             if (AccountValidation.IsValidEmail(AccountRequest.Email) &&
@@ -38,22 +37,27 @@ public class Edit : PageModel
                 AccountValidation.IsValidPassword(AccountRequest.Password))
             {
                 Message = AccountRequest.Id + " " + AccountRequest.Email;
-                return Page();
                 bool checkEdit = _accountRepository.ModifyAccountFromRequest(AccountRequest).Result;
                 if (checkEdit) return RedirectToPage("./index");
                 else
                 {
                     Message = "Error!";
                 }
+                return Page();
+
             }
             else
             {
                 Message = "Your email was indentical, or your phone number has wrong format, please check again!";
             }
         }
-        ResetFormData(Int32.Parse(Request.Form["id"]));
-        Message = AccountRequest.Id + " " + AccountRequest.Email;
+        else
+        {
+            ResetFormData(Int32.Parse(Request.Form["id"]));
+            Message = AccountRequest.Id + " " + AccountRequest.Email;
+        }
         return Page();
+
     }
 
     public void ResetFormData(int id)
@@ -83,8 +87,8 @@ public class Edit : PageModel
         {
             Id = 1, Gender = "Female"
         });
-        ViewData["RoleId"] = new SelectList(listRoleRequest, "Id", "Role");
-        ViewData["GenderId"] = new SelectList(listGenderRequest, "Id", "Gender");
+        ViewData["Role"] = new SelectList(listRoleRequest, "Id", "Role");
+        ViewData["Gender"] = new SelectList(listGenderRequest, "Id", "Gender");
         AccountRequest = _accountRepository.GetAccountForEdit(id).Result;
     }
 }
