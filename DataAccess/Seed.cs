@@ -89,7 +89,7 @@ namespace DataAccess
                 {
                     new LocationEntity { Address = "123 Main St, City, Country" },
                     new LocationEntity { Address = "456 Elm St, City, Country" },
-                    new LocationEntity { Address = "789 Pine St, City, Country" }
+                    new LocationEntity { Address = "789 Pine St, City, Country" },
                     new LocationEntity { Address = "Lô E2a-7, Đường D1, Long Thạnh Mỹ, Thành Phố Thủ Đức, Thành phố Hồ Chí Minh" },
                     new LocationEntity { Address = "Nhà Văn Hóa Sinh Viên, Lưu Hữu Phước, Đông Hoà, Dĩ An, Bình Dương" }
                 };
