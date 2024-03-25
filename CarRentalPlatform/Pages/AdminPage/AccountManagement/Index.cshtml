@@ -47,11 +47,11 @@
                             <td>@item.PhoneNumber</td>
                             <td>@item.Gender</td>
                             <td>@item.Role</td>
-                            <td>$@item.WalletBalance</td>
+                            <td>@String.Format("{0:0,0}", item.WalletBalance)đ</td>
                             <td>@item.DriverLicense</td>
                             <td>
-                                <a asp-page="./detail" asp-route-id="@item.Id">Detail</a>
-                                <a asp-page="./edit" asp-route-id="@item.Id">Edit</a>
+                                <a href="/admin/accounts/detail?id=@item.Id">Detail</a>
+                                <a href="/admin/accounts/edit?id=@item.Id">Edit</a>
                                 <a asp-page="./delete" asp-route-id="@item.Id">Delete</a>
                             </td>
                         </tr>
