@@ -3,6 +3,8 @@ using Repository.Repository.Abstract;
 using DataAccess.DataAccessLayer;
 using DataTransferLayer.DataTransfer;
 using Microsoft.EntityFrameworkCore;
+using DataTransferLayer.DataTransfer.Response;
+using DataTransferLayer.DataTransfer.Request;
 
 namespace Repository.Repository
 {
@@ -58,6 +60,13 @@ namespace Repository.Repository
         public async Task<List<BookingDetailDTO>> GetAllBookingDetails() => await _bookingDao.GetAllBookingDetails();
         public async Task<BookingDetailDTO> GetBookingDetailsById(int bookingId) => await _bookingDao.GetBookingDetailsById(bookingId);
         public async Task<List<BookingDetailDTO>> GetBookingDetailsByCustomerID(int customerID) => await _bookingDao.GetBookingDetailsByCustomerID(customerID);
+
+        public async Task<List<BookingResponse>> GetBookingsByTimeRange(string timeRange) => await _bookingDao.GetBookingsByTimeRange(timeRange);
+        public async Task<List<BookingResponse>> GetBookingByStatus(int Status) => await _bookingDao.GetBookingByStatus(Status);
+        public async Task<List<BookingResponse>> GetBookingByPrice(int price) => await _bookingDao.GetBookingByPrice(price);
+        public async Task<List<BookingResponse>> GetBookingByDay(DateTime? day) => await _bookingDao.GetBookingByDay(day);
+        public async Task<List<BookingResponse>> GetAllBookingsDashBoard() =>await _bookingDao.GetAllBookingsDashBoard();
+        public async Task<BookingRequestAdmin> GetAllBookingsbyId(int id) => await _bookingDao.GetAllBookingsbyId(id);
 
     }
 }

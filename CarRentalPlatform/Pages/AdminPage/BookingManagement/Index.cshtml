@@ -1,4 +1,4 @@
-@page "/admin/bookings/index"
+﻿@page "/admin/bookings/index"
 @model CarRentalPlatform.Pages.AdminPage.BookingManagement.IndexModel
 
 @{
@@ -19,43 +19,70 @@
         </div>
         <div class="card mb-4">
             <div class="card-header">
+                <div class="card-header">
+                    <form method="post" id="submit_form">
+                        <label>Select Time Range:</label>
+                        <select asp-for="Valuetime" id="timeRange">
+                            <option value="">Select</option>
+                            <option value="day">5 day Ago</option>
+                            <option value="month">Last 30 Days</option>
+                            <option value="year">Last 365 Days</option>
+                        </select>
+                    </form>
+                </div>
+
             </div>
             <div class="card-body">
                 <table id="datatablesSimple">
                     <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Customer</th>
-                        <th>Renting date</th>
-                        <th>Return date</th>
-                        <th>Car model</th>
-                        <th>License Plate</th>
-                        <th>Feedback</th>
-                        <th>Note</th>
-                        <th>Deposit</th>
-                        <th>Total</th>
-                        <th>Operation</th>
+@*                             <th>ID</th>
+ *@                            <th>Customer</th>
+                            <th>Renting date</th>
+                            <th>Return date</th>
+                            <th>Car model</th>
+                            <th>License Plate</th>
+                            <th>Feedback</th>
+                            <th>Note</th>
+                            <th>Deposit</th>
+                            <th>Total</th>
+                            <th>Operation</th>
                     </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>ehe</td>
-                            <td>ehe</td>
-                            <td>ehe</td>
-                            <td>ehe</td>
-                            <td>ehe</td>
-                            <td>ehe</td>
-                            <td>ehe</td>
-                            <td>ehe</td>
-                            <td>ehe</td>
-                            <td>ehe</td>
-                            <td>
-                                <a asp-page="./admin/bookings/detail" asp-route-id=1>Detail</a>
-                            </td>
-                        </tr>
+                        @foreach (var item in @Model.Booking)
+                        {
+                            <tr>
+@*                                 <td>@item.BookingId</td>
+ *@                                <td>@item.CustomerFirstName</td>
+                                <td>@item.StartDate</td>
+                                <td>@item.EndDate</td>
+                                <td>@item.CarModel</td>
+                                <td>@item.LicensePlate</td>
+                                <td>@item.Feedback</td>
+                                <td>@item.Note</td>
+                                <td>@String.Format("{0:0,0}", item.DepositAmount)đ</td>
+                                <td>@String.Format("{0:0,0}", item.TotalAmount)đ</td>
+
+
+                                
+                                <td>
+                                    <a href="/admin/Bookings/detail?id=@item.BookingId">Detail</a>
+                                </td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </main>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#timeRange").change(function () {
+            $("#submit_form").submit();
+        });
+    });
+</script>
