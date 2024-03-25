@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using BusinessObject.Entities;
 using DataTransferLayer.DataTransfer;
+using DataTransferLayer.DataTransfer.Response;
+using DataTransferLayer.DataTransfer.Request;
 
 namespace Repository.Repository.Abstract
 {
@@ -24,5 +26,11 @@ namespace Repository.Repository.Abstract
         Task<List<BookingDetailDTO>> GetBookingDetailsByCustomerID(int customerID);
 
 
+        Task<List<BookingResponse>> GetBookingsByTimeRange(string timeRange);
+        Task<List<BookingResponse>> GetBookingByStatus(int Status);
+        Task<List<BookingResponse>> GetBookingByPrice(int price);
+        Task<List<BookingResponse>> GetBookingByDay(DateTime? day);
+        Task<List<BookingResponse>> GetAllBookingsDashBoard();
+        Task<BookingRequestAdmin> GetAllBookingsbyId(int id);
     }
 }

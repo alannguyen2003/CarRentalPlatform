@@ -7,28 +7,46 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BusinessObject.Entities;
 using DataAccess.DataAccessLayer;
+using DataTransferLayer.DataTransfer.Response;
+using Repository.Repository;
+using Repository.Repository.Abstract;
+using DataTransferLayer.DataTransfer;
+using Microsoft.IdentityModel.Tokens;
+using System.Reflection.Metadata;
+using Microsoft.CodeAnalysis;
 
 namespace CarRentalPlatform.Pages.AdminPage.BookingManagement
 {
     public class IndexModel : PageModel
     {
-        private readonly DataAccess.DataAccessLayer.ApplicationDbContext _context;
+        private readonly IBookingRepository bookingRepository;
 
-        public IndexModel(DataAccess.DataAccessLayer.ApplicationDbContext context)
+        public IndexModel(IBookingRepository repo)
         {
-            _context = context;
+            bookingRepository = repo;
         }
 
-        public IList<BookingEntity> BookingEntity { get;set; } = default!;
-
+        public IList<BookingResponse> Booking { get;set; } = default!;
+        [BindProperty]
+        public string Valuetime { get; set; }
         public async Task OnGetAsync()
+        { 
+                Booking = await bookingRepository.GetAllBookingsDashBoard();
+        }
+        public async Task<IActionResult> OnPost()
         {
-            if (_context.Bookings != null)
+            string selectedValue = Valuetime;
+            if (!string.IsNullOrEmpty(selectedValue))
             {
-                BookingEntity = await _context.Bookings
-                .Include(b => b.Car)
-                .Include(b => b.Customer).ToListAsync();
+                Booking = await bookingRepository.GetBookingsByTimeRange(Valuetime);
+
             }
+            else
+            {
+                Booking = await bookingRepository.GetAllBookingsDashBoard();
+            }
+
+            return Page();
         }
     }
 }
