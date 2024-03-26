@@ -1,0 +1,47 @@
+﻿@page "/ViewFixingDetails/{BookingId:int}"
+@model CarRentalPlatform.Pages.EmployeePage.ViewFixingDetailsModel
+
+@{
+    Layout = "_LayoutCustomer";
+    ViewData["Title"] = "Fixing Details";
+}
+
+<div class="container mt-5 mb-5">
+    <h2 class="mb-4">Fixing Details for Booking @Model.BookingId</h2>
+    @if (Model.FixingDetails != null && Model.FixingDetails.Count > 0)
+    {
+        <div class="table-responsive">
+            <table class="table table-hover" id="datatablesSimple">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Description</th>
+                        <th scope="col" class="text-right">Price (VND)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var detail in Model.FixingDetails)
+                    {
+                        <tr>
+                            <td>@detail.FixingDescription</td>
+                            <td class="text-right">@detail.Price.ToString("N0", new System.Globalization.CultureInfo("vi-VN")) đ</td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr class="table-info">
+                        <th>Total Amount</th>
+                        <th class="text-right">@Model.FixingDetails.Sum(fd => fd.Price).ToString("N0", new System.Globalization.CultureInfo("vi-VN")) đ</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning" role="alert">
+            No fixing details found.
+        </div>
+    }
+
+    <a href="/BookingHistory" class="btn btn-secondary mt-4">Back to Booking History</a>
+</div>

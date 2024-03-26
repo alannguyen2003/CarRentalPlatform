@@ -34,16 +34,26 @@ namespace CarRentalPlatform.Pages.EmployeePage
             }
 
             UserAccount = SessionHelper.GetObjectFromJson<AccountDto>(HttpContext.Session, "user");
-            if (UserAccount != null && UserAccount.Role == 2)
-            {
-                Bookings = await _bookingRepository.GetAllBookingDetails();
-            }
-            else
+            if (UserAccount == null || UserAccount.Role != 2) // Assuming Role 2 is for Employee
             {
                 return RedirectToPage("/Error");
             }
+
+            var currentDate = DateTime.Now;
+            Bookings = await _bookingRepository.GetAllBookingDetails();
+
+            var bookingsToUpdate = Bookings.Where(b => b.StartDate < currentDate && b.Status < 2).ToList();
+            foreach (var booking in bookingsToUpdate)
+            {
+                await _bookingRepository.UpdateBookingStatus(booking.BookingId, 5); // 5 is status for "Cancel"
+            }
+
+            // Reload bookings after updates
+            Bookings = await _bookingRepository.GetAllBookingDetails();
+
             return Page();
         }
+
 
         public async Task<IActionResult> OnGetCancelAsync(int id)
         {

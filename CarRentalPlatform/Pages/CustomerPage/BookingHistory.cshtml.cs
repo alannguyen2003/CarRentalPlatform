@@ -32,7 +32,7 @@ namespace CarRentalPlatform.Pages.CustomerPage
 			}
 
 			UserAccount = SessionHelper.GetObjectFromJson<AccountDto>(HttpContext.Session, "user");
-			if (UserAccount != null && UserAccount.Role == 3)
+			if (UserAccount != null)
 			{
 				Bookings = await _bookingRepository.GetBookingDetailsByCustomerID(UserAccount.Id);
 			}

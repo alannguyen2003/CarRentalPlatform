@@ -4,7 +4,7 @@
     Layout = "_LayoutCustomer";
     ViewData["Title"] = "Booking History";
 }
-<div class="container mt-5" style="max-width: 1200px !important">
+<div class="container mt-5" style="max-width: 1400px !important">
     <h2 class="mb-4">@ViewData["Title"]</h2>
     @if (!ModelState.IsValid)
     {
@@ -26,6 +26,7 @@
                     <th class="text-center">Booking ID</th>
                     <th class="text-center">Start Date</th>
                     <th class="text-center">End Date</th>
+                    <th class="text-center">Actual Return Date</th>
                     <th class="text-center">Car Model</th>
                     <th class="text-center">Deposit Amount</th>
                     <th class="text-center">Total Amount</th>
@@ -40,6 +41,7 @@
                         <td class="text-center">@booking.BookingId</td>
                         <td class="text-center">@booking.StartDate.ToString("dd/MM/yyyy")</td>
                         <td class="text-center">@booking.EndDate.ToString("dd/MM/yyyy")</td>
+                        <td class="text-center">@booking.ActualReturnDate?.ToString("dd/MM/yyyy")</td>
                         <td class="text-center">@booking.CarModel</td>
                         <td class="text-center">@booking.DepositAmount.ToString("N0", new System.Globalization.CultureInfo("vi-VN")) đ</td>
                         <td class="text-center">@booking.TotalAmount.ToString("N0", new System.Globalization.CultureInfo("vi-VN")) đ</td>
@@ -50,9 +52,9 @@
                         </td>
                         <td class="text-center">
                             <a href="/ViewBookingDetail/@booking.BookingId" class="btn btn-primary">View</a>
-                            @if (booking.TotalAmount != 0 && booking.Status == 3)
+                            @if (booking.TotalAmount != 0 && booking.Status == 6)
                             {
-                                <a href="javascript:void(0)" class="btn btn-primary" onclick="confirmPayment('@booking.BookingId')">Pay</a>
+                                <a href="javascript:void(0)" class="btn bg-purple-light" onclick="confirmPayment('@booking.BookingId')">Pay Total</a>
 
                             }
                             else

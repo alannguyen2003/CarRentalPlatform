@@ -195,8 +195,23 @@
                                                     <label for="note">Note</label>
                                                     <textarea class="form-control form-control-lg" id="note" name="note" rows="3" placeholder="Note"></textarea>
                                                 </div>
-
+                                                <div class="form-group mt-3">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" id="termsAgreement" required>
+                                                        <label class="form-check-label" for="termsAgreement">
+                                                            I agree to the <a href="/terms-of-use">Terms of Use</a> and <a href="/policies">Policies</a> of the company providing services
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" id="informationCorrect" required>
+                                                        <label class="form-check-label" for="informationCorrect">
+                                                            I commit that the above information is correct. If there are any errors, I take full responsibility
+                                                        </label>
+                                                    </div>
+                                                </div>
+    
                                                 <button type="submit" class="btn btn-primary btn-lg mt-3">Place Order</button>
+
                                             </form>
                                         </div>
                                     </div>
@@ -218,6 +233,8 @@
             </div>
         </div>
     </div>
+
+
     <!-- End of Check Out Section -->
     <!-- copyright -->
     <div class="copyright">
@@ -300,7 +317,7 @@
             startDateInput.min = minDate;
             if (new Date(startDateInput.value) < today) {
                 startDateInput.value = minDate;
-                handleInputStartDate(); // Cập nhật lại giá trị dựa trên ngày mới được thiết lập
+                handleInputStartDate(); // Update the value again based on the newly established date
             }
         }
 
@@ -316,7 +333,8 @@
         // Update Deposit Amount
         handleInputStartDate();
         handleInputEndDate();
-    });
+        });
+
     </script>
 
 

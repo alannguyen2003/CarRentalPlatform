@@ -164,18 +164,68 @@ namespace DataAccess
                 var accounts = await context.Accounts.ToListAsync();
 
                 var bookings = new List<BookingEntity>
-            {
-                new BookingEntity { StartDate = DateTime.Now.AddDays(-10), EndDate = DateTime.Now.AddDays(-5), ActualReturnDate = DateTime.Now.AddDays(-5), Feedback = "Very good service", Note = "No issues", DepositAmount = 2500000, TotalAmount = 5000000, CustomerId = accounts[3].Id, CarId = cars[0].Id, Status = 5 },
-                new BookingEntity { StartDate = DateTime.Now.AddDays(-20), EndDate = DateTime.Now.AddDays(-15), ActualReturnDate = DateTime.Now.AddDays(-14), Feedback = "Excellent car", Note = "Minor scratches", DepositAmount = 2250000, TotalAmount = 4500000, CustomerId = accounts[4].Id, CarId = cars[3].Id, Status = 5 },
-                new BookingEntity { StartDate = DateTime.Now.AddDays(-30), EndDate = DateTime.Now.AddDays(-25), ActualReturnDate = DateTime.Now.AddDays(-24), Feedback = "Okay experience", Note = "Late return", DepositAmount = 2000000, TotalAmount = 4000000, CustomerId = accounts[3].Id, CarId = cars[2].Id, Status = 4 },
-                new BookingEntity { StartDate = DateTime.Now.AddDays(-15), EndDate = DateTime.Now.AddDays(-10), ActualReturnDate = DateTime.Now.AddDays(-9), Feedback = "Great car, will rent again", Note = "All good", DepositAmount = 1875000, TotalAmount = 3750000, CustomerId = accounts[4].Id, CarId = cars[1].Id, Status = 5 },
-                new BookingEntity { StartDate = DateTime.Now.AddDays(-5), EndDate = DateTime.Now.AddDays(-1), ActualReturnDate = DateTime.Now, Feedback = "Car was not clean", Note = "Dirty interior", DepositAmount = 1000000, TotalAmount = 2000000, CustomerId = accounts[3].Id, CarId = cars[4].Id, Status = 4 }
-            };
+                {
+                new BookingEntity { StartDate = DateTime.Now.AddDays(-10), EndDate = DateTime.Now.AddDays(-5), ActualReturnDate = DateTime.Now.AddDays(-5), Feedback = "Very good service", Note = "No issues", DepositAmount = 2500000, TotalAmount = 0, CustomerId = accounts[3].Id, CarId = cars[0].Id, IsSigned =true,  Status = 5 },
+                new BookingEntity { StartDate = DateTime.Now.AddDays(-20), EndDate = DateTime.Now.AddDays(-15), ActualReturnDate = DateTime.Now.AddDays(-14), Feedback = "Excellent car", Note = "Minor scratches", DepositAmount = 2250000, TotalAmount = 0, CustomerId = accounts[4].Id, CarId = cars[3].Id, IsSigned = true, Status = 5 },
+                new BookingEntity { StartDate = DateTime.Now.AddDays(-30), EndDate = DateTime.Now.AddDays(-25), ActualReturnDate = DateTime.Now.AddDays(-24), Feedback = "Okay experience", Note = "Late return", DepositAmount = 2000000, TotalAmount = 0, CustomerId = accounts[3].Id, CarId = cars[2].Id, IsSigned = true, Status = 4 },
+                new BookingEntity { StartDate = DateTime.Now.AddDays(-15), EndDate = DateTime.Now.AddDays(-10), ActualReturnDate = DateTime.Now.AddDays(-9), Feedback = "Great car, will rent again", Note = "All good", DepositAmount = 1875000, TotalAmount = 0, CustomerId = accounts[4].Id, CarId = cars[1].Id, IsSigned = true, Status = 5 },
+                new BookingEntity { StartDate = DateTime.Now.AddDays(-5), EndDate = DateTime.Now.AddDays(-1), ActualReturnDate = DateTime.Now, Feedback = "Car was not clean", Note = "Dirty interior", DepositAmount = 1000000, TotalAmount = 0, CustomerId = accounts[3].Id, CarId = cars[4].Id, IsSigned = true, Status = 4 }
+                };
 
                 foreach (var booking in bookings)
                 {
                     await context.Bookings.AddAsync(booking);
                 }
+                await context.SaveChangesAsync();
+
+            }
+        }
+
+        public static async Task SeedFixingDetail(ApplicationDbContext context)
+        {
+            if (!await context.FixingDetails.AnyAsync())
+            {
+                var bookings = await context.Bookings.ToListAsync();
+
+                // Thêm fixing details cho các bookings
+                var fixingDetailsList = new List<FixingDetailEntity>
+                {
+
+                        // BookingId = 1
+                        new FixingDetailEntity { BookingId = 1, FixingDescription = "Replace new tires", Price = 1000000 },
+                        new FixingDetailEntity { BookingId = 1, FixingDescription = "Small engine repair", Price = 1500000 },
+                        // BookingId = 2
+                        new FixingDetailEntity { BookingId = 2, FixingDescription = "Windshield replacement", Price = 2000000 },
+                        new FixingDetailEntity { BookingId = 2, FixingDescription = "Paint touch-ups", Price = 500000 },
+                        // BookingId = 3
+                        new FixingDetailEntity { BookingId = 3, FixingDescription = "Brake pad replacement", Price = 700000 },
+                        // BookingId = 4
+                        new FixingDetailEntity { BookingId = 4, FixingDescription = "Battery replacement", Price = 800000 },
+                        // BookingId = 5
+                        new FixingDetailEntity { BookingId = 5, FixingDescription = "Interior cleaning", Price = 300000 },
+                        new FixingDetailEntity { BookingId = 5, FixingDescription = "Scratch removal", Price = 600000 }
+
+                };
+
+                foreach (var fixingDetail in fixingDetailsList)
+                {
+                    await context.FixingDetails.AddAsync(fixingDetail);
+                }
+
+                await context.SaveChangesAsync();
+
+                // Update TotalAmount for each respective Booking
+                foreach (var booking in bookings)
+                {
+                    var fixingDetailsForBooking = fixingDetailsList.Where(fd => fd.BookingId == booking.Id).ToList();
+                    if (fixingDetailsForBooking.Any())
+                    {
+                        var totalFixingPrice = fixingDetailsForBooking.Sum(fd => fd.Price);
+                        booking.TotalAmount = booking.DepositAmount + totalFixingPrice;
+                        context.Bookings.Update(booking);
+                    }
+                }
+
                 await context.SaveChangesAsync();
             }
         }
