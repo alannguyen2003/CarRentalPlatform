@@ -29,16 +29,22 @@
         </div>
 
         <div class="row">
-            <div class="col-6">
+            <div class="col-4">
                 <div class="form-group">
                     <label>Start Date</label>
                     <input type="text" value="@Model.Booking.StartDate.ToString("yyyy-MM-dd")" class="form-control" readonly />
                 </div>
             </div>
-            <div class="col-6">
+            <div class="col-4">
                 <div class="form-group">
                     <label>End Date</label>
                     <input type="text" value="@Model.Booking.EndDate.ToString("yyyy-MM-dd")" class="form-control" readonly />
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <label>Actual Return Date</label>
+                    <input type="text" value="@Model.Booking.ActualReturnDate?.ToString("yyyy-MM-dd")" class="form-control" readonly />
                 </div>
             </div>
         </div>
@@ -68,15 +74,34 @@
             </div>
             <div class="col-4">
                 <div class="form-group">
-                    <label>Deposit Amount</label>
+                    <label>Total Amount</label>
                     <input type="text" value="@Model.Booking.TotalAmount.ToString("N0", new System.Globalization.CultureInfo("vi-VN")) đ" class="form-control" readonly />
+
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <label>Fixing Detail</label>
+                    @if (Model.Booking.TotalAmount > 0)
+                    {
+                        <a href="/ViewFixingDetails/@Model.Booking.BookingId" class="btn btn-info form-control" style="background-color: #17a2b8 !important">View Fixing Details</a>
+                    }
+                    else
+                    {
+                        <button class="btn btn-info form-control disabled" style="background-color: #01d28e !important" disabled>View Fixing Details</button>
+
+                    }
                 </div>
             </div>
         </div>
 
         <div class="row">
-            <label for="note">Note</label>
-            <input type="text" value="@Model.Booking.Note" class="form-control" placeholder="Note" readonly/>
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="note">Note</label>
+                    <input type="text" value="@Model.Booking.Note" class="form-control" placeholder="Note" readonly />
+                </div>
+            </div>
         </div>
     </form>
 </div>

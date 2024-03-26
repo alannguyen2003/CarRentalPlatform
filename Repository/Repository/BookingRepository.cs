@@ -52,6 +52,15 @@ namespace Repository.Repository
                 await _bookingDao.UpdateEntity(booking);
             }
         }
+        public async Task UpdateActualReturnDate(int bookingId, DateTime actualReturnDate)
+        {
+            var booking = await _bookingDao.GetEntityById(bookingId);
+            if (booking != null)
+            {
+                booking.ActualReturnDate = actualReturnDate;
+                await _bookingDao.UpdateEntity(booking);
+            }
+        }
 
         public Task<BookingEntity?> GetBookingById(int id) => _bookingDao.GetEntityById(id);
         public Task UpdateBooking(BookingEntity entity) => _bookingDao.UpdateEntity(entity);

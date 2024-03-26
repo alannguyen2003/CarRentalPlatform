@@ -11,6 +11,7 @@ namespace DataTransferLayer.DataTransfer
         public int BookingId { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public DateTime? ActualReturnDate { get; set; }
         public string CarModel { get; set; }
         public string CustomerFirstName { get; set; }
         public int Status { get; set; }
@@ -27,6 +28,7 @@ namespace DataTransferLayer.DataTransfer
                 3 => "On Checking",
                 4 => "Done",
                 5 => "Cancel",
+                6 => "Paying",
                 _ => "Unknown"
             };
         }
@@ -40,6 +42,7 @@ namespace DataTransferLayer.DataTransfer
                 3 => "bg-info border border-dark text-white",
                 4 => "bg-success border border-dark text-white",
                 5 => "bg-danger border border-dark text-white",
+                6 => "bg-purple-light border border-dark text-dark",
                 _ => "bg-secondary border border-dark"
             };
         }

@@ -10,9 +10,10 @@ namespace CarRentalPlatform.Pages.CustomerPage
         private readonly IAccountRepository _accountRepository;
 
 
-        public PayTotalAmountModel(IBookingRepository bookingRepository)
+        public PayTotalAmountModel(IBookingRepository bookingRepository, IAccountRepository accountRepository)
         {
             _bookingRepository = bookingRepository;
+            _accountRepository = accountRepository;
         }
         public async Task<IActionResult> OnGet(int id)
         {
@@ -42,7 +43,7 @@ namespace CarRentalPlatform.Pages.CustomerPage
                 // Redirect to Booking History with an error message
                 TempData["ErrorMessage"] = "Insufficient balance in wallet";
             }
-            return RedirectToPage("/BookingHistory");
+            return RedirectToPage("./BookingHistory");
         }
 
     }

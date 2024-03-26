@@ -35,6 +35,10 @@ public class CheckOut : PageModel
     [BindProperty]
     public DateTime EndDate { get; set; }
 
+    [BindProperty]
+    public bool TermsAccepted { get; set; }
+
+
     public IActionResult OnGet()
     {
         IsLogin = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "isLogin");
@@ -134,7 +138,7 @@ public class CheckOut : PageModel
             return Page(); // Return to the page to display the error
         }
 
-        //Valite Overlap Booking
+        //Valite Overlap Car is Booked
         var existingBookings = _bookingRepository.GetBookingsForCar(CartModel.Car.Id);
         bool isOverlapping = existingBookings.Any(booking =>
             (StartDate < booking.EndDate) && (EndDate > booking.StartDate));
@@ -143,6 +147,20 @@ public class CheckOut : PageModel
         {
             ModelState.AddModelError(string.Empty, "The selected date range overlaps with an existing booking.");
             TempData["Errors"] = "The selected date range overlaps with an existing booking.";
+            return RedirectToPage("/checkout"); // Return to the page to display the error
+        }
+
+        //Valite Overlap Booked with overlap time
+        var customerBookings = await _bookingRepository.GetBookingsByCustomerId(CartModel.Account.Id);
+
+        bool overlap = customerBookings.Any(b =>
+            (StartDate < b.EndDate && EndDate > b.StartDate) ||
+            (EndDate > b.StartDate && StartDate < b.EndDate));
+
+        if (overlap)
+        {
+            ModelState.AddModelError("", "You cannot book more than one car at the same period.");
+            TempData["Errors"] = "You cannot book more than one car at the same period.";
             return RedirectToPage("/checkout"); // Return to the page to display the error
         }
 

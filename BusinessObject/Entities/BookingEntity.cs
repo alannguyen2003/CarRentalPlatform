@@ -33,4 +33,9 @@ public class BookingEntity : BaseEntity
     public int CarId { get; set; }
     public virtual CarEntity Car { get; set; } = null!;
 
+
+    public bool IsSigned { get; set; }
+
+    public ICollection<FixingDetailEntity>? FixingDetails { get; set; }
+
 }
