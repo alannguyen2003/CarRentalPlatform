@@ -11,4 +11,8 @@
       <ProjectReference Include="..\DataTransferLayer\DataTransferLayer.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Stripe.net" Version="43.19.0" />
+    </ItemGroup>
+
 </Project>

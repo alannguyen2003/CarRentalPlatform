@@ -34,6 +34,7 @@ namespace Repository.Repository
                     Id = account.Id,
                     Name = account.LastName,
                     Email = account.Email,
+                    WalletBalance = account.WalletBalance,
                     Role = account.Role
                 };
             }

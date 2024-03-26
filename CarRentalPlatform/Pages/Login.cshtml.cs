@@ -52,6 +52,7 @@ public class Login : PageModel
                     Id = accountDto.Id,
                     Email = accountDto.Email,
                     Name = accountDto.Name,
+                    WalletBalance = accountDto.WalletBalance,
                     Role = accountDto.Role
                 };
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "isLogin", true);

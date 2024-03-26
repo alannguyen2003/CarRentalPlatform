@@ -2,7 +2,7 @@
 @model CarRentalPlatform.Pages.CustomerPage.Profile.DriverLicenseRegistrationModel
 
 @{
-    Layout = "Shared/_Layout";
+    Layout = "Shared/_LayoutCustomer";
     ViewData["Title"] = "Driver License Registration";
     var message = TempData["Message"];
 }
@@ -35,7 +35,6 @@
             <input type="file" class="form-control-file" id="licenseImage" name="licenseImage">
         </div>
         <button type="submit" class="btn btn-secondary" asp-page-handler="CheckLicense">Check</button>
-
     </form>
 
     @if (Model.LicenseInfo != null)

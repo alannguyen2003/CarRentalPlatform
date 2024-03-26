@@ -5,6 +5,7 @@ public class AccountDto
     public int Id { get; set; } = 0;
     public string? Email { get; set; }
     public string? Name { get; set; }
+    public int WalletBalance { get; set; }
     //1 --> Admin
     //2 --> Employee
     //3 --> Customer
