@@ -28,6 +28,7 @@ namespace Repository.Repository
                 EndDate = request.EndDate,
                 Note = request.Note,
                 Status = 1,
+                IsSigned = true,
                 Feedback = "",
                 CustomerId = request.CustomerId,
                 CarId = request.CarId,

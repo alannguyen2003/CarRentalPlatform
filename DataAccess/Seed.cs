@@ -169,7 +169,11 @@ namespace DataAccess
                 new BookingEntity { StartDate = DateTime.Now.AddDays(-20), EndDate = DateTime.Now.AddDays(-15), ActualReturnDate = DateTime.Now.AddDays(-14), Feedback = "Excellent car", Note = "Minor scratches", DepositAmount = 2250000, TotalAmount = 0, CustomerId = accounts[4].Id, CarId = cars[3].Id, IsSigned = true, Status = 5 },
                 new BookingEntity { StartDate = DateTime.Now.AddDays(-30), EndDate = DateTime.Now.AddDays(-25), ActualReturnDate = DateTime.Now.AddDays(-24), Feedback = "Okay experience", Note = "Late return", DepositAmount = 2000000, TotalAmount = 0, CustomerId = accounts[3].Id, CarId = cars[2].Id, IsSigned = true, Status = 4 },
                 new BookingEntity { StartDate = DateTime.Now.AddDays(-15), EndDate = DateTime.Now.AddDays(-10), ActualReturnDate = DateTime.Now.AddDays(-9), Feedback = "Great car, will rent again", Note = "All good", DepositAmount = 1875000, TotalAmount = 0, CustomerId = accounts[4].Id, CarId = cars[1].Id, IsSigned = true, Status = 5 },
-                new BookingEntity { StartDate = DateTime.Now.AddDays(-5), EndDate = DateTime.Now.AddDays(-1), ActualReturnDate = DateTime.Now, Feedback = "Car was not clean", Note = "Dirty interior", DepositAmount = 1000000, TotalAmount = 0, CustomerId = accounts[3].Id, CarId = cars[4].Id, IsSigned = true, Status = 4 }
+                new BookingEntity { StartDate = DateTime.Now.AddDays(-5), EndDate = DateTime.Now.AddDays(-1), ActualReturnDate = DateTime.Now, Feedback = "Car was not clean", Note = "Dirty interior", DepositAmount = 1000000, TotalAmount = 0, CustomerId = accounts[3].Id, CarId = cars[4].Id, IsSigned = true, Status = 4 },
+                new BookingEntity { StartDate = DateTime.Now.AddDays(-5), EndDate = DateTime.Now.AddDays(-1), ActualReturnDate = DateTime.Now, Feedback = "Car was not clean", Note = "Dirty interior", DepositAmount = 1000000, TotalAmount = 0, CustomerId = accounts[3].Id, CarId = cars[4].Id, IsSigned = true, Status = 4 },
+                new BookingEntity { StartDate = DateTime.Now.AddDays(-5), EndDate = DateTime.Now.AddDays(-1), ActualReturnDate = null, Feedback = "Car was not clean", Note = "Dirty interior", DepositAmount = 1000000, TotalAmount = 0, CustomerId = accounts[3].Id, CarId = cars[6].Id, IsSigned = true, Status = 1 }
+
+
                 };
 
                 foreach (var booking in bookings)
