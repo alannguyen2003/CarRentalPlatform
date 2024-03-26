@@ -36,12 +36,12 @@ namespace CarRentalPlatform.Pages.CustomerPage.Profile
                 UserAccount = await _accountRepository.GetAccountById(accountDto.Id);
                 if (UserAccount == null)
                 {
-                    return RedirectToPage("/Error");
+                    return Redirect("/Error");
                 }
             }
             else
             {
-                return RedirectToPage("/Login");
+                return Redirect("/Login");
             }
             return Page();
         }
@@ -113,9 +113,6 @@ namespace CarRentalPlatform.Pages.CustomerPage.Profile
                 Message = "No changes were detected in the form.";
                 return Page();
             }
-
-
-
             // Update Data
             await _accountRepository.UpdateAccount(currentAccount);
             Message = "Profile updated successfully.";
