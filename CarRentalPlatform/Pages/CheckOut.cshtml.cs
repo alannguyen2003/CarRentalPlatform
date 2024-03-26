@@ -171,6 +171,7 @@ public class CheckOut : PageModel
             EndDate = EndDate,
             ActualReturnDate = null,
             Note = note,
+            IsSigned = true,
             CarId = CartModel.Car.Id,
             CustomerId = AccountCheckBilling.Id,
             DepositAmount = depositAmount
