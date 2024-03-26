@@ -40,7 +40,7 @@ public class CheckOut : PageModel
         IsLogin = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "isLogin");
         if (IsLogin == false)
         {
-            return RedirectToPage("./login");
+            return RedirectToPage("/login");
         }
         CartModel = SessionHelper.GetObjectFromJson<CartModel>(HttpContext.Session, "cart") == null ?
             new CartModel()
@@ -62,7 +62,7 @@ public class CheckOut : PageModel
         }
         else
         {
-            return RedirectToPage("./index");
+            return RedirectToPage("/index");
         }
 
         var account = _accountRepository.GetAccountById(CartModel.Account.Id).Result;
@@ -76,6 +76,11 @@ public class CheckOut : PageModel
                 PhoneNumber = account.PhoneNumber,
                 DriverLicense = account.DriverLicense
             };
+        }
+
+        if (TempData["Errors"] is string errors)
+        {
+            ModelState.AddModelError(string.Empty, errors);
         }
         return Page();
     }
@@ -92,7 +97,7 @@ public class CheckOut : PageModel
         CartModel = SessionHelper.GetObjectFromJson<CartModel>(HttpContext.Session, "cart");
         if (CartModel == null)
         {
-            return RedirectToPage("./cars"); // Return to the page to display the error
+            return RedirectToPage("/cars"); // Return to the page to display the error
         }
         else
         {
@@ -112,14 +117,20 @@ public class CheckOut : PageModel
         if (account == null)
         {
             ModelState.AddModelError(string.Empty, "Account not found.");
+            TempData["Errors"] = "Account not found.";
+
             return Page();
         }
 
         //Validate Wallet Balance
-        var depositAmount = DaysBetween(StartDate, EndDate) * CartModel.Car.PricePerDay;
+        var depositAmountInput = Request.Form["depositAmount"];
+        var depositAmount = int.Parse(depositAmountInput);
+
         if (account.WalletBalance < depositAmount)
         {
             ModelState.AddModelError(string.Empty, "Insufficient wallet balance to make this booking.");
+            TempData["Errors"] = "Insufficient wallet balance to make this booking.";
+
             return Page(); // Return to the page to display the error
         }
 
@@ -131,7 +142,8 @@ public class CheckOut : PageModel
         if (isOverlapping)
         {
             ModelState.AddModelError(string.Empty, "The selected date range overlaps with an existing booking.");
-            return Page(); // Return to the page to display the error
+            TempData["Errors"] = "The selected date range overlaps with an existing booking.";
+            return RedirectToPage("/checkout"); // Return to the page to display the error
         }
 
         // Create Entity
@@ -139,6 +151,7 @@ public class CheckOut : PageModel
         {
             StartDate = StartDate,
             EndDate = EndDate,
+            ActualReturnDate = null,
             Note = note,
             CarId = CartModel.Car.Id,
             CustomerId = AccountCheckBilling.Id,

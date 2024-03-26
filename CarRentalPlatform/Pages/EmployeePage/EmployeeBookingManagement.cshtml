@@ -48,8 +48,8 @@
                             @booking.GetStatusText()
                         </div>
                     </td>
-                    <td class="text-center">@booking.DepositAmount</td>
-                    <td class="text-center">@booking.TotalAmount</td>
+                    <td class="text-center">@booking.DepositAmount.ToString("N0", new System.Globalization.CultureInfo("vi-VN")) đ</td>
+                    <td class="text-center">@booking.TotalAmount.ToString("N0", new System.Globalization.CultureInfo("vi-VN")) đ</td>
                     <td>
                         <a href="/EditBookingTotal/@booking.BookingId" class="btn btn-primary">Edit</a>
                     </td>

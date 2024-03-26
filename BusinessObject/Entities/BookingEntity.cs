@@ -8,8 +8,7 @@ public class BookingEntity : BaseEntity
 {
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
-    
-    public DateTime ActualReturnDate { get; set; }
+    public DateTime? ActualReturnDate { get; set; }
 
     public string Feedback { get; set; } = null!;
 
