@@ -1,0 +1,82 @@
+﻿@page "/ViewBookingDetail/{id:int}"
+@model CarRentalPlatform.Pages.EmployeePage.ViewBookingDetailModel
+@{
+    Layout = "_LayoutCustomer";
+}
+
+<div class="container mt-5 mb-5">
+    <h2 class="mb-4">@ViewData["Title"]</h2>
+
+    <form method="post">
+        <input type="hidden" asp-for="Booking.BookingId" />
+
+        <div class="row">
+            <div class="col-2">
+                <div class="form-group">
+                    <label>Booking ID</label>
+                    <input type="text" value="@Model.Booking.BookingId" class="form-control" readonly />
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="form-group">
+                    <label>Status</label>
+                    <div class="@Model.Booking.GetStatusClass() p-1 rounded d-flex align-items-center justify-content-center">
+                        @Model.Booking.GetStatusText()
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group">
+                    <label>Start Date</label>
+                    <input type="text" value="@Model.Booking.StartDate.ToString("yyyy-MM-dd")" class="form-control" readonly />
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                    <label>End Date</label>
+                    <input type="text" value="@Model.Booking.EndDate.ToString("yyyy-MM-dd")" class="form-control" readonly />
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-4">
+                <div class="form-group">
+                    <label>Car Model</label>
+                    <input type="text" value="@Model.Booking.CarModel" class="form-control" readonly />
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <label>Customer Name</label>
+                    <input type="text" value="@Model.Booking.CustomerFirstName" class="form-control" readonly />
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-4">
+                <div class="form-group">
+                    <label>Deposit Amount</label>
+                    <input type="text" value="@Model.Booking.DepositAmount.ToString("N0", new System.Globalization.CultureInfo("vi-VN")) đ" class="form-control" readonly />
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <label>Deposit Amount</label>
+                    <input type="text" value="@Model.Booking.TotalAmount.ToString("N0", new System.Globalization.CultureInfo("vi-VN")) đ" class="form-control" readonly />
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <label for="note">Note</label>
+            <input type="text" value="@Model.Booking.Note" class="form-control" placeholder="Note" readonly/>
+        </div>
+    </form>
+</div>

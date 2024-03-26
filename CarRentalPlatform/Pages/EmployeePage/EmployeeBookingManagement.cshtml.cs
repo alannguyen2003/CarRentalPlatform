@@ -45,6 +45,17 @@ namespace CarRentalPlatform.Pages.EmployeePage
             return Page();
         }
 
+        public async Task<IActionResult> OnGetCancelAsync(int id)
+        {
+            var booking = await _bookingRepository.GetBookingById(id);
+            if (booking == null)
+            {
+                return NotFound();
+            }
+
+            await _bookingRepository.UpdateBookingStatus(id, 5); // 5 is status for "Cancel"
+            return RedirectToPage("./EmployeeBookingManagement");
+        }
     }
 }
 
