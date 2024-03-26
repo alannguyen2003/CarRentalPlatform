@@ -4,6 +4,7 @@ using DataAccess.DataAccessLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240326155920_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -100,10 +103,6 @@ namespace DataAccess.Migrations
                     b.Property<string>("Feedback")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsSigned")
-                        .HasColumnType("bit");
-
 
                     b.Property<string>("Note")
                         .IsRequired()
@@ -198,31 +197,6 @@ namespace DataAccess.Migrations
                     b.ToTable("Cars");
                 });
 
-            modelBuilder.Entity("BusinessObject.Entities.FixingDetailEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("BookingId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FixingDescription")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Price")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BookingId");
-
-                    b.ToTable("FixingDetails");
-                });
-
             modelBuilder.Entity("BusinessObject.Entities.LocationEntity", b =>
                 {
                     b.Property<int>("Id")
@@ -277,22 +251,6 @@ namespace DataAccess.Migrations
                     b.Navigation("Brand");
 
                     b.Navigation("Location");
-                });
-
-            modelBuilder.Entity("BusinessObject.Entities.FixingDetailEntity", b =>
-                {
-                    b.HasOne("BusinessObject.Entities.BookingEntity", "Booking")
-                        .WithMany("FixingDetails")
-                        .HasForeignKey("BookingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Booking");
-                });
-
-            modelBuilder.Entity("BusinessObject.Entities.BookingEntity", b =>
-                {
-                    b.Navigation("FixingDetails");
                 });
 
             modelBuilder.Entity("BusinessObject.Entities.BrandEntity", b =>
