@@ -25,7 +25,8 @@ namespace DataAccess.Migrations
                     Password = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     WalletBalance = table.Column<int>(type: "int", nullable: false),
                     Role = table.Column<int>(type: "int", nullable: false),
-                    DriverLicense = table.Column<string>(type: "nvarchar(12)", maxLength: 12, nullable: false)
+                    DriverLicense = table.Column<string>(type: "nvarchar(12)", maxLength: 12, nullable: true),
+                    DriverDegree = table.Column<string>(type: "nvarchar(2)", maxLength: 2, nullable: true)
                 },
                 constraints: table =>
                 {

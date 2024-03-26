@@ -61,6 +61,7 @@ namespace Repository.Repository
             {
                 // Map infor from LicenseInfo to AccountEntity
                 account.DriverLicense = licenseInfo.DriverLicense;
+                account.DriverDegree = licenseInfo.DriverDegree;
 
                 // UpdateEntity
                 await _accountDao.UpdateEntity(account);

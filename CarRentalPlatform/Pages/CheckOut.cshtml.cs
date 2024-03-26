@@ -164,6 +164,16 @@ public class CheckOut : PageModel
             return RedirectToPage("/checkout"); // Return to the page to display the error
         }
 
+        // Validate Driver's License Degree
+        var validDegrees = new List<string> { "B1", "B2", "C", "D", "E", "F" };
+        if (!validDegrees.Contains(account.DriverDegree))
+        {
+            ModelState.AddModelError(string.Empty, "Your driver's license does not qualify to rent a car.");
+            TempData["Errors"] = "Your driver's license does not qualify to rent a car.";
+            return RedirectToPage("/checkout");
+        }
+
+
         // Create Entity
         BookingRequest bookingRequest = new BookingRequest()
         {
