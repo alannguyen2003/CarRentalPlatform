@@ -90,6 +90,7 @@ namespace DataAccess.DataAccessLayer
                     CarModel = b.Car.Model,
                     CustomerFirstName = b.Customer.FirstName + (b.Customer.LastName != null ? " " + b.Customer.LastName : ""),
                     Status = b.Status,
+                    Note = b.Note,
                     DepositAmount = b.DepositAmount,
                     TotalAmount = b.TotalAmount
                 }).FirstOrDefaultAsync();

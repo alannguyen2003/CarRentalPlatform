@@ -19,6 +19,7 @@ public class BookingEntity : BaseEntity
     //3 --> On Checking
     //4 --> Done
     //5 --> Cancel
+    //6 --> Paying
     public int Status { get; set; }
 
     public int DepositAmount { get; set; }

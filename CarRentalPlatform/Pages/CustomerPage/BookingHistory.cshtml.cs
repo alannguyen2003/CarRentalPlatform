@@ -42,5 +42,29 @@ namespace CarRentalPlatform.Pages.CustomerPage
 			}
 			return Page();
 		}
-	}
+
+        public async Task<IActionResult> OnGetCancelAsync(int id)
+        {
+            var booking = await _bookingRepository.GetBookingById(id);
+            if (booking == null)
+            {
+                return NotFound();
+            }
+
+            var now = DateTime.UtcNow;
+            var timeDiff = booking.StartDate - now;
+
+            if (timeDiff.TotalHours < 24)
+            {
+				// Set error message to display it somehow or log it
+				ModelState.AddModelError(string.Empty, "The automatic cancellation function only allows orders that are within 24 hours of the start date. Please contact staff for further assistance.");
+                // This example simply redirects back with an error query string
+                return RedirectToPage("./BookingHistory");
+            }
+
+            await _bookingRepository.UpdateBookingStatus(id, 5); // 5 is status for "Cancel"
+            return RedirectToPage("./BookingHistory");
+        }
+
+    }
 }

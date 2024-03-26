@@ -16,6 +16,7 @@ namespace DataTransferLayer.DataTransfer
         public int Status { get; set; }
         public int DepositAmount { get; set; }
         public int TotalAmount { get; set; }
+        public string Note { get; set; }
 
         public string GetStatusText()
         {

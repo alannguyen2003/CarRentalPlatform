@@ -1,13 +1,12 @@
+using CarRentalPlatform.Configuration;
+using DataTransferLayer.DataTransfer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Repository.Repository.Abstract;
-using BuildObject.Entities;
-using DataTransferLayer.DataTransfer;
-using CarRentalPlatform.Configuration;
 
 namespace CarRentalPlatform.Pages.EmployeePage
 {
-    public class EditBookingTotalModel : PageModel
+    public class ViewBookingDetailModel : PageModel
     {
         private readonly IBookingRepository _bookingRepository;
 
@@ -19,11 +18,10 @@ namespace CarRentalPlatform.Pages.EmployeePage
 
         [BindProperty]
         public bool IsLogin { get; set; }
-        public EditBookingTotalModel(IBookingRepository bookingRepository)
+        public ViewBookingDetailModel(IBookingRepository bookingRepository)
         {
             _bookingRepository = bookingRepository;
         }
-
         public async Task<IActionResult> OnGetAsync(int id)
         {
             IsLogin = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "isLogin");
@@ -41,27 +39,6 @@ namespace CarRentalPlatform.Pages.EmployeePage
             }
 
             return Page();
-        }
-
-        public async Task<IActionResult> OnPostAsync()
-        {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
-            var bookingToUpdate = await _bookingRepository.GetBookingById(Booking.BookingId);
-
-            if (bookingToUpdate == null)
-            {
-                return NotFound();
-            }
-
-            bookingToUpdate.TotalAmount = Booking.TotalAmount;
-            bookingToUpdate.Status = 6;
-            await _bookingRepository.UpdateBooking(bookingToUpdate);
-
-            return RedirectToPage("./EmployeeBookingManagement");
         }
     }
 }
