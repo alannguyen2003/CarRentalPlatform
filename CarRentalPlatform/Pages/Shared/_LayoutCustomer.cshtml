@@ -65,6 +65,7 @@
                                 <i style="margin-right: 3px" class="bi bi-person-fill"></i>Profile
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownProfile">
+                                <a class="dropdown-item" href="#">Your wallet: @String.Format("{0:0,0}", @Model.UserAccount.WalletBalance)đ</a>
                                 <a class="dropdown-item" href="/CustomerProfile">View Profile</a>
                                 <a class="dropdown-item" href="/BookingHistory">My Booking</a>
                                 @if (@Model.UserAccount.Role == 2)
