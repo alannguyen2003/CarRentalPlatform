@@ -4,6 +4,7 @@ public class BookingRequest
 {
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
+    public DateTime? ActualReturnDate { get; set; }
     public string Note { get; set; }
     public int DepositAmount { get; set; }
     public int CarId { get; set; }

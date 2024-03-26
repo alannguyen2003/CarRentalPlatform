@@ -42,6 +42,12 @@
     <link rel="stylesheet" href="~/css/main.css">
     <!-- responsive -->
     <link rel="stylesheet" href="~/css/responsive.css">
+    <!-- custom style-->
+    <link rel="stylesheet" href="~/css/custom-style.css">
+    <!-- Add Icon-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+
 
 </head>
 <body>
@@ -53,19 +59,17 @@
         </div>
     </div>
     <!--PreLoader Ends-->
-    <!-- header -->
+    <!-- Header -->
     <div class="top-header-area" id="sticker">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-12 col-sm-12 text-center">
+            <div class="row align-items-center">
+                <div class="col-md-3">
+                    <!-- logo -->
+                    <h2 class="ftco-heading-2"><a href="/Index" class="logo">Car<span>book</span></a></h2>
+                    <!-- logo -->
+                </div>
+                <div class="col-md-9">
                     <div class="main-menu-wrap">
-                        <!-- logo -->
-                        <div class="site-logo">
-                            <a href="/Index">
-                                Car<span>Book</span>
-                            </a>
-                        </div>
-                        <!-- logo -->
                         <!-- menu start -->
                         <nav class="main-menu">
                             <ul>
@@ -73,14 +77,12 @@
                                     <a href="/Index">Home</a>
                                 </li>
                                 <li><a href="/about">About</a></li>
-                                <li>
-                                    <a href="/price">Pricing</a>
-                                </li>
+                                <li><a href="/price">Pricing</a></li>
                                 <li><a href="/cars">Cars</a></li>
                                 <li><a href="/contact">Contact</a></li>
                                 <li>
                                     <div class="header-icons">
-                                        <a class="shopping-cart" href="/cart">Cart</a>
+                                        <i class="fas fa-shopping-cart" style="color: #fff; font-size: 20px;"></i><a class="shopping-cart" href="/cart">Cart</a>
                                     </div>
                                 </li>
                             </ul>
@@ -93,7 +95,7 @@
             </div>
         </div>
     </div>
-    <!-- end header -->
+    <!-- End Header -->
     <!-- search area -->
     <div class="search-area">
         <div class="container">
@@ -126,7 +128,6 @@
         </div>
     </div>
     <!-- end breadcrumb section -->
-
     <!-- Check Out Section -->
     <div class="checkout-section mt-150 mb-150">
         <div class="container">
@@ -137,52 +138,65 @@
                         <div class="accordion" id="accordionExample">
                             <div class="card single-accordion">
                                 <div class="card-header" id="headingOne">
-                                    <h5 class="mb-0">
-                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                            Billing Address
-                                        </button>
+                                    <h5 class="p-5">
+                                        <i class="fa-solid fa-clipboard"></i> Checkout Billing
                                     </h5>
                                 </div>
+                                @if (!ViewData.ModelState.IsValid)
+                                {
+                                    <div class="alert alert-danger">
+                                        @foreach (var modelState in ViewData.ModelState.Values)
+                                        {
+                                            foreach (var error in modelState.Errors)
+                                            {
+                                                <p>@error.ErrorMessage</p>
+                                            }
+                                        }
+                                    </div>
+                                }
+
                                 <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                                     <div class="card-body">
                                         <div class="billing-address-form order-details-wrap">
                                             <form method="post">
                                                 <!-- ID and Phone Number -->
-                                                <div class="row">
+                                                <div class="row mt-3">
                                                     <div class="form-group col-md-6">
-                                                        <div class="col-md-3">
-                                                            <label for="id">Model</label>
-                                                            <input type="text" class="form-control" id="id" value="@Model.AccountCheckBilling.Id" name="id" placeholder="ID" hidden>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <input type="text" value="@Model.CartModel.Car.Model" placeholder="Name" disabled>
-                                                        </div>
+                                                        <label for="id">Model</label>
+                                                        <input type="text" class="form-control form-control-lg" id="id" value="@Model.AccountCheckBilling.Id" name="id" placeholder="ID" hidden>
+                                                        <input type="text" class="form-control form-control-lg" value="@Model.CartModel.Car.Model" placeholder="Name" disabled>
                                                     </div>
                                                     <div class="form-group col-md-6">
                                                         <label for="phoneNumber">Phone Number</label>
-                                                        <input type="tel" class="form-control" id="phoneNumber" value="@Model.AccountCheckBilling.PhoneNumber" placeholder="Phone Number" readonly>
+                                                        <input type="tel" class="form-control form-control-lg" id="phoneNumber" value="@Model.AccountCheckBilling.PhoneNumber" placeholder="Phone Number" readonly>
                                                     </div>
                                                 </div>
 
-                                                <!-- Start Date and End Date -->
-                                                <div class="row">
-                                                    <div class="form-group col-md-6">
+                                                <div class="row mt-3">
+                                                    <!-- Start Date and End Date -->
+
+                                                    <div class="form-group col-md-3">
                                                         <label for="startDate">Start Date</label>
-                                                        <input type="datetime-local" class="form-control" id="startDate" name="startDate" value="@Model.StartDate.ToString("yyyy-MM-ddTHH:mm")">
+                                                        <input type="date" class="form-control-lg" id="book_pick_date" name="startDate" value="@Model.StartDate.ToString("yyyy-MM-dd")">
                                                     </div>
-                                                    <div class="form-group col-md-6">
+                                                    <div class="form-group col-md-3">
                                                         <label for="endDate">End Date</label>
-                                                        <input type="datetime-local" class="form-control" id="endDate" name="endDate" value="@Model.EndDate.ToString("yyyy-MM-ddTHH:mm")">
+                                                        <input type="date" class="form-control-lg" id="drop_off_date" name="endDate" value="@Model.EndDate.ToString("yyyy-MM-dd")">
+                                                    </div>
+                                                    <!-- Deposit Amount-->
+                                                    <div class="form-group col-md-6">
+                                                        <label for="Deposit Amount">Deposit Amount</label>
+                                                        <input type="hidden" name="depositAmount" id="depositAmount" value="0">
+                                                        <input style="width: auto" type="text" class="form-control form-control-lg" id="total" value="0" readonly>
                                                     </div>
                                                 </div>
-
                                                 <!-- Note -->
-                                                <div class="form-group">
+                                                <div class="form-group mt-3">
                                                     <label for="note">Note</label>
-                                                    <textarea class="form-control" id="note" name="note" rows="3" placeholder="Note"></textarea>
+                                                    <textarea class="form-control form-control-lg" id="note" name="note" rows="3" placeholder="Note"></textarea>
                                                 </div>
 
-                                                <button type="submit" class="btn btn-primary">Place Order</button>
+                                                <button type="submit" class="btn btn-primary btn-lg mt-3">Place Order</button>
                                             </form>
                                         </div>
                                     </div>
@@ -193,87 +207,18 @@
                     </div>
                 </div>
                 <div class="col-lg-4">
-                    <!-- Order Details Wrap -->
-                    <!-- Existing order details content -->
+                    <div class="card">
+                        <img class="card-img-top" src="@Model.CartModel.Car.ThumbnailImage" alt="Car Image">
+                        <div class="card-body">
+                            <h5 class="card-title">@Model.CartModel.Car.Model</h5>
+                            <p class="card-text">@Model.CartModel.Car.Description</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- End of Check Out Section -->
-
-    <!-- logo carousel -->
-    <div class="logo-carousel-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="logo-carousel-inner">
-                        <div class="single-logo-item">
-                            <img src="assets/img/company-logos/1.png" alt="">
-                        </div>
-                        <div class="single-logo-item">
-                            <img src="assets/img/company-logos/2.png" alt="">
-                        </div>
-                        <div class="single-logo-item">
-                            <img src="assets/img/company-logos/3.png" alt="">
-                        </div>
-                        <div class="single-logo-item">
-                            <img src="assets/img/company-logos/4.png" alt="">
-                        </div>
-                        <div class="single-logo-item">
-                            <img src="assets/img/company-logos/5.png" alt="">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- end logo carousel -->
-    <!-- footer -->
-    <div class="footer-area">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-md-6">
-                    <div class="footer-box about-widget">
-                        <h2 class="widget-title">About us</h2>
-                        <p>Ut enim ad minim veniam perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae.</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="footer-box get-in-touch">
-                        <h2 class="widget-title">Get in Touch</h2>
-                        <ul>
-                            <li>34/8, East Hukupara, Gifirtok, Sadan.</li>
-                            <li>support@fruitkha.com</li>
-                            <li>+00 111 222 3333</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="footer-box pages">
-                        <h2 class="widget-title">Pages</h2>
-                        <ul>
-                            <li><a href="index.html">Home</a></li>
-                            <li><a href="about.html">About</a></li>
-                            <li><a href="services.html">Shop</a></li>
-                            <li><a href="news.html">News</a></li>
-                            <li><a href="contact.html">Contact</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="footer-box subscribe">
-                        <h2 class="widget-title">Subscribe</h2>
-                        <p>Subscribe to our mailing list to get the latest updates.</p>
-                        <form action="https://technext.github.io/frutika/index.html">
-                            <input type="email" placeholder="Email">
-                            <button type="submit"><i class="fas fa-paper-plane"></i></button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- end footer -->
     <!-- copyright -->
     <div class="copyright">
         <div class="container">
@@ -300,63 +245,81 @@
         function daysBetween(time1, time2) {
             const date1 = new Date(time1);
             const date2 = new Date(time2);
-            const timeDiff = Math.abs(date2.getTime() - date1.getTime());
-            const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+            const timeDiff = Math.abs(date2 - date1);
+            const days = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
             return days;
         }
 
+        function updateDepositAmount() {
+            const startDateInput = document.getElementById("book_pick_date");
+            const endDateInput = document.getElementById("drop_off_date");
+            const startDate = new Date(startDateInput.value);
+            let endDate = new Date(endDateInput.value);
+            if (new Date(startDate) >= new Date(endDate)) {
+                alert("End date must be after start date.");
+                endDate = new Date(startDate.getTime() + (24 * 60 * 60 * 1000)); // Add 1 day
+                endDateInput.value = endDate.toISOString().split('T')[0];
+                return;
+            }
+            const days = daysBetween(startDate, endDate);
+            const pricePerDay = @Model.CartModel.Car.PricePerDay;
+            if (!isNaN(days) && days > 0) {
+                const depositAmount = days * pricePerDay;
+                const formattedDepositAmount = depositAmount.toLocaleString('vn-VN');
+                document.getElementById("depositAmount").value = depositAmount;
+                document.getElementById("total").value = formattedDepositAmount + ' đ';
+            } else {
+                document.getElementById("total").value = "0" + ' đ'; // Reset to 0 if dates are not valid
+            }
+        }
+
         function handleInputStartDate() {
-            const startDate = document.getElementById("book_pick_date").value;
-            const endDate = document.getElementById("drop_off_date").value;
-            if (startDate != null || endDate != null) {
-                const rentingDays = document.getElementById("renting_days");
-                const total = document.getElementById("total");
-                const days = daysBetween(startDate, endDate);
-                if (isNaN(typeof days)) {
-                    rentingDays.innerHTML = days + "";
-                    total.innerHTML = "$" + @Model.CartModel.Car.PricePerDay * days;
-                }
-            }
+            const startDateInput = document.getElementById("book_pick_date");
+            const endDateInput = document.getElementById("drop_off_date");
+            const startDate = new Date(startDateInput.value);
+
+            // Set the min attribute for end date to the day after the selected start date
+            const nextDay = new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
+            endDateInput.min = nextDay.toISOString().split('T')[0];
+            updateDepositAmount();
         }
+
         function handleInputEndDate() {
-            const startDate = document.getElementById("book_pick_date").value;
-            const endDate = document.getElementById("drop_off_date").value;
-            if (startDate != null || endDate != null) {
-                const rentingDays = document.getElementById("renting_days");
-                const days = daysBetween(startDate, endDate);
-                const total = document.getElementById("total");
-                if (isNaN(typeof days)) {
-                    rentingDays.innerHTML = days + "";
-                    total.innerHTML = "$" + @Model.CartModel.Car.PricePerDay * days;
-                }
+            updateDepositAmount();
+        }
+
+        // Set the minimum start date to today and update the drop_off_date accordingly
+        function setMinStartDate() {
+            const today = new Date();
+            const dd = String(today.getDate()).padStart(2, '0');
+            const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+            const yyyy = today.getFullYear();
+            const minDate = yyyy + '-' + mm + '-' + dd;
+
+            const startDateInput = document.getElementById("book_pick_date");
+            startDateInput.min = minDate;
+            if (new Date(startDateInput.value) < today) {
+                startDateInput.value = minDate;
+                handleInputStartDate(); // Cập nhật lại giá trị dựa trên ngày mới được thiết lập
             }
         }
 
-        function () {
-            var blackoutDates = @Html.Raw(Json.Serialize(Model.BlackOutDateArray));
+        document.addEventListener("DOMContentLoaded", function () {
+        setMinStartDate();
 
-            function isInvalidDate(date) {
-                for (var i = 0; i < blackoutDates.length; i++) {
-                    var startDate = moment(blackoutDates[i][0]);
-                    var endDate = moment(blackoutDates[i][1]);
-                    if (date >= startDate && date <= endDate) {
-                        return true; // Ngày không hợp lệ vì nó nằm trong khoảng thời gian đã bị book
-                    }
-                }
-                return false; // Ngày hợp lệ
-            }
+        var startDateInput = document.getElementById("book_pick_date");
+        var endDateInput = document.getElementById("drop_off_date");
 
-            $('#book_pick_date').daterangepicker({
-                singleDatePicker: true,
-                isInvalidDate: isInvalidDate
-            });
+        startDateInput.addEventListener("change", handleInputStartDate);
+        endDateInput.addEventListener("change", handleInputEndDate);
 
-            $('#drop_off_date').daterangepicker({
-                singleDatePicker: true,
-                isInvalidDate: isInvalidDate
-            });
-        }
+        // Update Deposit Amount
+        handleInputStartDate();
+        handleInputEndDate();
+    });
     </script>
+
+
     <!-- jquery -->
     <script src="~/js/jquery-1.11.3.min.js"></script>
     <!-- bootstrap -->
@@ -377,8 +340,8 @@
     <script src="~/js/sticker.js"></script>
     <!-- main js -->
     <script src="~/js/cart.js"></script>
-
+    <!-- datepicker js-->
+    <script src="~/lib/daterangepicker/moment.min.js"></script>
+    <script src="~/lib/daterangepicker/daterangepicker.js"></script>
 </body>
-
-<!-- Mirrored from technext.github.io/frutika/checkout.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 08 Mar 2024 10:18:49 GMT -->
 </html>

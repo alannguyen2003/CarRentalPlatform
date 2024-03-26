@@ -1,0 +1,21 @@
+﻿
+    .btn-primary {
+        background-color: #f60;
+        border-color: #f60;
+        border-radius: 20px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #000;
+        border-color: #f60;
+        color: #f60;
+    }
+
+
+.checkout-icon {
+    color: #f60;
+    font-size: 20px;
+}
+
+

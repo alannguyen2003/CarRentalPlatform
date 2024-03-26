@@ -41,8 +41,8 @@
                         <td class="text-center">@booking.StartDate.ToString("dd/MM/yyyy")</td>
                         <td class="text-center">@booking.EndDate.ToString("dd/MM/yyyy")</td>
                         <td class="text-center">@booking.CarModel</td>
-                        <td class="text-center">@booking.DepositAmount</td>
-                        <td class="text-center">@booking.TotalAmount</td>
+                        <td class="text-center">@booking.DepositAmount.ToString("N0", new System.Globalization.CultureInfo("vi-VN")) đ</td>
+                        <td class="text-center">@booking.TotalAmount.ToString("N0", new System.Globalization.CultureInfo("vi-VN")) đ</td>
                         <td class="text-center">
                             <div class="@booking.GetStatusClass() p-1 rounded text-center">
                                 @booking.GetStatusText()
