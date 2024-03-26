@@ -21,13 +21,13 @@ namespace DataAccess
             {
                 var accounts = new List<AccountEntity>
             {
-                new AccountEntity { Email = "admin@gmail.com", FirstName = "Admin", LastName = "Nguyen", PhoneNumber = "0847919292", Gender = true, Password = "123", WalletBalance = 2000000, DriverLicense = "103103103103", Role = 1 },
-                new AccountEntity { Email = "employee1@gmail.com", FirstName = "Tran Minh", LastName = "Quoc", PhoneNumber = "0913243528", Gender = true, Password = "123", WalletBalance = 6000000, DriverLicense = "234567890123", Role = 2 },
-                new AccountEntity { Email = "employee2@gmail.com", FirstName = "Ho Duong", LastName = "Trung Nguyen", PhoneNumber = "0386392391", Gender = true, Password = "123", WalletBalance = 820000, DriverLicense = "345678901234", Role = 2 },
-                new AccountEntity { Email = "customer1@gmail.com", FirstName = "Nguyen", LastName = "Phuong Kiet", PhoneNumber = "0913823109", Gender = true, Password = "123", WalletBalance = 9500000, DriverLicense = "456789012345", Role = 3 },
-                new AccountEntity { Email = "customer2@gmail.com", FirstName = "Vo", LastName = "Son Nghi", PhoneNumber = "0934192391", Gender = true, Password = "123", WalletBalance = 8300000, DriverLicense = "567890123456", Role = 3 },
-                new AccountEntity { Email = "customer3@gmail.com", FirstName = "Vo", LastName = "Tan Tai", PhoneNumber = "0941923841", Gender = true, Password = "123", WalletBalance = 923000, DriverLicense = "550367220001", Role = 3 },
-                new AccountEntity { Email = "customer4@gmail.com", FirstName = "Pham Tuan", LastName = "Cao Thang", PhoneNumber = "0941923841", Gender = true, Password = "123", WalletBalance = 1000, DriverLicense = "550392231440", Role = 3 }
+                new AccountEntity { Email = "admin@gmail.com", FirstName = "Admin", LastName = "Nguyen", PhoneNumber = "0847919292", Gender = true, Password = "123", WalletBalance = 2000000, DriverLicense = "103103103103", DriverDegree = "E" , Role = 1 },
+                new AccountEntity { Email = "employee1@gmail.com", FirstName = "Tran Minh", LastName = "Quoc", PhoneNumber = "0913243528", Gender = true, Password = "123", WalletBalance = 6000000, DriverLicense = "234567890123", DriverDegree = "D", Role = 2 },
+                new AccountEntity { Email = "employee2@gmail.com", FirstName = "Ho Duong", LastName = "Trung Nguyen", PhoneNumber = "0386392391", Gender = true, Password = "123", WalletBalance = 820000, DriverLicense = "345678901234", DriverDegree = "C", Role = 2 },
+                new AccountEntity { Email = "customer1@gmail.com", FirstName = "Nguyen", LastName = "Phuong Kiet", PhoneNumber = "0913823109", Gender = true, Password = "123", WalletBalance = 9500000, DriverLicense = "456789012345", DriverDegree = "C", Role = 3 },
+                new AccountEntity { Email = "customer2@gmail.com", FirstName = "Vo", LastName = "Son Nghi", PhoneNumber = "0934192391", Gender = true, Password = "123", WalletBalance = 8300000, DriverLicense = "567890123456", DriverDegree = "A1", Role = 3 },
+                new AccountEntity { Email = "customer3@gmail.com", FirstName = "Vo", LastName = "Tan Tai", PhoneNumber = "0941923841", Gender = true, Password = "123", WalletBalance = 923000, DriverLicense = "550367220001", DriverDegree = "A2", Role = 3 },
+                new AccountEntity { Email = "customer4@gmail.com", FirstName = "Pham Tuan", LastName = "Cao Thang", PhoneNumber = "0941923841", Gender = true, Password = "123", WalletBalance = 1000, DriverLicense = "550392231440", DriverDegree = "B1", Role = 3 }
             };
 
 

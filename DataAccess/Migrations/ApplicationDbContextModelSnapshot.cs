@@ -30,8 +30,11 @@ namespace DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("DriverDegree")
+                        .HasMaxLength(2)
+                        .HasColumnType("nvarchar(2)");
+
                     b.Property<string>("DriverLicense")
-                        .IsRequired()
                         .HasMaxLength(12)
                         .HasColumnType("nvarchar(12)");
 
@@ -103,7 +106,6 @@ namespace DataAccess.Migrations
 
                     b.Property<bool>("IsSigned")
                         .HasColumnType("bit");
-
 
                     b.Property<string>("Note")
                         .IsRequired()

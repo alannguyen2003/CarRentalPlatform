@@ -36,5 +36,8 @@ public class AccountEntity : BaseEntity
     public int Role { get; set; }
     
     [StringLength(12)]
-    public string DriverLicense { get; set; }
+    public string? DriverLicense { get; set; }
+
+    [StringLength (2)]
+    public string? DriverDegree { get; set; }
 }
