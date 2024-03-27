@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataTransferLayer", "DataTr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "Repository\Repository.csproj", "{BFCA1FAB-05FD-4F23-A223-D30D1E639ECB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentWebhook", "PaymentWebhook\PaymentWebhook.csproj", "{C3C61EAB-F626-43D3-AF92-8E86BF2127ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentWebhook", "PaymentWebhook\PaymentWebhook.csproj", "{C3C61EAB-F626-43D3-AF92-8E86BF2127ED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
