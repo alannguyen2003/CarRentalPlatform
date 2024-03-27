@@ -10,17 +10,20 @@ namespace CarRentalPlatform.Pages.CustomerPage
     public class BookingHistoryModel : PageModel
     {
 		private readonly IBookingRepository _bookingRepository;
+        private readonly IAccountRepository _accountRepository;
 
-		public List<BookingDetailDTO> Bookings { get; set; }
+
+        public List<BookingDetailDTO> Bookings { get; set; }
 
 		[BindProperty]
 		public AccountDto UserAccount { get; set; }
 
 		[BindProperty]
 		public bool IsLogin { get; set; }
-		public BookingHistoryModel(IBookingRepository bookingRepository)
+		public BookingHistoryModel(IBookingRepository bookingRepository, IAccountRepository accountRepository)
 		{
 			_bookingRepository = bookingRepository;
+            _accountRepository = accountRepository;
 		}
 
 		public async Task<IActionResult> OnGet()
@@ -54,6 +57,7 @@ namespace CarRentalPlatform.Pages.CustomerPage
 
         public async Task<IActionResult> OnGetCancelAsync(int id)
         {
+            UserAccount = SessionHelper.GetObjectFromJson<AccountDto>(HttpContext.Session, "user");
             var booking = await _bookingRepository.GetBookingById(id);
             if (booking == null)
             {
@@ -72,6 +76,11 @@ namespace CarRentalPlatform.Pages.CustomerPage
             }
 
             await _bookingRepository.UpdateBookingStatus(id, 5); // 5 is status for "Cancel"
+
+            // Update Account Balance
+            var accountToUpdate = await _accountRepository.GetAccountById(UserAccount.Id);
+            accountToUpdate.WalletBalance += booking.DepositAmount;
+            await _accountRepository.UpdateAccount(accountToUpdate);
             return RedirectToPage("./BookingHistory");
         }
 
