@@ -1,0 +1,122 @@
+﻿@page "/TermsOfUse"
+@model CarRentalPlatform.Pages.TermsOfUseModel
+@{
+    ViewData["Title"] = "Terms of Use";
+    Layout = "Shared/_Layout";
+}
+
+<!-- Nav Bar-->
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+    <div class="container">
+        <a class="navbar-brand" href="#">Car<span>Book</span></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="oi oi-menu"></span> Menu
+        </button>
+        <div class="collapse navbar-collapse" id="ftco-nav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active"><a href="/Index" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="/about" class="nav-link">About</a></li>
+                <li class="nav-item"><a href="/price" class="nav-link">Pricing</a></li>
+                <li class="nav-item"><a href="/cars" class="nav-link">Cars</a></li>
+                <li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item d-inline">
+                    <a href="/Cart" class="nav-link"><i class="bi bi-cart-fill"></i>Cart</a>
+                </li>
+                @if (Model.Account.Role == 1)
+                {
+                    <li class="nav-item">
+                        <a href="/Admin/Index" class="nav-link">Admin Page</a>
+                    </li>
+                }
+
+                @if (@Model.IsLogin == true)
+                {
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownProfile" role="butt  on" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i style="margin-right: 3px" class="bi bi-person-fill"></i>Profile
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownProfile">
+                            <a class="dropdown-item" href="#">Your wallet: @String.Format("{0:0,0}", @Model.Account.WalletBalance)đ</a>
+                            <a class="dropdown-item" href="/CustomerProfile">View Profile</a>
+                            <a class="dropdown-item" href="/BookingHistory">My Booking</a>
+                            @if (@Model.Account.Role == 2)
+                            {
+                                <a class="dropdown-item" href="/EmployeeBookingManagement">Manage Booking</a>
+                            }
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/Logout">Logout</a>
+                        </div>
+                    </li>
+
+                }
+                else
+                {
+                    <li class="nav-item"><a href="/Login" class="nav-link">Login</a></li>
+                }
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- END nav -->
+<!-- Terms Of Use -->
+<div class="container mt-5 mb-5">
+    <div class="jumbotron">
+        <h1 class="display-4">Terms of Use</h1>
+        <p class="lead">Welcome to our Car Rental Platform. These Terms of Use govern your access to and use of our website and services. By accessing or using the service, you agree to be bound by these terms.</p>
+        <hr class="my-4">
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">1. Eligibility</h5>
+            <p class="card-text">To use our services, you must be at least 18 years old and hold a valid driving license. By agreeing to these terms, you represent and warrant that you meet these eligibility requirements.</p>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">2. Booking and Rental Agreement</h5>
+            <p class="card-text">When booking a vehicle through our platform, you enter into a rental agreement that outlines the rental period, fees, and other conditions. Please read this agreement carefully before finalizing your booking.</p>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">3. Insurance and Liability</h5>
+            <p class="card-text">All our vehicles come with a standard insurance package. Additional insurance options are available for purchase. You are responsible for any damages or losses not covered by insurance.</p>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">4. Payment and Fees</h5>
+            <p class="card-text">Full payment is required to secure your booking. Any additional fees incurred during your rental period, such as late return fees or damage charges, will be billed accordingly.</p>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">5. Vehicle Use and Restrictions</h5>
+            <p class="card-text">The rented vehicle must be used in accordance with all applicable laws and regulations. You are prohibited from using the vehicle for illegal activities, racing, or any purpose that could cause excessive wear and tear.</p>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">6. Cancellation Policy</h5>
+            <p class="card-text">Cancellations made more than 24 hours before the rental start date will receive a full refund. Cancellations made less than 24 hours before will incur a cancellation fee.</p>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">7. Modifications to Terms</h5>
+            <p class="card-text">We reserve the right to modify these terms at any time. Your continued use of our services following any such modifications constitutes your acceptance of the new terms.</p>
+        </div>
+    </div>
+
+    <p class="mt-4">These Terms of Use are an integral part of using our service. We encourage you to review them carefully and contact us with any questions. Thank you for choosing our car rental service.</p>
+</div>
+<!-- End Terms Of Use -->

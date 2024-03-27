@@ -1,0 +1,204 @@
+﻿@page "/Policies"
+@model CarRentalPlatform.Pages.PoliciesModel
+@{
+    ViewData["Title"] = "Privacy Policy";
+    Layout = "Shared/_Layout";
+}
+
+<!-- Nav Bar-->
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+    <div class="container">
+        <a class="navbar-brand" href="#">Car<span>Book</span></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="oi oi-menu"></span> Menu
+        </button>
+        <div class="collapse navbar-collapse" id="ftco-nav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active"><a href="/Index" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="/about" class="nav-link">About</a></li>
+                <li class="nav-item"><a href="/price" class="nav-link">Pricing</a></li>
+                <li class="nav-item"><a href="/cars" class="nav-link">Cars</a></li>
+                <li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item d-inline">
+                    <a href="/Cart" class="nav-link"><i class="bi bi-cart-fill"></i>Cart</a>
+                </li>
+                @if (Model.Account.Role == 1)
+                {
+                    <li class="nav-item">
+                        <a href="/Admin/Index" class="nav-link">Admin Page</a>
+                    </li>
+                }
+
+                @if (@Model.IsLogin == true)
+                {
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownProfile" role="butt  on" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i style="margin-right: 3px" class="bi bi-person-fill"></i>Profile
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownProfile">
+                            <a class="dropdown-item" href="#">Your wallet: @String.Format("{0:0,0}", @Model.Account.WalletBalance)đ</a>
+                            <a class="dropdown-item" href="/CustomerProfile">View Profile</a>
+                            <a class="dropdown-item" href="/BookingHistory">My Booking</a>
+                            @if (@Model.Account.Role == 2)
+                            {
+                                <a class="dropdown-item" href="/EmployeeBookingManagement">Manage Booking</a>
+                            }
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/Logout">Logout</a>
+                        </div>
+                    </li>
+
+                }
+                else
+                {
+                    <li class="nav-item"><a href="/Login" class="nav-link">Login</a></li>
+                }
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- END nav -->
+<!-- Policies Section-->
+<div class="container mt-5 mb-5">
+    <div class="jumbotron">
+        <h1 class="display-4">Privacy Policy</h1>
+        <p class="lead">We value the privacy of our users and are committed to protecting your personal information.</p>
+        <hr class="my-4">
+    </div>
+
+    <div class="accordion" id="privacyPolicyAccordion">
+        @* Each section here is wrapped in a card component within an accordion for a neat organization *@
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        1. Information Collection
+                    </button>
+                </h2>
+            </div>
+
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#privacyPolicyAccordion">
+                <div class="card-body">
+                    We collect information you provide directly to us, such as when you create an account, make a booking, or communicate with us. This information may include your name, email address, phone number, and payment information.
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header" id="headingTwo">
+                <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        2. Use of Information
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#privacyPolicyAccordion">
+                <div class="card-body">
+                    We use your information to provide, maintain, and improve our services, such as to process transactions, manage bookings, and offer customer support.
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header" id="headingTwo">
+                <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        3. Sharing of Information
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#privacyPolicyAccordion">
+                <div class="card-body">
+                    We do not share your personal information with third parties except as described in this policy. We may share information with our partners, service providers, and law enforcement in accordance with legal requirements.
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header" id="headingTwo">
+                <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        4. Data Security
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#privacyPolicyAccordion">
+                <div class="card-body">
+                    We take reasonable measures to protect your information from loss, theft, misuse, and unauthorized access, disclosure, alteration, and destruction. However, no method of transmission over the Internet or electronic storage is completely secure.
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header" id="headingTwo">
+                <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        5. Changes to This Policy
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#privacyPolicyAccordion">
+                <div class="card-body">
+                    We may update this privacy policy from time to time. If we make changes, we will notify you by revising the date at the top of the policy and, in some cases, provide you with additional notice.
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header" id="headingTwo">
+                <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        6. Your Rights and Choices
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#privacyPolicyAccordion">
+                <div class="card-body">
+                    You have certain rights regarding the personal information we hold about you. These may include the right to access, correct, delete, or restrict the use of your information. You may also have the right to object to certain processing or to withdraw consent for any consent-based processing at any time.
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header" id="headingTwo">
+                <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        7. Cookies and Tracking Technologies
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#privacyPolicyAccordion">
+                <div class="card-body">
+                    We use cookies and similar tracking technologies to track activity on our service and hold certain information. Cookies are files with a small amount of data which may include an anonymous unique identifier. You are free to refuse our cookies if your browser permits, but note that some parts of our service may not function properly without them.
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header" id="headingTwo">
+                <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        8. Contact Us
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#privacyPolicyAccordion">
+                <div class="card-body">
+                    If you have any questions about this Privacy Policy or our treatment of your personal data, please contact us at info@carrentalplatform.com.
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <p>Your privacy is important to us, and we encourage you to read through our Privacy Policy carefully. Understanding our practices when it comes to your personal information will help you make informed decisions about your use of our services.</p>
+            <p>Thank you for trusting us with your information. We are committed to using it responsibly and protecting your privacy every step of the way.</p>
+        </div>
+    </div>
+    <!-- End Policies Section-->
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
