@@ -122,8 +122,7 @@ public class CheckOut : PageModel
         {
             ModelState.AddModelError(string.Empty, "Account not found.");
             TempData["Errors"] = "Account not found.";
-
-            return Page();
+            return RedirectToPage("/checkout"); // Return to the page to display the error
         }
 
         //Validate Wallet Balance
@@ -134,8 +133,7 @@ public class CheckOut : PageModel
         {
             ModelState.AddModelError(string.Empty, "Insufficient wallet balance to make this booking.");
             TempData["Errors"] = "Insufficient wallet balance to make this booking.";
-
-            return Page(); // Return to the page to display the error
+            return RedirectToPage("/checkout"); // Return to the page to display the error
         }
 
         //Valite Overlap Car is Booked
