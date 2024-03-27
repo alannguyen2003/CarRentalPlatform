@@ -39,7 +39,7 @@ namespace CarRentalPlatform.Pages.EmployeePage
                 return RedirectToPage("/Error");
             }
 
-            var currentDate = DateTime.Now;
+            var currentDate = DateTime.Now.Date;
             Bookings = await _bookingRepository.GetAllBookingDetails();
 
             var bookingsToUpdate = Bookings.Where(b => b.StartDate < currentDate && b.Status < 2).ToList();

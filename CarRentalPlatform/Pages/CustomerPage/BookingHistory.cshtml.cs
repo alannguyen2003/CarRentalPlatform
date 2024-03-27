@@ -34,7 +34,7 @@ namespace CarRentalPlatform.Pages.CustomerPage
 			UserAccount = SessionHelper.GetObjectFromJson<AccountDto>(HttpContext.Session, "user");
 			if (UserAccount != null)
 			{
-                var currentDate = DateTime.Now;
+                var currentDate = DateTime.Now.Date;
                 Bookings = await _bookingRepository.GetBookingDetailsByCustomerID(UserAccount.Id);
 
                 var bookingsToUpdate = Bookings.Where(b => b.StartDate < currentDate && b.Status < 2).ToList();
