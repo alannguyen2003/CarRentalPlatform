@@ -4,12 +4,14 @@ using Repository.Repository.Abstract;
 using BuildObject.Entities;
 using DataTransferLayer.DataTransfer;
 using CarRentalPlatform.Configuration;
+using Repository.Repository;
 
 namespace CarRentalPlatform.Pages.EmployeePage
 {
     public class EmployeeBookingManagementModel : PageModel
     {
         private readonly IBookingRepository _bookingRepository;
+        private readonly IAccountRepository _accountRepository;
 
         public List<BookingDetailDTO> Bookings { get; set; } = new List<BookingDetailDTO>();
 
@@ -19,9 +21,10 @@ namespace CarRentalPlatform.Pages.EmployeePage
         [BindProperty]
         public bool IsLogin { get; set; }
 
-        public EmployeeBookingManagementModel(IBookingRepository bookingRepository)
+        public EmployeeBookingManagementModel(IBookingRepository bookingRepository, IAccountRepository accountRepository)
         {
             _bookingRepository = bookingRepository;
+            _accountRepository = accountRepository;
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -64,6 +67,11 @@ namespace CarRentalPlatform.Pages.EmployeePage
             }
 
             await _bookingRepository.UpdateBookingStatus(id, 5); // 5 is status for "Cancel"
+
+            var accountToUpdate = await _accountRepository.GetAccountById(UserAccount.Id);
+            accountToUpdate.WalletBalance += booking.DepositAmount;
+            await _accountRepository.UpdateAccount(accountToUpdate);
+
             return RedirectToPage("./EmployeeBookingManagement");
         }
     }
