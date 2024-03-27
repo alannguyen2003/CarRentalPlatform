@@ -12,6 +12,7 @@ using DataTransferLayer.DataTransfer.Request;
 using DataTransferLayer.DataTransfer.Response;
 using Microsoft.EntityFrameworkCore;
 using Repository.Repository.Utils;
+using Stripe;
 
 namespace Repository.Repository
 {
@@ -52,6 +53,36 @@ namespace Repository.Repository
                 DriverLicense = account.DriverLicense,
                 PhoneNumber = account.PhoneNumber
             };
+        }
+
+        public async Task<AccountDto?> GetAccountWithEmail(string email)
+        {
+            var account = await _accountDao.GetAccountWithEmail(email);
+            return new AccountDto()
+            {
+                Email = account.Email,
+                Id = account.Id,
+                Name = account.LastName,
+                Role = account.Role,
+                WalletBalance = account.WalletBalance
+            };
+        }
+
+        public async Task RechareMoneyForCustomer(int accountId, int money)
+        {
+            var account = await _accountDao.GetEntityById(accountId);
+            if (account != null)
+            {
+                // Map infor from LicenseInfo to AccountEntity
+                account.WalletBalance += money;
+
+                // UpdateEntity
+                await _accountDao.UpdateEntity(account);
+            }
+            else
+            {
+                throw new Exception("Account not found");
+            }
         }
 
         public async Task UpdateDriverLicenseInfo(int accountId, LicenseInfo licenseInfo)

@@ -82,7 +82,6 @@ namespace CarRentalPlatform.Pages.CustomerPage.Profile
 
             // Save temp infor
             SessionHelper.SetObjectAsJson(HttpContext.Session, "LicenseInfo", LicenseInfo);
-
             return Page();
         }
 

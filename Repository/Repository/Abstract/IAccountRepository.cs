@@ -9,6 +9,8 @@ namespace Repository.Repository.Abstract
     {
         Task<AccountDto?> Login(string email, string password);
         Task<AccountCheckBilling?> GetAccountCheckBilling(int id);
+        Task<AccountDto?> GetAccountWithEmail(string email);
+        Task RechareMoneyForCustomer(int accountId, int money);
         Task CreateAccount(AccountEntity entity);
         Task<bool> CreateAccountFromRequest(CreateAccountRequest request);
         Task<bool> ModifyAccountFromRequest(AccountRequest request);
