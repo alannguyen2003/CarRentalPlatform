@@ -49,6 +49,6 @@ public static class ConvertUtilization
     
     public static bool GetGender_2(int gender)
     {
-        return gender == 1? true : false;
+        return gender == 1? false : true;
     } 
 }
