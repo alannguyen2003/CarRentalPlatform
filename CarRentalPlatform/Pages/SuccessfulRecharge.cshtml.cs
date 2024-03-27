@@ -41,6 +41,5 @@ public class SuccessfulRecharge : PageModel
         {
             return Redirect("/Login");
         }
-        return Page();
     }
 }

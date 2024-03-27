@@ -31,23 +31,23 @@
     {
         <form method="post" class="form">
             <div class="form-group">
-                <input type="text" class="form-control" name="ID" value="@Model.UserAccount.Id" hidden />
+                <input type="text" class="form-control" name="ID" value="@Model.UserAccount.Id" hidden/>
             </div>
             <div class="form-group">
                 <label>Email:</label>
-                <input type="email" class="form-control" name="Email" value="@Model.UserAccount.Email" readonly />
+                <input type="email" class="form-control" name="Email" value="@Model.UserAccount.Email" readonly/>
             </div>
             <div class="form-group">
                 <label>First Name:</label>
-                <input type="text" class="form-control" name="FirstName" value="@Model.UserAccount.FirstName" />
+                <input type="text" class="form-control" name="FirstName" value="@Model.UserAccount.FirstName"/>
             </div>
             <div class="form-group">
                 <label>Last Name:</label>
-                <input type="text" class="form-control" name="LastName" value="@Model.UserAccount.LastName" />
+                <input type="text" class="form-control" name="LastName" value="@Model.UserAccount.LastName"/>
             </div>
             <div class="form-group">
                 <label>Phone Number:</label>
-                <input type="text" class="form-control" name="PhoneNumber" value="@Model.UserAccount.PhoneNumber" />
+                <input type="text" class="form-control" name="PhoneNumber" value="@Model.UserAccount.PhoneNumber"/>
             </div>
             <div class="form-group">
                 <label>Gender:</label>
@@ -59,23 +59,24 @@
             </div>
             <div class="form-group">
                 <label>Password:</label>
-                <input type="password" class="form-control" name="Password" value="@Model.UserAccount.Password" placeholder="New Password" />
+                <input type="password" class="form-control" name="Password" value="@Model.UserAccount.Password" placeholder="New Password"/>
             </div>
             <div class="form-group">
                 <label>Wallet Balance:</label>
-                <input type="number" class="form-control" name="WalletBalance" value="@Model.UserAccount.WalletBalance" readonly />
+                <input type="number" class="form-control" name="WalletBalance" value="@Model.UserAccount.WalletBalance" readonly/>
+                <a class="btn btn-primary" href="/recharge">Recharge money</a>
             </div>
             <div class="form-group">
                 <label>Driver License:</label>
                 @if (string.IsNullOrEmpty(Model.UserAccount.DriverLicense))
                 {
                     <p class="text-warning">You have not any Driver License. <a href="/DriverLicenseRegistration">Add Now</a></p>
-                    <input type="text" class="form-control" name="DriverLicense" value="" readonly />
+                    <input type="text" class="form-control" name="DriverLicense" value="" readonly/>
                 }
                 else
                 {
-                    <input type="hidden" name="DriverLicense" value="@Model.UserAccount.DriverLicense" />
-                    <input type="text" class="form-control" value="@Model.UserAccount.DriverLicense" readonly />
+                    <input type="hidden" name="DriverLicense" value="@Model.UserAccount.DriverLicense"/>
+                    <input type="text" class="form-control" value="@Model.UserAccount.DriverLicense" readonly/>
                     <a class="btn btn-primary" href="/DriverLicenseRegistration">Update Driver License</a>
                 }
 

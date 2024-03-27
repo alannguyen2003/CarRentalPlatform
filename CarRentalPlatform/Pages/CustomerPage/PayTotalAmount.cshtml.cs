@@ -28,7 +28,7 @@ namespace CarRentalPlatform.Pages.CustomerPage
             if (account.WalletBalance >= booking.TotalAmount)
             {
                 // Deduct the amount from the wallet and update
-                account.WalletBalance -= booking.TotalAmount;
+                account.WalletBalance -= (booking.TotalAmount + booking.DepositAmount);
                 await _accountRepository.UpdateAccount(account);
 
                 // Optionally, update booking status to Completed or Paid
