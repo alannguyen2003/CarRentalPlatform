@@ -35,6 +35,10 @@ public class CheckOut : PageModel
     [BindProperty]
     public DateTime EndDate { get; set; }
 
+    [BindProperty]
+    public bool TermsAccepted { get; set; }
+
+
     public IActionResult OnGet()
     {
         IsLogin = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "isLogin");
@@ -134,7 +138,7 @@ public class CheckOut : PageModel
             return Page(); // Return to the page to display the error
         }
 
-        //Valite Overlap Booking
+        //Valite Overlap Car is Booked
         var existingBookings = _bookingRepository.GetBookingsForCar(CartModel.Car.Id);
         bool isOverlapping = existingBookings.Any(booking =>
             (StartDate < booking.EndDate) && (EndDate > booking.StartDate));
@@ -146,6 +150,30 @@ public class CheckOut : PageModel
             return RedirectToPage("/checkout"); // Return to the page to display the error
         }
 
+        //Valite Overlap Booked with overlap time
+        var customerBookings = await _bookingRepository.GetBookingsByCustomerId(CartModel.Account.Id);
+
+        bool overlap = customerBookings.Any(b =>
+            (StartDate < b.EndDate && EndDate > b.StartDate) ||
+            (EndDate > b.StartDate && StartDate < b.EndDate));
+
+        if (overlap)
+        {
+            ModelState.AddModelError("", "You cannot book more than one car at the same period.");
+            TempData["Errors"] = "You cannot book more than one car at the same period.";
+            return RedirectToPage("/checkout"); // Return to the page to display the error
+        }
+
+        // Validate Driver's License Degree
+        var validDegrees = new List<string> { "B1", "B2", "C", "D", "E", "F" };
+        if (!validDegrees.Contains(account.DriverDegree))
+        {
+            ModelState.AddModelError(string.Empty, "Your driver's license does not qualify to rent a car.");
+            TempData["Errors"] = "Your driver's license does not qualify to rent a car.";
+            return RedirectToPage("/checkout");
+        }
+
+
         // Create Entity
         BookingRequest bookingRequest = new BookingRequest()
         {
@@ -153,6 +181,7 @@ public class CheckOut : PageModel
             EndDate = EndDate,
             ActualReturnDate = null,
             Note = note,
+            IsSigned = true,
             CarId = CartModel.Car.Id,
             CustomerId = AccountCheckBilling.Id,
             DepositAmount = depositAmount

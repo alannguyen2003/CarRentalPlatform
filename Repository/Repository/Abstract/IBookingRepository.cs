@@ -19,13 +19,13 @@ namespace Repository.Repository.Abstract
         Task UpdateBooking(BookingEntity entity);
         Task DeleteBooking(BookingEntity entity);
         Task UpdateBookingStatus(int bookingId, int newStatus);
+        Task UpdateActualReturnDate(int bookingId, DateTime actualReturnDate);
+
         List<BookingEntity> GetBookingsForCar(int carID);
         Task<List<BookingEntity>> GetBookingsByCustomerId(int customerID);
         Task<List<BookingDetailDTO>> GetAllBookingDetails();
         Task<BookingDetailDTO> GetBookingDetailsById(int bookingId);
         Task<List<BookingDetailDTO>> GetBookingDetailsByCustomerID(int customerID);
-
-
         Task<List<BookingResponse>> GetBookingsByTimeRange(string timeRange);
         Task<List<BookingResponse>> GetBookingByStatus(int Status);
         Task<List<BookingResponse>> GetBookingByPrice(int price);

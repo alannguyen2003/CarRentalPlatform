@@ -14,7 +14,7 @@ public static class DependencyInjection
         services.AddScoped<ILocationRepository, LocationRepository>();
         services.AddScoped<IBrandRepository, BrandRepository>();
         services.AddScoped<IBookingRepository, BookingRepository>();
-        services.AddScoped<IPaymentRepository, PaymentRepository>();
+        //services.AddScoped<IPaymentRepository, PaymentRepository>();
         services.AddScoped<ApplicationDbContext>();
         return services;
     }

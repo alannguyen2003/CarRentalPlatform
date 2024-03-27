@@ -32,15 +32,48 @@ namespace CarRentalPlatform.Pages.CustomerPage
 			}
 
 			UserAccount = SessionHelper.GetObjectFromJson<AccountDto>(HttpContext.Session, "user");
-			if (UserAccount != null && UserAccount.Role == 3)
+			if (UserAccount != null)
 			{
-				Bookings = await _bookingRepository.GetBookingDetailsByCustomerID(UserAccount.Id);
-			}
+                var currentDate = DateTime.Now;
+                Bookings = await _bookingRepository.GetBookingDetailsByCustomerID(UserAccount.Id);
+
+                var bookingsToUpdate = Bookings.Where(b => b.StartDate < currentDate && b.Status < 2).ToList();
+                foreach (var booking in bookingsToUpdate)
+                {
+                    await _bookingRepository.UpdateBookingStatus(booking.BookingId, 5); // 5 is status for "Cancel"
+                }
+
+                Bookings = await _bookingRepository.GetBookingDetailsByCustomerID(UserAccount.Id);
+            }
 			else
 			{
 				return RedirectToPage("/Error");
 			}
 			return Page();
 		}
-	}
+
+        public async Task<IActionResult> OnGetCancelAsync(int id)
+        {
+            var booking = await _bookingRepository.GetBookingById(id);
+            if (booking == null)
+            {
+                return NotFound();
+            }
+
+            var now = DateTime.UtcNow;
+            var timeDiff = booking.StartDate - now;
+
+            if (timeDiff.TotalHours < 24)
+            {
+				// Set error message to display it somehow or log it
+				ModelState.AddModelError(string.Empty, "The automatic cancellation function only allows orders that are within 24 hours of the start date. Please contact staff for further assistance.");
+                // This example simply redirects back with an error query string
+                return RedirectToPage("./BookingHistory");
+            }
+
+            await _bookingRepository.UpdateBookingStatus(id, 5); // 5 is status for "Cancel"
+            return RedirectToPage("./BookingHistory");
+        }
+
+    }
 }

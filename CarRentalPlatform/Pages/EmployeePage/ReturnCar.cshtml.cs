@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Repository.Repository.Abstract;
 
-namespace CarRentalPlatform.Pages.CustomerPage
+namespace CarRentalPlatform.Pages.EmployeePage
 {
     public class ReturnCarModel : PageModel
     {
@@ -16,7 +16,10 @@ namespace CarRentalPlatform.Pages.CustomerPage
         public async Task<IActionResult> OnGetAsync(int id)
         {
             await _bookingRepository.UpdateBookingStatus(id, 3);
-            return RedirectToPage("./BookingHistory");
+
+            // Update Actual Return Date to today's date
+            await _bookingRepository.UpdateActualReturnDate(id, DateTime.Now);
+            return RedirectToPage("./EmployeeBookingManagement");
         }
     }
 

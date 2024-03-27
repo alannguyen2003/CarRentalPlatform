@@ -19,6 +19,7 @@ public class BookingEntity : BaseEntity
     //3 --> On Checking
     //4 --> Done
     //5 --> Cancel
+    //6 --> Paying
     public int Status { get; set; }
 
     public int DepositAmount { get; set; }
@@ -31,5 +32,10 @@ public class BookingEntity : BaseEntity
     [ForeignKey("CarId")]
     public int CarId { get; set; }
     public virtual CarEntity Car { get; set; } = null!;
+
+
+    public bool IsSigned { get; set; }
+
+    public ICollection<FixingDetailEntity>? FixingDetails { get; set; }
 
 }

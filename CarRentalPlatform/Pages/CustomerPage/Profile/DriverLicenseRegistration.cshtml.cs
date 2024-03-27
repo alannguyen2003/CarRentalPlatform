@@ -138,7 +138,7 @@ namespace CarRentalPlatform.Pages.CustomerPage.Profile
                         Nation = data.Nation,
                         Address = data.Address,
                         PlaceIssue = data.place_issue,
-                        Class = data.Class
+                        DriverDegree = data.Class
                     };
                 }
             }

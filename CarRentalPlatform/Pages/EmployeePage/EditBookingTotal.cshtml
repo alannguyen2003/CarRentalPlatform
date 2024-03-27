@@ -10,6 +10,21 @@
 <div class="container mt-5">
     <h2 class="mb-4">@ViewData["Title"]</h2>
 
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
+
     <form method="post">
         <input type="hidden" asp-for="Booking.BookingId" />
 
@@ -62,29 +77,114 @@
             <div class="col-4">
                 <div class="form-group">
                     <label>Deposit Amount</label>
-                    <input type="text" value="@Model.Booking.DepositAmount" class="form-control" readonly />
+                    <input type="text" value="@Model.Booking.DepositAmount.ToString("N0", new System.Globalization.CultureInfo("vi-VN")) đ" class="form-control" readonly />
                 </div>
             </div>
         </div>
 
         <div class="row">
             <div class="col-12">
-                <div class="form-group">
-                    <label asp-for="Booking.TotalAmount" class="control-label">Total Amount</label>
-                    @if (Model.Booking.Status != 3)
-                    {
-                        <input asp-for="Booking.TotalAmount" class="form-control" readonly />
-                    }
-                    else
-                    {
-                        <input asp-for="Booking.TotalAmount" class="form-control" />
-                    }
-                    <span asp-validation-for="Booking.TotalAmount" class="text-danger"></span>
-                </div>
+                <h4>Fixing Details</h4>
+                <div id="fixing-details-container"></div>
+                <button type="button" id="add-detail" class="btn btn-secondary py-3 my-2">Add Fixing Detail</button>
+                <!-- Thêm input readonly cho Total Amount -->
+                <input type="text" id="total-amount" class="form-control mt-3" readonly placeholder="Total Amount">
             </div>
         </div>
-        <div class="form-group">
+
+        <div class="form-group mt-3">
             <input type="submit" value="Update" class="btn btn-primary" />
         </div>
     </form>
 </div>
+
+<script>
+    function isValidDescription(description) {
+        // Kiểm tra mô tả không chứa ký tự đặc biệt
+        return /^[a-zA-Z0-9\s]+$/.test(description);
+    }
+
+    function isValidPrice(price) {
+        // Kiểm tra giá không âm và không bằng 0
+        return price > 0;
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        let index = 0;
+        const container = document.querySelector('#fixing-details-container');
+        const totalAmountInput = document.getElementById('total-amount');
+        let totalAmount = 0;
+
+        document.querySelector('#add-detail').addEventListener('click', function () {
+            const detailHTML = `
+                <div class="row fixing-detail" data-index="${index}">
+                    <div class="col">
+                        <input type="text" name="FixingDetails[${index}].FixingDescription" class="form-control description-input" placeholder="Description" required />
+                    </div>
+                    <div class="col">
+                        <input type="number" style="width: 300px" name="FixingDetails[${index}].Price" class="form-control price-input" placeholder="Price" required />
+                    </div>
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-danger remove-detail py-3">Remove</button>
+                    </div>
+                </div>`;
+            container.insertAdjacentHTML('beforeend', detailHTML);
+            index++;
+        });
+
+        container.addEventListener('input', function (e) {
+            if (e.target.classList.contains('description-input') && !isValidDescription(e.target.value)) {
+                alert('Description should not contain special characters.');
+                e.target.value = ''; // Reset input
+            } else if (e.target.classList.contains('price-input') && !isValidPrice(parseInt(e.target.value, 10))) {
+                alert('Price must be a positive number and not zero.');
+                e.target.value = ''; // Reset input
+            }
+            updateTotalAmount();
+        });
+
+        container.addEventListener('click', function (e) {
+            if (e.target.classList.contains('remove-detail')) {
+                const detailRow = e.target.closest('.fixing-detail');
+                container.removeChild(detailRow);
+                updateTotalAmount();
+            }
+        });
+
+        function updateTotalAmount() {
+            totalAmount = Array.from(container.querySelectorAll('.fixing-detail')).reduce((sum, row) => {
+                const priceInput = row.querySelector('.price-input');
+                const price = parseInt(priceInput.value || 0, 10);
+                return sum + (isValidPrice(price) ? price : 0);
+            }, 0);
+            totalAmountInput.value = `${totalAmount.toLocaleString('vi-VN')} đ`;
+        }
+    });
+
+    document.querySelector('form').addEventListener('submit', function (e) {
+        const descriptions = container.querySelectorAll('.description-input');
+        const prices = container.querySelectorAll('.price-input');
+
+        let isValidForm = true;
+        descriptions.forEach(input => {
+            if (!isValidDescription(input.value)) {
+                alert('One or more descriptions are invalid.');
+                isValidForm = false;
+            }
+        });
+
+        prices.forEach(input => {
+            if (!isValidPrice(parseInt(input.value, 10))) {
+                alert('One or more prices are invalid.');
+                isValidForm = false;
+            }
+        });
+
+        if (!isValidForm) {
+            e.preventDefault(); // Ngăn không cho form submit nếu có lỗi
+        }
+    });
+</script>
+
+
+

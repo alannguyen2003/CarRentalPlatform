@@ -30,6 +30,8 @@ builder.Services.AddScoped<ICarRepository, CarRepository>();
 builder.Services.AddScoped<ILocationRepository, LocationRepository>();
 builder.Services.AddScoped<IBrandRepository, BrandRepository>();
 builder.Services.AddScoped<IBookingRepository, BookingRepository>();
+builder.Services.AddScoped<IFixingDetailRepository, FixingRepository>();
+
 
 builder.Services.AddLoggingInformation();
 
@@ -63,6 +65,7 @@ try
     await Seed.SeedLocation(context);
     await Seed.SeedCar(context);
     await Seed.SeedBooking(context);
+    await Seed.SeedFixingDetail(context);
 }
 catch (Exception ex)
 {

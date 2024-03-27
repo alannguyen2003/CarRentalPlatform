@@ -4,12 +4,20 @@ using Repository.Repository.Abstract;
 using BuildObject.Entities;
 using DataTransferLayer.DataTransfer;
 using CarRentalPlatform.Configuration;
+using BusinessObject.Entities;
 
 namespace CarRentalPlatform.Pages.EmployeePage
 {
+    public class FixingDetailInputModel
+    {
+        public string FixingDescription { get; set; }
+        public int Price { get; set; }
+    }
+        
     public class EditBookingTotalModel : PageModel
     {
         private readonly IBookingRepository _bookingRepository;
+        private readonly IFixingDetailRepository _fixingDetailRepository;
 
         [BindProperty]
         public BookingDetailDTO Booking { get; set; }
@@ -19,9 +27,14 @@ namespace CarRentalPlatform.Pages.EmployeePage
 
         [BindProperty]
         public bool IsLogin { get; set; }
-        public EditBookingTotalModel(IBookingRepository bookingRepository)
+
+        [BindProperty]
+        public List<FixingDetailInputModel> FixingDetails { get; set; } = new List<FixingDetailInputModel>();
+
+        public EditBookingTotalModel(IBookingRepository bookingRepository, IFixingDetailRepository fixingDetailRepository)
         {
             _bookingRepository = bookingRepository;
+            _fixingDetailRepository = fixingDetailRepository;
         }
 
         public async Task<IActionResult> OnGetAsync(int id)
@@ -45,22 +58,36 @@ namespace CarRentalPlatform.Pages.EmployeePage
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
 
             var bookingToUpdate = await _bookingRepository.GetBookingById(Booking.BookingId);
 
-            if (bookingToUpdate == null)
+            if (bookingToUpdate != null)
             {
-                return NotFound();
-            }
+                // Handles adding each Fixing Detail to the database
+                foreach (var detail in FixingDetails)
+                {
+                    await _fixingDetailRepository.CreateFixingDetail(new FixingDetailEntity
+                    {
+                        BookingId = Booking.BookingId,
+                        FixingDescription = detail.FixingDescription,
+                        Price = detail.Price
+                    });
+                }
 
-            bookingToUpdate.TotalAmount = Booking.TotalAmount;
-            await _bookingRepository.UpdateBooking(bookingToUpdate);
+                // Update Total Amount and Status
+                bookingToUpdate.TotalAmount = FixingDetails.Sum(fd => fd.Price);
+                bookingToUpdate.Status = 6; // Change status to "Paying"
+                await _bookingRepository.UpdateBooking(bookingToUpdate);
+
+                TempData["SuccessMessage"] = "Booking and fixing details updated successfully.";
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Booking not found.";
+            }
 
             return RedirectToPage("./EmployeeBookingManagement");
         }
+
     }
 }
