@@ -35,12 +35,16 @@ public class CheckOut : PageModel
     [BindProperty]
     public DateTime EndDate { get; set; }
 
+    [BindProperty]
+    public bool TermsAccepted { get; set; }
+
+
     public IActionResult OnGet()
     {
         IsLogin = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "isLogin");
         if (IsLogin == false)
         {
-            return RedirectToPage("./login");
+            return RedirectToPage("/login");
         }
         CartModel = SessionHelper.GetObjectFromJson<CartModel>(HttpContext.Session, "cart") == null ?
             new CartModel()
@@ -62,7 +66,7 @@ public class CheckOut : PageModel
         }
         else
         {
-            return RedirectToPage("./index");
+            return RedirectToPage("/index");
         }
 
         var account = _accountRepository.GetAccountById(CartModel.Account.Id).Result;
@@ -77,6 +81,11 @@ public class CheckOut : PageModel
                 DriverLicense = account.DriverLicense
             };
         }
+
+        if (TempData["Errors"] is string errors)
+        {
+            ModelState.AddModelError(string.Empty, errors);
+        }
         return Page();
     }
 
@@ -87,12 +96,13 @@ public class CheckOut : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
+        ModelState.Clear();
         string note = Request.Form["note"];
 
         CartModel = SessionHelper.GetObjectFromJson<CartModel>(HttpContext.Session, "cart");
         if (CartModel == null)
         {
-            return RedirectToPage("./cars"); // Return to the page to display the error
+            return RedirectToPage("/cars"); // Return to the page to display the error
         }
         else
         {
@@ -112,18 +122,22 @@ public class CheckOut : PageModel
         if (account == null)
         {
             ModelState.AddModelError(string.Empty, "Account not found.");
-            return Page();
+            TempData["Errors"] = "Account not found.";
+            return RedirectToPage("/checkout"); // Return to the page to display the error
         }
 
         //Validate Wallet Balance
-        var depositAmount = DaysBetween(StartDate, EndDate) * CartModel.Car.PricePerDay;
+        var depositAmountInput = Request.Form["depositAmount"];
+        var depositAmount = int.Parse(depositAmountInput);
+
         if (account.WalletBalance < depositAmount)
         {
             ModelState.AddModelError(string.Empty, "Insufficient wallet balance to make this booking.");
-            return Page(); // Return to the page to display the error
+            TempData["Errors"] = "Insufficient wallet balance to make this booking.";
+            return RedirectToPage("/checkout"); // Return to the page to display the error
         }
 
-        //Valite Overlap Booking
+        //Valite Overlap Car is Booked
         var existingBookings = _bookingRepository.GetBookingsForCar(CartModel.Car.Id);
         bool isOverlapping = existingBookings.Any(booking =>
             (StartDate < booking.EndDate) && (EndDate > booking.StartDate));
@@ -131,15 +145,42 @@ public class CheckOut : PageModel
         if (isOverlapping)
         {
             ModelState.AddModelError(string.Empty, "The selected date range overlaps with an existing booking.");
-            return Page(); // Return to the page to display the error
+            TempData["Errors"] = "The selected date range overlaps with an existing booking.";
+            return RedirectToPage("/checkout"); // Return to the page to display the error
         }
+
+        //Valite Overlap Booked with overlap time
+        var customerBookings = await _bookingRepository.GetBookingsByCustomerId(CartModel.Account.Id);
+
+        bool overlap = customerBookings.Any(b =>
+            (StartDate < b.EndDate && EndDate > b.StartDate) ||
+            (EndDate > b.StartDate && StartDate < b.EndDate));
+
+        if (overlap)
+        {
+            ModelState.AddModelError("", "You cannot book more than one car at the same period.");
+            TempData["Errors"] = "You cannot book more than one car at the same period.";
+            return RedirectToPage("/checkout"); // Return to the page to display the error
+        }
+
+        // Validate Driver's License Degree
+        var validDegrees = new List<string> { "B1", "B2", "C", "D", "E", "F" };
+        if (!validDegrees.Contains(account.DriverDegree))
+        {
+            ModelState.AddModelError(string.Empty, "Your driver's license does not qualify to rent a car.");
+            TempData["Errors"] = "Your driver's license does not qualify to rent a car.";
+            return RedirectToPage("/checkout");
+        }
+
 
         // Create Entity
         BookingRequest bookingRequest = new BookingRequest()
         {
             StartDate = StartDate,
             EndDate = EndDate,
+            ActualReturnDate = null,
             Note = note,
+            IsSigned = true,
             CarId = CartModel.Car.Id,
             CustomerId = AccountCheckBilling.Id,
             DepositAmount = depositAmount

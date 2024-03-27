@@ -4,7 +4,7 @@
     Layout = "_LayoutCustomer";
     ViewData["Title"] = "Booking History";
 }
-<div class="container mt-5">
+<div class="container mt-5" style="max-width: 1400px !important">
     <h2 class="mb-4">@ViewData["Title"]</h2>
     @if (!ModelState.IsValid)
     {
@@ -20,12 +20,13 @@
 
     @if (Model.Bookings != null && Model.Bookings.Count > 0)
     {
-        <table class="table">
+        <table class="table" id="datatablesSimple">
             <thead>
                 <tr>
                     <th class="text-center">Booking ID</th>
                     <th class="text-center">Start Date</th>
                     <th class="text-center">End Date</th>
+                    <th class="text-center">Actual Return Date</th>
                     <th class="text-center">Car Model</th>
                     <th class="text-center">Deposit Amount</th>
                     <th class="text-center">Total Amount</th>
@@ -40,31 +41,27 @@
                         <td class="text-center">@booking.BookingId</td>
                         <td class="text-center">@booking.StartDate.ToString("dd/MM/yyyy")</td>
                         <td class="text-center">@booking.EndDate.ToString("dd/MM/yyyy")</td>
+                        <td class="text-center">@booking.ActualReturnDate?.ToString("dd/MM/yyyy")</td>
                         <td class="text-center">@booking.CarModel</td>
-                        <td class="text-center">@booking.DepositAmount</td>
-                        <td class="text-center">@booking.TotalAmount</td>
+                        <td class="text-center">@booking.DepositAmount.ToString("N0", new System.Globalization.CultureInfo("vi-VN")) đ</td>
+                        <td class="text-center">@booking.TotalAmount.ToString("N0", new System.Globalization.CultureInfo("vi-VN")) đ</td>
                         <td class="text-center">
                             <div class="@booking.GetStatusClass() p-1 rounded text-center">
                                 @booking.GetStatusText()
                             </div>
                         </td>
                         <td class="text-center">
-                            @if (booking.Status == 1)
+                            <a href="/ViewBookingDetail/@booking.BookingId" class="btn btn-primary">View</a>
+                            @if (booking.TotalAmount != 0 && booking.Status == 6)
                             {
-                                <a href="/TakeCar/@booking.BookingId" class="btn btn-warning">Take Car</a>
-                            }
-                            else if (booking.Status == 2)
-                            {
-                                <a href="/ReturnCar/@booking.BookingId" class="btn btn-info">Return Car</a>
-                            }
-                            else if (booking.TotalAmount != 0 && booking.Status == 3)
-                            {
-                                <a href="/PayTotalAmount/@booking.BookingId" class="btn btn-primary" onclick="confirmPayment('@booking.BookingId')">Pay</a>
+                                <a href="javascript:void(0)" class="btn bg-purple-light" onclick="confirmPayment('@booking.BookingId')">Pay Total</a>
+
                             }
                             else
                             {
                                 <button class="btn btn-secondary" disabled>No Action</button>
                             }
+                            <a class="btn btn-danger cancel-button" href="javascript:void(0)" onclick="confirmCancel('@booking.BookingId', '@booking.StartDate.ToString("o")', '@booking.Status')" data-start-date="@booking.StartDate.ToString("o")" data-status="@booking.Status">Cancel</a>
                         </td>
                     </tr>
                 }
@@ -79,8 +76,64 @@
 
 <script>
     function confirmPayment(bookingId) {
-        if (confirm("Do you want to proceed with the payment?")) {
-            window.location.href = `/PayTotalAmount/${bookingId}`;
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Do you want to proceed with the payment?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, pay it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = `/PayTotalAmount/${bookingId}`;
+            }
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll('.cancel-button').forEach(function (button) {
+            const startDate = new Date(button.getAttribute('data-start-date'));
+            const status = button.getAttribute('data-status');
+            const now = new Date();
+            const hoursDiff = (startDate - now) / (1000 * 60 * 60);
+
+            if (hoursDiff < 24) {
+                button.classList.add('disabled');
+                button.onclick = function (e) {
+                    e.preventDefault();
+                };
+            }
+        });
+    });
+
+    function confirmCancel(bookingId, startDate, status) {
+        const startDateObj = new Date(startDate);
+        const now = new Date();
+        const hoursDiff = (startDateObj - now) / (1000 * 60 * 60);
+
+        if (hoursDiff < 24 || status !== '1') {
+            Swal.fire({
+                title: 'Action Not Allowed',
+                text: "Cancellation is only allowed for bookings that Status are 'On Booking' and at least 24 hours before the 'Start Date'.",
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+            return;
         }
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, cancel it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = `/BookingHistory?handler=Cancel&id=${bookingId}`;
+            }
+        });
     }
 </script>

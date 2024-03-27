@@ -9,6 +9,7 @@ using Repository.Repository;
 using Repository.Repository.Abstract;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using BusinessObject.Entities;
 
 namespace CarRentalPlatform.Pages.CustomerPage.Profile
 {
@@ -18,6 +19,10 @@ namespace CarRentalPlatform.Pages.CustomerPage.Profile
         private readonly IWebHostEnvironment _environment;
         private readonly IAccountRepository _accountRepository; // Replace ApiService with the name of your API service
         public LicenseInfo LicenseInfo { get; private set; }
+        [BindProperty]
+        public AccountEntity UserAccount { get; set; }
+        [BindProperty]
+        public bool IsLogin { get; set; }
 
         public DriverLicenseRegistrationModel(IWebHostEnvironment environment, IAccountRepository accountRepository, IHttpClientFactory httpClientFactory)
         {
@@ -25,6 +30,25 @@ namespace CarRentalPlatform.Pages.CustomerPage.Profile
             _accountRepository = accountRepository;
             _httpClient = httpClientFactory.CreateClient();
 
+        }
+
+        public async Task<IActionResult> OnGetAsync()
+        {
+            IsLogin = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "isLogin");
+            AccountDto accountDto = SessionHelper.GetObjectFromJson<AccountDto>(HttpContext.Session, "user");
+            if (accountDto != null)
+            {
+                UserAccount = await _accountRepository.GetAccountById(accountDto.Id);
+                if (UserAccount == null)
+                {
+                    return Redirect("/Error");
+                }
+            }
+            else
+            {
+                return Redirect("/Login");
+            }
+            return Page();
         }
 
         public async Task<IActionResult> OnPostCheckLicenseAsync(IFormFile licenseImage)
@@ -58,7 +82,6 @@ namespace CarRentalPlatform.Pages.CustomerPage.Profile
 
             // Save temp infor
             SessionHelper.SetObjectAsJson(HttpContext.Session, "LicenseInfo", LicenseInfo);
-
             return Page();
         }
 
@@ -115,7 +138,7 @@ namespace CarRentalPlatform.Pages.CustomerPage.Profile
                         Nation = data.Nation,
                         Address = data.Address,
                         PlaceIssue = data.place_issue,
-                        Class = data.Class
+                        DriverDegree = data.Class
                     };
                 }
             }

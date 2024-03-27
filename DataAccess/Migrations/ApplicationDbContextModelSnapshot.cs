@@ -30,8 +30,11 @@ namespace DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("DriverDegree")
+                        .HasMaxLength(2)
+                        .HasColumnType("nvarchar(2)");
+
                     b.Property<string>("DriverLicense")
-                        .IsRequired()
                         .HasMaxLength(12)
                         .HasColumnType("nvarchar(12)");
 
@@ -82,7 +85,7 @@ namespace DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("ActualReturnDate")
+                    b.Property<DateTime?>("ActualReturnDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("CarId")
@@ -100,6 +103,9 @@ namespace DataAccess.Migrations
                     b.Property<string>("Feedback")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsSigned")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Note")
                         .IsRequired()
@@ -194,6 +200,31 @@ namespace DataAccess.Migrations
                     b.ToTable("Cars");
                 });
 
+            modelBuilder.Entity("BusinessObject.Entities.FixingDetailEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BookingId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FixingDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookingId");
+
+                    b.ToTable("FixingDetails");
+                });
+
             modelBuilder.Entity("BusinessObject.Entities.LocationEntity", b =>
                 {
                     b.Property<int>("Id")
@@ -248,6 +279,22 @@ namespace DataAccess.Migrations
                     b.Navigation("Brand");
 
                     b.Navigation("Location");
+                });
+
+            modelBuilder.Entity("BusinessObject.Entities.FixingDetailEntity", b =>
+                {
+                    b.HasOne("BusinessObject.Entities.BookingEntity", "Booking")
+                        .WithMany("FixingDetails")
+                        .HasForeignKey("BookingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Booking");
+                });
+
+            modelBuilder.Entity("BusinessObject.Entities.BookingEntity", b =>
+                {
+                    b.Navigation("FixingDetails");
                 });
 
             modelBuilder.Entity("BusinessObject.Entities.BrandEntity", b =>

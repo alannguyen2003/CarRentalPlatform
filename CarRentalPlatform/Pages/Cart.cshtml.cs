@@ -32,12 +32,12 @@ public class Cart : PageModel
         IsLogin = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "isLogin");
         if (IsLogin == false)
         {
-            return RedirectToPage("./login");
+            return Redirect("/login");
         }
         CartModel = SessionHelper.GetObjectFromJson<CartModel>(HttpContext.Session, "cart");
         if (CartModel == null)
         {
-            return RedirectToPage("./cars");
+            return Redirect("/cars");
         }
         else
         {

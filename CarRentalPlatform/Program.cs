@@ -7,6 +7,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using Repository.Repository;
 using Repository.Repository.Abstract;
+using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +30,8 @@ builder.Services.AddScoped<ICarRepository, CarRepository>();
 builder.Services.AddScoped<ILocationRepository, LocationRepository>();
 builder.Services.AddScoped<IBrandRepository, BrandRepository>();
 builder.Services.AddScoped<IBookingRepository, BookingRepository>();
+builder.Services.AddScoped<IFixingDetailRepository, FixingRepository>();
+
 
 builder.Services.AddLoggingInformation();
 
@@ -42,7 +45,7 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-
+StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey").Get<string>();
 app.UseHttpLogging();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -62,6 +65,7 @@ try
     await Seed.SeedLocation(context);
     await Seed.SeedCar(context);
     await Seed.SeedBooking(context);
+    await Seed.SeedFixingDetail(context);
 }
 catch (Exception ex)
 {

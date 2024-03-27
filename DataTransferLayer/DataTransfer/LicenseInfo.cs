@@ -13,7 +13,7 @@ namespace DataTransferLayer.DataTransfer
         public string Address { get; set; }
         public string Nation { get; set; }
         public string PlaceIssue { get; set; }
-        public string Class { get; set; }
+        public string DriverDegree { get; set; }
     }
 
 }

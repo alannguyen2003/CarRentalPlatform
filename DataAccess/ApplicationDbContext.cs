@@ -22,6 +22,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<BrandEntity> Brands { get; set; }
     public DbSet<CarEntity> Cars { get; set; }
     public DbSet<BookingEntity> Bookings { get; set; }
+    public DbSet<FixingDetailEntity> FixingDetails { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

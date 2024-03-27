@@ -28,6 +28,7 @@ namespace Repository.Repository
                 EndDate = request.EndDate,
                 Note = request.Note,
                 Status = 1,
+                IsSigned = true,
                 Feedback = "",
                 CustomerId = request.CustomerId,
                 CarId = request.CarId,
@@ -49,6 +50,15 @@ namespace Repository.Repository
             if (booking != null)
             {
                 booking.Status = newStatus;
+                await _bookingDao.UpdateEntity(booking);
+            }
+        }
+        public async Task UpdateActualReturnDate(int bookingId, DateTime actualReturnDate)
+        {
+            var booking = await _bookingDao.GetEntityById(bookingId);
+            if (booking != null)
+            {
+                booking.ActualReturnDate = actualReturnDate;
                 await _bookingDao.UpdateEntity(booking);
             }
         }
