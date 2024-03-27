@@ -11,6 +11,7 @@ using Repository.Repository.Abstract;
 using DataTransferLayer.DataTransfer;
 using DataTransferLayer.DataTransfer.Response;
 using DataTransferLayer.DataTransfer.Request;
+using CarRentalPlatform.Configuration;
 
 namespace CarRentalPlatform.Pages.AdminPage.BookingManagement
 {
@@ -23,20 +24,39 @@ namespace CarRentalPlatform.Pages.AdminPage.BookingManagement
 
         [BindProperty]
         public BookingRequestAdmin BookingAdmin { get; set; } = default!;
+        [BindProperty]
+        public bool IsLogin { get; set; }
+
+        [BindProperty]
+        public AccountDto AccountDto { get; set; }
         public async Task<IActionResult> OnGet(int? id)
         {
-            try
+            IsLogin = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "isLogin");
+            AccountDto = SessionHelper.GetObjectFromJson<AccountDto>(HttpContext.Session, "user");
+            if (IsLogin == false)
             {
-               BookingAdmin = await _bookingRepository.GetAllBookingsbyId((int)id);
-                if (BookingAdmin == null)
+                return RedirectToPage("/login");
+            }
+            else if (AccountDto.Role != 1)
+            {
+                return RedirectToPage("/index");
+            }
+            else
+            {
+                try
                 {
-                    return NotFound();
+                    BookingAdmin = await _bookingRepository.GetAllBookingsbyId((int)id);
+                    if (BookingAdmin == null)
+                    {
+                        return NotFound();
+                    }
                 }
+                catch
+                {
+                    throw new Exception();
+                }
+                return Page();
             }
-            catch {
-                throw new Exception();
-            }
-            return Page();
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using DataTransferLayer.DataTransfer.Response;
+﻿using CarRentalPlatform.Configuration;
+using DataTransferLayer.DataTransfer;
+using DataTransferLayer.DataTransfer.Response;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NuGet.Packaging.Core;
@@ -17,10 +19,24 @@ public class Detail : PageModel
     
     [BindProperty]
     public CarResponse? CarResponse { get; set; }
-    
+    [BindProperty]
+    public bool IsLogin { get; set; }
+
+    [BindProperty]
+    public AccountDto AccountDto { get; set; }
+
     public IActionResult OnGet(int id)
     {
-        
+        IsLogin = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "isLogin");
+        AccountDto = SessionHelper.GetObjectFromJson<AccountDto>(HttpContext.Session, "user");
+        if (IsLogin == false)
+        {
+            return RedirectToPage("/login");
+        }
+        else if (AccountDto.Role != 1)
+        {
+            return RedirectToPage("/index");
+        }
         return Page();
     }
 

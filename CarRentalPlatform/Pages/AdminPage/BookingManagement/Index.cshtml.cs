@@ -14,6 +14,7 @@ using DataTransferLayer.DataTransfer;
 using Microsoft.IdentityModel.Tokens;
 using System.Reflection.Metadata;
 using Microsoft.CodeAnalysis;
+using CarRentalPlatform.Configuration;
 
 namespace CarRentalPlatform.Pages.AdminPage.BookingManagement
 {
@@ -29,9 +30,34 @@ namespace CarRentalPlatform.Pages.AdminPage.BookingManagement
         public IList<BookingResponse> Booking { get;set; } = default!;
         [BindProperty]
         public string Valuetime { get; set; }
-        public async Task OnGetAsync()
-        { 
-                Booking = await bookingRepository.GetAllBookingsDashBoard();
+        [BindProperty]
+        public bool IsLogin { get; set; }
+
+        [BindProperty]
+        public AccountDto AccountDto { get; set; }
+        [BindProperty]
+        public int total { get; set; }
+        public async Task<IActionResult> OnGetAsync()
+        {
+            IsLogin = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "isLogin");
+            AccountDto = SessionHelper.GetObjectFromJson<AccountDto>(HttpContext.Session, "user");
+            if (IsLogin == false)
+            {
+                return RedirectToPage("/login");
+            }
+            else if (AccountDto.Role != 1)
+            {
+                return RedirectToPage("/index");
+            }
+            else {
+               Booking = await bookingRepository.GetAllBookingsDashBoard();
+                foreach (var booking in Booking)
+                {
+                    total += booking.DepositAmount;
+                }
+                return Page();
+
+            }
         }
         public async Task<IActionResult> OnPost()
         {
