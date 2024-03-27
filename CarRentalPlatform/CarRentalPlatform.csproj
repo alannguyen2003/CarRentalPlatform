@@ -32,7 +32,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Pages\AdminPage\AccountGenerate\" />
       <Folder Include="Pages\AdminPage\BookingManagement\" />
       <Folder Include="wwwroot\admin\" />
       <Folder Include="wwwroot\images\" />
@@ -42,6 +41,19 @@
       <Content Update="appsettings.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Pages\AdminPage\Car\Create.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\AdminPage\Car\Delete.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\AdminPage\Car\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\AdminPage\Car\Edit.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\AdminPage\Car\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\AdminPage\Account\Create.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\AdminPage\Account\Delete.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\AdminPage\Account\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\AdminPage\Account\Edit.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\AdminPage\Account\Index.cshtml" />
     </ItemGroup>
 
 </Project>

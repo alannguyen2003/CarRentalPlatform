@@ -96,6 +96,7 @@ public class CheckOut : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
+        ModelState.Clear();
         string note = Request.Form["note"];
 
         CartModel = SessionHelper.GetObjectFromJson<CartModel>(HttpContext.Session, "cart");

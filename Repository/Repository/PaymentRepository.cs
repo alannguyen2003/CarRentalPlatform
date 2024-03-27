@@ -7,15 +7,17 @@ public class PaymentRepository : IPaymentRepository
 {
     private static string ClientDomain = "https://localhost:7129/";
     
-    public async Task<Session> GetSession(int totalAmount)
+    public async Task<Session> GetSession(string email, int totalAmount)
     {
+        
         var options = new SessionCreateOptions
         {
-            SuccessUrl = ClientDomain + $"checkout",
+            SuccessUrl = ClientDomain + $"success?money=" + totalAmount,
             CancelUrl = ClientDomain + "checkout-fail",
             LineItems = new List<SessionLineItemOptions>(),
             Mode = "payment",
-            PaymentIntentData = new SessionPaymentIntentDataOptions()
+            PaymentIntentData = new SessionPaymentIntentDataOptions(),
+            CustomerEmail = email
         };
         var sessionLineItem = new SessionLineItemOptions()
         {

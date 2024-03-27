@@ -20,7 +20,7 @@
     @if (!ModelState.IsValid)
     {
         <div class="alert alert-danger">
-            <ul>
+            <ul style="list-style-type: none;">
                 @foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
                 {
                     <li>@error.ErrorMessage</li>
@@ -32,8 +32,9 @@
     <form method="post">
         <div class="form-group">
             <label for="money">Money (Your money to charge must be bigger than 0 and samller than 1.000.000.000đ):</label>
-            <input type="number" class="form-control" style="width: 300px;" id="money" name="money">
+            <input type="number" class="form-control" style="width: 300px;" id="money" name="money" value="@Model.Money">
         </div>
         <button type="submit" class="btn btn-secondary" asp-page-handler="RechargeMoney">Recharge</button>
     </form>
+    your charge is @Model.Money
 </div>

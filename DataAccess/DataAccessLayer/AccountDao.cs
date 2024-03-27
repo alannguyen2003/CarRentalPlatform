@@ -34,10 +34,22 @@ public class AccountDAO : BaseDao<AccountEntity>
     {
         if (_context.Accounts != null)
         {
-            var isFound = _context.Accounts
-                .Any(account => account.PhoneNumber == phoneNumber);
+            var isFound = await _context.Accounts
+                .AnyAsync(account => account.PhoneNumber == phoneNumber);
             return isFound;
         }
         return false;
+    }
+
+    public async Task<AccountEntity?> GetAccountWithEmail(string email)
+    {
+        if (_context.Accounts != null)
+        {
+            var account = await _context.Accounts
+                .Where(account => account.Email == email)
+                .FirstOrDefaultAsync();
+            return account;
+        }
+        return null;
     }
 }

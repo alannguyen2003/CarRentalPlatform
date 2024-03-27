@@ -7,6 +7,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using Repository.Repository;
 using Repository.Repository.Abstract;
+using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,7 +45,7 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-
+StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey").Get<string>();
 app.UseHttpLogging();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
